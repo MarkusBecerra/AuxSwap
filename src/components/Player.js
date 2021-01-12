@@ -1,3 +1,6 @@
+//credit: https://levelup.gitconnected.com/how-to-build-a-spotify-player-with-react-in-15-minutes-7e01991bc4b6
+
+
 import React from "react";
 import "./Player.css";
 const Player = props => {

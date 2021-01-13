@@ -5,7 +5,8 @@
     ".eslintrc.json",
     ".babelrc",
     ".prettierrc",
-    "src/"
+    "src/",
+    "dotenv"
   ],
   "verbose": true,
   "ignore": ["*.test.js", "*.spec.js"]

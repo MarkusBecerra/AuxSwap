@@ -2,7 +2,6 @@ import React from 'react';
 import PlayerPage from '../pages/PlayerPage';
 import Party from '../pages/Party';
 import Chat from '../pages/Chat';
-import Battle from '../pages/Battle';
 import {
   BrowserRouter as Router,
   Switch,

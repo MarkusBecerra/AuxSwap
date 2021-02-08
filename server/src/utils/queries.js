@@ -1,16 +1,16 @@
-export const createMessageTable = `
-DROP TABLE IF EXISTS messages;
-CREATE TABLE IF NOT EXISTS messages (
+export const createProfileTable = `
+DROP TABLE IF EXISTS profile;
+CREATE TABLE IF NOT EXISTS profile (
   id SERIAL PRIMARY KEY,
-  name VARCHAR DEFAULT '',
-  message VARCHAR NOT NULL
+  userName VARCHAR DEFAULT '',
+  userId VARCHAR NOT NULL
   )
   `;
 
-export const insertMessages = `
-INSERT INTO messages(name, message)
-VALUES ('chidimo', 'first message'),
-      ('orji', 'second message')
+export const insertProfile = `
+INSERT INTO profile(userName, userId)
+VALUES ('Haonan', 'Haonan Id'),
+      ('Chance', 'Chance Id')
 `;
 
-export const dropMessagesTable = 'DROP TABLE messages';
+export const dropProfileTable = 'DROP TABLE profile';

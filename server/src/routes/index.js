@@ -1,10 +1,10 @@
 import express from 'express';
-import { indexPage, messagesPage, addMessage } from '../controllers';
-import { modifyMessage, performAsyncAction } from '../middleware';
+import { indexPage, profilePage, addProfile } from '../controllers';
+import { modifyProfile, performAsyncAction } from '../middleware';
 const indexRouter = express.Router();
 
 indexRouter.get('/', indexPage);
-indexRouter.get('/messages', messagesPage);
-indexRouter.post('/messages', modifyMessage, performAsyncAction, addMessage);
+indexRouter.get('/profile', profilePage);
+indexRouter.post('/profile', modifyProfile, performAsyncAction, addProfile);
 
 export default indexRouter;

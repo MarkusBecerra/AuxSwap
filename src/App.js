@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React, { useEffect } from "react";
 import './App.css';
 import {
@@ -33,7 +32,7 @@ function App() {
     setCurrToken(token);
   };
 
-  //TODO: Move the last four routes into home.js without it breaking.
+  //TODO: Move the last four routes into home.js without it breaking.... Why do they all need to be in one place?
     return (
     <TokenContext.Provider value={{currtoken}}>
         <Router>
@@ -49,9 +48,6 @@ function App() {
             </Route>
             <Route exact path="/chat">
               <Chat/>
-            </Route>
-            <Route exact path="/battle">
-              <Battle/>
             </Route>
             <Route exact path="/party">
               <Party/>

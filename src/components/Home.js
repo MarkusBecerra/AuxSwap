@@ -17,19 +17,12 @@ function Home(){
 
 return(
     <div>
-        <div>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
             </header>
-        </div>
-
-        <div>
             <ul>
                 <li>
                     <NavLink to="/chat"> Chat </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/battle"> Battle </NavLink>
                 </li>
                 <li>
                     <NavLink to="/party"> Party </NavLink>
@@ -40,13 +33,10 @@ return(
             </ul>
 
             <hr/>
-{/* 
+{/*  Why doesn't this work?
             <Switch>
                 <Route exact path="/chat">
                     <Chat/>
-                </Route>
-                <Route exact path="/battle">
-                    <Battle/>
                 </Route>
                 <Route exact path="/party">
                     <Party/>
@@ -55,7 +45,6 @@ return(
                     <PlayerPage/>
                 </Route>
             </Switch> */}
-        </div>
     </div>
 );
 }

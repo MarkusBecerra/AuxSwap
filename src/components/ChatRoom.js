@@ -16,6 +16,7 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = React.useState("");
   const [currSong, setCurrSong] = React.useState("spotify:track:0jBE7Fn78EAvmIs3dCd6GO");
   const context = useContext(TokenContext);
+  const [showPlayer, setShowPlayer] = React.useState(false);
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -52,7 +53,10 @@ const ChatRoom = (props) => {
             
             if(isMessageSpotifyTrack(message.body)){
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
-                    <div onClick={()=> setSpotifyURI(message.body)}>                    
+                    <div onClick={()=> {
+                      setSpotifyURI(message.body);
+                      setShowPlayer(true);
+                    }}>                    
                         <SpotifyTrackMessage message={message.body}  />
                     </div>
 
@@ -75,10 +79,13 @@ const ChatRoom = (props) => {
       <button onClick={handleSendMessage} className="send-message-button">
         Send
       </button>
-      <SpotifyPlayer
-      token={context.currtoken}
-      uris={currSong}
-      />
+      {/* we want this component to only appear after a song has been */}
+        
+      <div> {showPlayer ? <SpotifyPlayer
+          token={context.currtoken}
+          uris={currSong}/> : ""} 
+      </div>
+
     </div>
 
   );

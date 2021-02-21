@@ -5,6 +5,8 @@ import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
 import * as $ from "jquery";
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
+import SpotifySearch from "./SpotifySearch";
+
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
@@ -16,6 +18,11 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = React.useState("");
   const [currSong, setCurrSong] = React.useState("spotify:track:0jBE7Fn78EAvmIs3dCd6GO");
   const context = useContext(TokenContext);
+
+
+  // const trackSearch = document.getElementById('searchBar');
+  // const trackSearch = "blinding lights";
+
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -75,6 +82,21 @@ const ChatRoom = (props) => {
       <button onClick={handleSendMessage} className="send-message-button">
         Send
       </button>
+
+
+
+      {/* <input type="search" className="searchbar"
+
+      />
+
+      <button onClick={() => this.props.} className="send-search-button">
+         SEARCH
+      </button> */}
+
+      <div>
+        <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
+      </div>
+      
       <SpotifyPlayer
       token={context.currtoken}
       uris={currSong}

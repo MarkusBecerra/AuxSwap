@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import * as $ from "jquery";
 import './SpotifySearch.css';
 import TokenContext from './TokenContext'
+import SpotifyPlayer from 'react-spotify-web-playback';
+
 
 const SpotifySearch = (props) => {
     const context = useContext(TokenContext);  
@@ -25,8 +27,10 @@ const SpotifySearch = (props) => {
             console.log(data);
             //   setTopResults({topResults: data.tracks.items[0].album.images[1].url})
             //   setTopResults({topResults: data.tracks.items[0].album.images[2].url})
-            setTopResults(topResults => [...topResults, data.tracks.items[0].album.images[2].url])
-            setTopResults(topResults => [...topResults, data.tracks.items[1].album.images[2].url])
+            // setTopResults(topResults => [...topResults, data.tracks.items[0].album.images[2].url])
+            // setTopResults(topResults => [...topResults, data.tracks.items[1].album.images[2].url])
+            setTopResults(topResults => [...topResults, data.tracks.items[0]])
+            setTopResults(topResults => [...topResults, data.tracks.items[1]])
 
           
         },
@@ -67,14 +71,17 @@ const SpotifySearch = (props) => {
             SEARCH
             </button>
 
+            
+
         <h1>RESULTS </h1>
         <ul>
             {/* <li> */}
                 {topResults.map(index => {
-                    return <img key={index} src={index} />
+                    return <img key={index.album.images[2].url} src={index.album.images[2].url} onClick={() => {navigator.clipboard.writeText(index.external_urls.spotify);document.execCommand("copy");console.log(`YOU PRESSED ME: ${index.external_urls.spotify}`)}}/>
                 })}
             {/* </li> */}
         </ul>
+        
       </div>
     )
     // let names = ['wood', 'sun', 'moon', 'sea'].map( (name, index) => {

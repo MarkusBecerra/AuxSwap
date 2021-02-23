@@ -10,11 +10,12 @@ import SpotifyTrackMessage from "./SpotifyTrackMessage";
 
 
 const ChatRoom = (props) => {
-  const regex = /^(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/;
+  const spotifyRegex = /^(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/;
+  const linkRegex = /^((http:|https:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)/;
   const { roomId } = props.match.params;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
-  const [currSong, setCurrSong] = React.useState("spotify:track:0jBE7Fn78EAvmIs3dCd6GO");
+  const [currSong, setCurrSong] = React.useState("");
   const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
@@ -28,6 +29,11 @@ const ChatRoom = (props) => {
   };
 
   const handleSendMessage = () => {
+    console.log(newMessage);
+    if(newMessage === ""){
+          setNewMessage("");
+      return;
+    }
     sendMessage(newMessage);
     setNewMessage("");
   };
@@ -41,15 +47,22 @@ const ChatRoom = (props) => {
 
 
   //Checking if message is spotify track using JS regex.
-  const isMessageSpotifyTrack = (body) => {
-    if(regex.test(body)){
-      return true
+  const isMessageSpotifyTrack = (body) =>{
+    if(spotifyRegex.test(body)){
+      return true;
     }
       return false
   }
 
+  const isMessageLink = (body) => {
+    if(linkRegex.test(body)){
+      return true
+    }
+    return false;
+  }
+
   const setSpotifyURI = (message) => {
-    const array = message.match(regex);
+    const array = message.match(spotifyRegex);
     const songID = array[2];
     const res = "spotify:track:".concat(songID);
     setCurrSong(res);
@@ -62,17 +75,22 @@ const ChatRoom = (props) => {
         <div className="messages-container">
           <ol className="messages-list">
           {messages.map((message, i) => {
-            
+
             if(isMessageSpotifyTrack(message.body)){
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
                     <div onClick={()=> {
                       setSpotifyURI(message.body);
                       setShowPlayer(true);
-                    }}>                    
+                    }}>
                         <SpotifyTrackMessage message={message.body}  />
                     </div>
 
               </li>)
+            }
+            else if(isMessageLink(message.body)){
+              return(<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                          <a href={message.body} target="_blank" rel="noreferrer">{message.body}</a>
+                     </li>)
             }
             else{
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
@@ -82,22 +100,42 @@ const ChatRoom = (props) => {
           })}
         </ol>
       </div>
+
+
+
+      {/* CONSIDER USING FORM AND INPUT FOR THIS!!!
+      CHECKOUT: https://github.com/mrshawnhum/chat-app/blob/master/client/src/components/Chat/Chat.js
+      FOR AN EXAMPLE. THANKS SHAWN */}
       <textarea
         value={newMessage}
         onKeyDown={handleEnter}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
         className="new-message-input-field"
+        onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
       />
       <button onClick={handleSendMessage} className="send-message-button">
         Send
       </button>
       {/* we want this component to only appear after a song has been */}
-        
+
+
+        <div>
+          {showPlayer ? <button onClick={() => setShowPlayer(false)}>
+            <img src="https://1001freedownloads.s3.amazonaws.com/vector/thumb/70571/close-button.png" className="x-button"/>
+          </button> : null}
+        </div>
+
+
       <div> {showPlayer ? <SpotifyPlayer
           token={context.currtoken}
-          uris={currSong}/> : ""} 
+          uris={currSong}
+          autoPlay="true"
+          showSaveIcon="true"
+          name="Auxswap"
+          /> : null}
       </div>
+
 
     </div>
 

@@ -27,7 +27,7 @@
 }
 
 .new-message-input-field {
-    height: 200px;
+    height: 100px;
     max-height: 50%;
     font-size: 20px;
     padding: 8px 12px;
@@ -66,4 +66,11 @@
 .new-message-input-field,
 .send-message-button {
     border-color: #9a9a9a;
+}
+
+.x-button{
+    width: auto;
+    height: auto;
+    max-width: 25px;
+    max-height: 25px;
 }

@@ -17,9 +17,14 @@ const ChatRoom = (props) => {
   const [currSong, setCurrSong] = React.useState("spotify:track:0jBE7Fn78EAvmIs3dCd6GO");
   const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
+  const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
 
   const handleNewMessageChange = (event) => {
-    setNewMessage(event.target.value);
+    event.preventDefault()
+    if(hitEnter != true){                 //if the enter key hasn't been pressed
+      setNewMessage(event.target.value);
+    }
+    setEnter(false);      //set the enter key to false
   };
 
   const handleSendMessage = () => {
@@ -27,13 +32,20 @@ const ChatRoom = (props) => {
     setNewMessage("");
   };
 
+  const handleEnter = e => {    //handle enter function
+    if (e.keyCode == 13) {      //if the user hits enter
+      setEnter(true)            //set enter to true, the key has been hit
+      handleSendMessage()       //call the send message function (basically hit send button)
+    }
+  }
+
 
   //Checking if message is spotify track using JS regex.
-  const isMessageSpotifyTrack = (body) =>{
+  const isMessageSpotifyTrack = (body) => {
     if(regex.test(body)){
-      return true;
+      return true
     }
-      return false;
+      return false
   }
 
   const setSpotifyURI = (message) => {
@@ -72,6 +84,7 @@ const ChatRoom = (props) => {
       </div>
       <textarea
         value={newMessage}
+        onKeyDown={handleEnter}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
         className="new-message-input-field"

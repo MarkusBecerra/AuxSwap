@@ -1,3 +1,11 @@
+*{
+    font-family: verdana;
+}
+
+body{
+    background-color: #121212;
+}
+
 .chat-room-container {
     position: fixed;
     left: 0;
@@ -7,10 +15,17 @@
     display: flex;
     flex-direction: column;
     margin: 16px;
+    background-color: #121212;
+}
+
+.chat-room-title {
+    margin-top: 0;
+    color: white;
 }
 
 .room-name {
-    margin-top: 0;
+    margin-top: -10px;
+    color: white;
 }
 
 .messages-container {
@@ -19,6 +34,7 @@
     overflow: auto;
     border: 1px solid black;
     border-radius: 7px 7px 0 0;
+    background-color: #121212;
 }
 
 .messages-list {
@@ -32,6 +48,8 @@
     font-size: 20px;
     padding: 8px 12px;
     resize: none;
+    background-color: #121212;
+    color: white;
 }
 
 .message-item {
@@ -39,12 +57,12 @@
     margin: 8px;
     padding: 12px 8px;
     word-break: break-word;
-    border-radius: 4px;
+    border-radius: 6px;
     color: white;
 }
 
 .my-message {
-    background-color: rgb(0, 132, 255);
+    background-color: #31a24c;
     margin-left: auto;
 }
 
@@ -54,11 +72,11 @@
 }
 
 .send-message-button {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 600;
     color: white;
     background: #31a24c;
-    padding: 24px 12px;
+    padding: 10px 12px;
     border: none;
 }
 

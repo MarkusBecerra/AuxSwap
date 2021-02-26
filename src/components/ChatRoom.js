@@ -71,7 +71,8 @@ const ChatRoom = (props) => {
 
   return (
     <div className="chat-room-container">
-      <h1 className="room-name">Room: {roomId}</h1>
+    <h1 className="chat-room-title">Chat Room</h1>
+      <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">
           <ol className="messages-list">
           {messages.map((message, i) => {
@@ -107,11 +108,11 @@ const ChatRoom = (props) => {
       CHECKOUT: https://github.com/mrshawnhum/chat-app/blob/master/client/src/components/Chat/Chat.js
       FOR AN EXAMPLE. THANKS SHAWN */}
       <textarea
+        className="new-message-input-field"
         value={newMessage}
         onKeyDown={handleEnter}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
-        className="new-message-input-field"
         onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
       />
       <button onClick={handleSendMessage} className="send-message-button">

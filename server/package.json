@@ -1,48 +1,16 @@
 {
   "name": "server",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "prestart": "babel ./src --out-dir build",
-    "start": "node ./build/bin/www",
-    "startdev": "nodemon --exec babel-node ./src/bin/www",
-    "lint": "./node_modules/.bin/eslint ./src",
-    "pretty": "prettier --write '**/*.{js,json}' '!node_modules/**'",
-    "postpretty": "yarn lint --fix",
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha -r @babel/register",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "runQuery": "babel-node ./src/utils/runQuery"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "model": "^6.0.1",
-    "morgan": "~1.9.1",
-    "pg": "^8.5.1",
-    "route": "^0.2.5"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10",
-    "@babel/runtime": "^7.12.5",
-    "chai": "^4.2.0",
-    "coveralls": "^3.1.0",
-    "eslint": "^7.17.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "mocha": "^8.2.1",
-    "nodemon": "^2.0.7",
-    "nyc": "^15.1.0",
-    "prettier": "^2.2.1",
-    "sinon-chai": "^3.5.0",
-    "supertest": "^6.0.1"
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
   }
 }

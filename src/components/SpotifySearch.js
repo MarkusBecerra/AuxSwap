@@ -4,15 +4,20 @@ import './SpotifySearch.css';
 import TokenContext from './TokenContext'
 import SpotifyPlayer from 'react-spotify-web-playback';
 
-
 const SpotifySearch = (props) => {
     const context = useContext(TokenContext);  
     const [topResults, setTopResults] = React.useState([]);
     const [trackName, setTrackName] = React.useState("")
+
     const getSongSearch = (props) => {
-        console.log("INSIDE")
+        setTopResults([])
+        topResults.length = 0
+
+        if(trackName != "")
+        {
+            console.log("INSIDE")
         $.ajax({
-        url: `https://api.spotify.com/v1/search?q=${trackName}&type=track`,
+        url: `https://api.spotify.com/v1/search?q=${trackName}&type=track&limit=5&offset=0`,
         type: "GET",
         beforeSend: xhr => {
             xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
@@ -25,14 +30,10 @@ const SpotifySearch = (props) => {
             }
             console.log("SUCCESS SUCCESS SUCCESS")
             console.log(data);
-            //   setTopResults({topResults: data.tracks.items[0].album.images[1].url})
-            //   setTopResults({topResults: data.tracks.items[0].album.images[2].url})
-            // setTopResults(topResults => [...topResults, data.tracks.items[0].album.images[2].url])
-            // setTopResults(topResults => [...topResults, data.tracks.items[1].album.images[2].url])
-            setTopResults(topResults => [...topResults, data.tracks.items[0]])
-            setTopResults(topResults => [...topResults, data.tracks.items[1]])
-
-          
+            
+            data.tracks.items.forEach(element => {
+                setTopResults(topResults => [...topResults, element])
+            });   
         },
         error: error => {
             console.log("ERROR ERROR ERROR")
@@ -40,36 +41,33 @@ const SpotifySearch = (props) => {
     
         }
       });
+        }
+        
+        
       }
       useEffect(() => {
           // TODO: FIGURE OUT HOW TO CLEAR OUT THE topResults ARRAY
           // WHEN CHANGES ARE MADE IN THE SEARCHBAR
-          // so far, this seems to do the trick
+          // if someone types fast enough, this can get up to length 10, due to asynchronous issues
         console.log("SpotifySearch useEffect")
+        topResults.length = 0
         setTopResults([])
-        setTrackName(document.getElementById('searchbar').value)
+        // setTrackName(document.getElementById('searchbar').value)
         getSongSearch(props);
 
-    },[]);
-    return(
-        // <div>
-        //     first:
-        //     <img src={topResults[0]}></img>
-        //     <br></br>
-        //     <br></br>
-        //     <br></br>
-        //     second:
-        //     <img src={topResults[1]}></img>
 
-        // </div>
+    },[trackName]);
+    return(
         
         <div>
-            <input type="search" id="searchbar"
+            {/* <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`); getSongSearch(props)}} /> */}
+            <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`)}} />
 
-            />
-            <button onClick={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);setTopResults([]); setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`); getSongSearch(props)}} className="send-search-button">
+            {/* <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);topResults.length=0;setTrackName(document.getElementById('searchbar').value);getSongSearch()}} /> */}
+
+            {/* <button onClick={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);setTopResults([]); setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`); getSongSearch(props)}} className="send-search-button">
             SEARCH
-            </button>
+            </button> */}
 
             
 
@@ -77,16 +75,13 @@ const SpotifySearch = (props) => {
         <ul>
             {/* <li> */}
                 {topResults.map(index => {
-                    return <img key={index.album.images[2].url} src={index.album.images[2].url} onClick={() => {navigator.clipboard.writeText(index.external_urls.spotify);document.execCommand("copy");console.log(`YOU PRESSED ME: ${index.external_urls.spotify}`)}}/>
+                    return <img key={index.external_urls.spotify} src={index.album.images[2].url} onClick={() => {navigator.clipboard.writeText(index.external_urls.spotify);document.execCommand("copy");console.log(`YOU PRESSED ME: ${index.external_urls.spotify}`)}}/>
                 })}
             {/* </li> */}
         </ul>
         
       </div>
     )
-    // let names = ['wood', 'sun', 'moon', 'sea'].map( (name, index) => {
-    //     return <img key={index} className="img-responsive" alt="" src={require(`./icons/${name}.png`)} />
-    // } );
         
     }
     

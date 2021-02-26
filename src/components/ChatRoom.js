@@ -83,16 +83,6 @@ const ChatRoom = (props) => {
         Send
       </button>
 
-
-
-      {/* <input type="search" className="searchbar"
-
-      />
-
-      <button onClick={() => this.props.} className="send-search-button">
-         SEARCH
-      </button> */}
-
       <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
       </div>

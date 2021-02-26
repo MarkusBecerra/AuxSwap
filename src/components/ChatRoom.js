@@ -5,6 +5,7 @@ import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
 import * as $ from "jquery";
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
+import NavBar from './navBar';
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
@@ -71,6 +72,7 @@ const ChatRoom = (props) => {
 
   return (
     <div className="chat-room-container">
+    <NavBar/>
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">

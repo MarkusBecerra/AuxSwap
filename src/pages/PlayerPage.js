@@ -4,6 +4,7 @@ import Player from "../components/Player";
 import './PlayerPage.css';
 import logo from '../logo.svg';
 import TokenContext from "../components/TokenContext";
+import NavBar from '../components/navBar';
 
 function PlayerPage() {
 
@@ -106,6 +107,7 @@ function getData() {
 
     return (
       <div className="App">
+        <NavBar/>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           {!NoData && (

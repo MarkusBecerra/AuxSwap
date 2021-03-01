@@ -78,6 +78,8 @@ const ChatRoom = (props) => {
         onChange={handleNewMessageChange}
         placeholder="Write message..."
         className="new-message-input-field"
+        id="new-message-input-field"
+
       />
       <button onClick={handleSendMessage} className="send-message-button">
         Send

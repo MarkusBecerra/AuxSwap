@@ -8,6 +8,14 @@ const SpotifySearch = (props) => {
     const context = useContext(TokenContext);  
     const [topResults, setTopResults] = React.useState([]);
     const [trackName, setTrackName] = React.useState("")
+    const numSearchResults = 5; //number of results we want to return
+
+    const appendSongToMessage = (song) => {
+        console.log(`Attempting to add song: ${song}`)
+        console.log(`Current value: ${document.getElementsByClassName("new-message-input-field").value}`)
+        document.getElementById("new-message-input-field").value += (song + " ");
+
+    }
 
     const getSongSearch = (props) => {
         setTopResults([])
@@ -17,7 +25,7 @@ const SpotifySearch = (props) => {
         {
             console.log("INSIDE")
         $.ajax({
-        url: `https://api.spotify.com/v1/search?q=${trackName}&type=track&limit=5&offset=0`,
+        url: `https://api.spotify.com/v1/search?q=${trackName}&type=track&limit=${numSearchResults}&offset=0`,
         type: "GET",
         beforeSend: xhr => {
             xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
@@ -74,8 +82,8 @@ const SpotifySearch = (props) => {
         <h1>RESULTS </h1>
         <ul>
             {/* <li> */}
-                {topResults.map(index => {
-                    return <img key={index.external_urls.spotify} src={index.album.images[2].url} onClick={() => {navigator.clipboard.writeText(index.external_urls.spotify);document.execCommand("copy");console.log(`YOU PRESSED ME: ${index.external_urls.spotify}`)}}/>
+                {topResults.slice(0, numSearchResults).map(index => {
+                    return <img key={index.external_urls.spotify} src={index.album.images[2].url} title={index.name} onClick={() => {navigator.clipboard.writeText(index.external_urls.spotify);document.execCommand("copy");appendSongToMessage(index.external_urls.spotify);console.log(`YOU PRESSED ME: ${index.external_urls.spotify}`)}}/>
                 })}
             {/* </li> */}
         </ul>

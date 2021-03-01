@@ -11,8 +11,8 @@ import NavBar from './navBar';
 
 
 const ChatRoom = (props) => {
-  const spotifyRegex = /^(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/;
-  const linkRegex = /^((http:|https:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)/;
+  const spotifyRegex = /^(.*)(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})(.*)/;
+  const linkRegex = /^(.*)((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)(.*)/;
   const { roomId } = props.match.params;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
@@ -30,7 +30,6 @@ const ChatRoom = (props) => {
   };
 
   const handleSendMessage = () => {
-    console.log(newMessage);
     if(newMessage === ""){
           setNewMessage("");
       return;
@@ -48,7 +47,7 @@ const ChatRoom = (props) => {
   };
 
 
-  //Checking if message is spotify track using JS regex.
+  //Checking if message contains spotify track using JS regex.
   const isMessageSpotifyTrack = (body) =>{
     if(spotifyRegex.test(body)){
       return true;
@@ -56,6 +55,7 @@ const ChatRoom = (props) => {
       return false
   }
 
+  //Checking if message contains a url using JS regex
   const isMessageLink = (body) => {
     if(linkRegex.test(body)){
       return true
@@ -68,19 +68,18 @@ const ChatRoom = (props) => {
     const songID = array[2];
     const res = "spotify:track:".concat(songID);
     const arr = currSong;
-    console.log(currSong);
     arr.push(res);
-    console.log(arr);
     setCurrSong(arr);
   }
 
     const setSpotifyURI = (message) => {
-    const array = message.match(spotifyRegex);
+    const array = message.match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/);
     const songID = array[2];
     const res = "spotify:track:".concat(songID);
     const arr = [res];
     setCurrSong(arr);
   }
+
 
 
   return (
@@ -92,20 +91,33 @@ const ChatRoom = (props) => {
           {messages.map((message, i) => {
 
             if(isMessageSpotifyTrack(message.body)){
+              const spotifyLink = (message.body).match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/)[0];
+              const restofMessage = (message.body).replace(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)(.{48})/,'');
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                    <div>
+                      {restofMessage}
+                      </div>
                     <div onClick={()=> {
-                      setSpotifyURI(message.body);
+                      setSpotifyURI(spotifyLink);
                       setShowPlayer(true);
                     }}>
-                        <SpotifyTrackMessage message={message.body}  />
+                        <SpotifyTrackMessage message={spotifyLink}  />
                     </div>
 
               </li>)
             }
             else if(isMessageLink(message.body)){
-              return(<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
-                          <a href={message.body} target="_blank" rel="noreferrer">{message.body}</a>
-                     </li>)
+              const url = message.body.match(/((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)[^ ]*/)[0];
+              const restofMessage = message.body.replace(/((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)[^ ]*/,'');
+              return(<div>
+                            <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                              <div>
+                                {restofMessage}
+                              </div>
+                          <a href={url} target="_blank" rel="noreferrer">{url}</a>
+                     </li>
+                </div>
+              )
             }
             else{
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>

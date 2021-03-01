@@ -22,7 +22,6 @@ const context = useContext(TokenContext);
       if(!data){
         setImage("https://i.pinimg.com/originals/d4/e3/60/d4e3604d2811dbe178801f48e6a2ae69.jpg");
       }
-      console.log(data);
         setImage(data.album.images[0].url);
     },
     error: error => {

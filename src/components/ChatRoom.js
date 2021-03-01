@@ -83,7 +83,9 @@ const ChatRoom = (props) => {
 
 
   return (
-    <div className="chat-room-container">
+  <div class="chat-room-page">
+    <NavBar/>
+   <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">
@@ -147,7 +149,8 @@ const ChatRoom = (props) => {
         </div>
 
 
-      <div> {showPlayer ? <SpotifyPlayer
+      <div> 
+        {showPlayer ? <SpotifyPlayer
           token={context.currtoken}
           uris={currSong}
           autoPlay="true"
@@ -158,7 +161,7 @@ const ChatRoom = (props) => {
 
 
     </div>
-
+  </div>
   );
 };
 

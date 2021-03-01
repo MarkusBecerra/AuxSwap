@@ -11,8 +11,9 @@ const ChatHome = () => {
   };
 
   return (
-    <div className="home-container">
+    <div>
       <NavBar/>
+      <div className="home-container">
       <input
         type="text"
         placeholder="Room"
@@ -23,6 +24,7 @@ const ChatHome = () => {
       <Link to={`/chat/${roomName}`} className="enter-room-button">
         Join room
       </Link>
+      </div>
     </div>
   );
 };

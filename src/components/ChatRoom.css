@@ -6,6 +6,10 @@ body{
     background-color: #121212;
 }
 
+.chat-room-page{
+    
+}
+
 .chat-room-container {
     position: fixed;
     left: 0;
@@ -15,6 +19,7 @@ body{
     display: flex;
     flex-direction: column;
     margin: 16px;
+    margin-top: 6%;
     background-color: #121212;
 }
 

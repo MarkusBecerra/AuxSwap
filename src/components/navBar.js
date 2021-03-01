@@ -10,22 +10,23 @@ import {
 } from "react-router-dom";
 import './Home.css';
 import logo from '../yessir.jpg';
+import './navBar.css';
 
 function NavBar(){
     return(
-    <nav>
+    <nav class="navClass">
     <div>
-       <img src={logo} alt="logo"/>
-      <h1> Stick'Me</h1>
+       {/* <img src={logo} alt="logo"/>
+      <h1> Stick'Me</h1> */}
     </div>
-            <ul>
-                <li>
+            <ul class="navList">
+                <li class ="navListElements">
                     <NavLink to="/chat"> Chat </NavLink>
                 </li>
-                <li>
+                <li class ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
                 </li>
-                <li>
+                <li class ="navListElements">
                     <NavLink to="/player"> Player</NavLink>
                 </li>
             </ul>

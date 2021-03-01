@@ -1,0 +1,33 @@
+.navClass {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+
+.navList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+.navListElements {
+    float: left;
+  }
+  
+.navListElements a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+.navListElements a:hover {
+    background-color: #1d5b2b;
+  }
+
+.navListElements a:active {
+    background-color: #31a24c;
+  }

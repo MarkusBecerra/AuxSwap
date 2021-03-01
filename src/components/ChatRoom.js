@@ -16,7 +16,7 @@ const ChatRoom = (props) => {
   const { roomId } = props.match.params;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
-  const [currSong, setCurrSong] = React.useState("");
+  const [currSong, setCurrSong] = React.useState([]);
   const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
@@ -39,12 +39,13 @@ const ChatRoom = (props) => {
     setNewMessage("");
   };
 
+
   const handleEnter = e => {    //handle enter function
     if (e.keyCode == 13) {      //if the user hits enter
       setEnter(true)            //set enter to true, the key has been hit
       handleSendMessage()       //call the send message function (basically hit send button)
     }
-  }
+  };
 
 
   //Checking if message is spotify track using JS regex.
@@ -62,17 +63,28 @@ const ChatRoom = (props) => {
     return false;
   }
 
-  const setSpotifyURI = (message) => {
+  const setSpotifyURIQueue = (message) => {
     const array = message.match(spotifyRegex);
     const songID = array[2];
     const res = "spotify:track:".concat(songID);
-    setCurrSong(res);
+    const arr = currSong;
+    console.log(currSong);
+    arr.push(res);
+    console.log(arr);
+    setCurrSong(arr);
+  }
+
+    const setSpotifyURI = (message) => {
+    const array = message.match(spotifyRegex);
+    const songID = array[2];
+    const res = "spotify:track:".concat(songID);
+    const arr = [res];
+    setCurrSong(arr);
   }
 
 
   return (
     <div className="chat-room-container">
-    <NavBar/>
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">
@@ -104,11 +116,6 @@ const ChatRoom = (props) => {
         </ol>
       </div>
 
-
-
-      {/* CONSIDER USING FORM AND INPUT FOR THIS!!!
-      CHECKOUT: https://github.com/mrshawnhum/chat-app/blob/master/client/src/components/Chat/Chat.js
-      FOR AN EXAMPLE. THANKS SHAWN */}
       <textarea
         className="new-message-input-field"
         value={newMessage}
@@ -120,8 +127,6 @@ const ChatRoom = (props) => {
       <button onClick={handleSendMessage} className="send-message-button">
         Send
       </button>
-      {/* we want this component to only appear after a song has been */}
-
 
         <div>
           {showPlayer ? <button onClick={() => setShowPlayer(false)}>

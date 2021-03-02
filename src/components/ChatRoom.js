@@ -94,7 +94,7 @@ const ChatRoom = (props) => {
 
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLink = (message.body).match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/)[0];
-              const restofMessage = (message.body).replace(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)(.{48})/,'');
+              const restofMessage = (message.body).replace(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})(.{26})*/,'');
               return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
                     <div>
                       {restofMessage}
@@ -156,7 +156,6 @@ const ChatRoom = (props) => {
           </button> : null}
         </div>
 
-
       <div>
         {showPlayer ? <SpotifyPlayer
           token={context.currtoken}
@@ -167,7 +166,6 @@ const ChatRoom = (props) => {
           /> : null}
       </div>
       </div>
-
     </div>
 
   );

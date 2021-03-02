@@ -26,12 +26,8 @@ const SpotifySearch = (props) => {
     
     const appendSongToMessage = (song) => {
         let textarea = document.getElementById("new-message-input-field")
-        console.log(`Attempting to add song: ${song}`)
-        console.log(`Current value: ${textarea.value}`)
-
         setNativeValue(textarea, song + " " + textarea.value );
         textarea.dispatchEvent(new Event('input', { bubbles: true }));
-
     }
 
     const getSongSearch = (props) => {
@@ -40,7 +36,6 @@ const SpotifySearch = (props) => {
 
         if(trackName != "")
         {
-            console.log("INSIDE")
         $.ajax({
         url: `https://api.spotify.com/v1/search?q=${trackName}&type=track&limit=${numSearchResults}&offset=0`,
         type: "GET",
@@ -53,28 +48,19 @@ const SpotifySearch = (props) => {
             if(!data){
 
             }
-            console.log("SUCCESS SUCCESS SUCCESS")
-            console.log(data);
-            
+            // console.log(data);
             data.tracks.items.forEach(element => {
                 setTopResults(topResults => [...topResults, element])
             });   
         },
         error: error => {
-            console.log("ERROR ERROR ERROR")
           console.log(error);
-    
         }
       });
         }
-        
-        
       }
       useEffect(() => {
-          // TODO: FIGURE OUT HOW TO CLEAR OUT THE topResults ARRAY
-          // WHEN CHANGES ARE MADE IN THE SEARCHBAR
-          // if someone types fast enough, this can get up to length 10, due to asynchronous issues
-        console.log("SpotifySearch useEffect")
+        // if someone types fast enough, this can get up to length 10, due to asynchronous issues
         topResults.length = 0
         setTopResults([])
         // setTrackName(document.getElementById('searchbar').value)
@@ -85,17 +71,8 @@ const SpotifySearch = (props) => {
     return(
         
         <div>
-            {/* <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`); getSongSearch(props)}} /> */}
-            <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);}} />
-
-            {/* <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);console.log(`length: ${topResults.length}`);topResults.length=0;setTrackName(document.getElementById('searchbar').value);getSongSearch()}} /> */}
-
-            {/* <button onClick={() => {console.log(`value should be: ${document.getElementById('searchbar').value}`);setTopResults([]); setTrackName(document.getElementById('searchbar').value);console.log(`trackName is: ${trackName}`); getSongSearch(props)}} className="send-search-button">
-            SEARCH
-            </button> */}
-
-            
-
+            <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);}} />
+        
         <h1>RESULTS </h1>
         <ul>
             {/* <li> */}

@@ -1,9 +1,14 @@
 import React from 'react';
+import NavBar from '../components/navBar';
 
 function Party()
 {
     return (
-        <h1> HI </h1>
+        <div>
+            <NavBar/>
+            <h1> HI </h1>
+        </div>
+
     )
 }
 

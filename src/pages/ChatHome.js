@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import NavBar from '../components/navBar';
 import "./ChatHome.css";
 
 const ChatHome = () => {
@@ -11,7 +11,9 @@ const ChatHome = () => {
   };
 
   return (
-    <div className="home-container">
+    <div>
+      <NavBar/>
+      <div className="home-container">
       <input
         type="text"
         placeholder="Room"
@@ -19,9 +21,10 @@ const ChatHome = () => {
         onChange={handleRoomNameChange}
         className="text-input-field"
       />
-      <Link to={`/${roomName}`} className="enter-room-button">
+      <Link to={`/chat/${roomName}`} className="enter-room-button">
         Join room
       </Link>
+      </div>
     </div>
   );
 };

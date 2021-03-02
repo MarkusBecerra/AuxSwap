@@ -14,7 +14,7 @@ import './navBar.css';
 
 function NavBar(){
     return(
-    <nav class="navClass">
+    <nav className="navClass">
     <div>
        {/* <img src={logo} alt="logo"/>
       <h1> Stick'Me</h1> */}

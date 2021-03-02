@@ -23,11 +23,6 @@ const ChatRoom = (props) => {
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
 
-
-  // const trackSearch = document.getElementById('searchBar');
-  // const trackSearch = "blinding lights";
-
-
   const handleNewMessageChange = (event) => {
     event.preventDefault()
     if(hitEnter != true){                 //if the enter key hasn't been pressed
@@ -86,8 +81,6 @@ const ChatRoom = (props) => {
     const arr = [res];
     setCurrSong(arr);
   }
-
-
 
   return (
   <div class="chat-room-page">

@@ -10,16 +10,18 @@ import {
 } from "react-router-dom";
 import './Home.css';
 import logo from '../logo.svg';
+import NavBar from './navBar';
 
 
 function Home(){
 
 return(
     <div>
+        <NavBar/>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
             </header>
-            <ul>
+            {/* <ul>
                 <li>
                     <NavLink to="/chat"> Chat </NavLink>
                 </li>
@@ -29,7 +31,7 @@ return(
                 <li>
                     <NavLink to="/player"> Player</NavLink>
                 </li>
-            </ul>
+            </ul> */}
 
             <hr/>
 {/*  Why doesn't this work?

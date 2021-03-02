@@ -19,14 +19,14 @@ function NavBar(){
        {/* <img src={logo} alt="logo"/>
       <h1> Stick'Me</h1> */}
     </div>
-            <ul class="navList">
-                <li class ="navListElements">
+            <ul className="navList">
+                <li className ="navListElements">
                     <NavLink to="/chat"> Chat </NavLink>
                 </li>
-                <li class ="navListElements">
+                <li className ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
                 </li>
-                <li class ="navListElements">
+                <li className ="navListElements">
                     <NavLink to="/player"> Player</NavLink>
                 </li>
             </ul>

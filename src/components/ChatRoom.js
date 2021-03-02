@@ -150,12 +150,6 @@ const ChatRoom = (props) => {
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
       </div>
 
-      <SpotifyPlayer
-      token={context.currtoken}
-      uris={currSong}
-      />
-    </div>
-
         <div>
           {showPlayer ? <button onClick={() => setShowPlayer(false)}>
             <img src="https://1001freedownloads.s3.amazonaws.com/vector/thumb/70571/close-button.png" className="x-button"/>
@@ -172,7 +166,7 @@ const ChatRoom = (props) => {
           name="Auxswap"
           /> : null}
       </div>
-
+      </div>
 
     </div>
 

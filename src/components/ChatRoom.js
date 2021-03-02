@@ -13,8 +13,8 @@ import NavBar from './navBar';
 
 
 const ChatRoom = (props) => {
-  const spotifyRegex = /^(.*)(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})(.*)/;
-  const linkRegex = /^(.*)((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)(.*)/;
+  const spotifyRegex = /(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/g;
+  const linkRegex = /(http:|https:|ftp:)\/\/[a-zA-Z0-9]+[.][a-z]+\/*[^ \n]*/g;
   const { roomId } = props.match.params;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
@@ -25,7 +25,7 @@ const ChatRoom = (props) => {
 
   const handleNewMessageChange = (event) => {
     event.preventDefault()
-    if(hitEnter != true){                 //if the enter key hasn't been pressed
+    if(hitEnter !== true){                 //if the enter key hasn't been pressed
       setNewMessage(event.target.value);
     }
     setEnter(false);      //set the enter key to false
@@ -42,7 +42,7 @@ const ChatRoom = (props) => {
 
 
   const handleEnter = e => {    //handle enter function
-    if (e.keyCode == 13) {      //if the user hits enter
+    if (e.keyCode === 13) {      //if the user hits enter
       setEnter(true)            //set enter to true, the key has been hit
       handleSendMessage()       //call the send message function (basically hit send button)
     }
@@ -93,32 +93,49 @@ const ChatRoom = (props) => {
           {messages.map((message, i) => {
 
             if(isMessageSpotifyTrack(message.body)){
-              const spotifyLink = (message.body).match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/)[0];
-              const restofMessage = (message.body).replace(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})(.{26})*/,'');
-              return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
-                    <div>
-                      {restofMessage}
-                      </div>
-                    <div onClick={()=> {
-                      setSpotifyURI(spotifyLink);
-                      setShowPlayer(true);
-                    }}>
-                        <SpotifyTrackMessage message={spotifyLink}  />
-                    </div>
+              const spotifyLinkSet = new Set((message.body).match(spotifyRegex));
+              const spotifyLinks = Array.from(spotifyLinkSet);
+              const restofMessage = (message.body).replace(/[ \n]*spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/([0-9a-z-A-Z]{22})([?]si=[a-zA-Z0-9]{22})?([ \n]*)/g,''); 
+              const isRestOfMessageEmpty = restofMessage === '';
+              return (
+                  <div>
+                      {!isRestOfMessageEmpty ? <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                            <div>
+                                {restofMessage}
+                            </div>
+                        </li> : null}
+                    {spotifyLinks.map((spotifyLink,m_key)=>{
+                        return(
+                          <li key={m_key} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                              <div  onClick={()=> {
+                                  setSpotifyURI(spotifyLink);
+                                  setShowPlayer(true);
+                                }}>
+                                  <SpotifyTrackMessage message={spotifyLink}  />
+                            </div>
+                          </li>
+                        )
+                      })
+                    }
 
-              </li>)
+              </div>
+              )
             }
             else if(isMessageLink(message.body)){
-              const url = message.body.match(/((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)[^ ]*/)[0];
-              const restofMessage = message.body.replace(/((http:|https:|ftp:)\/\/[a-z.]*\.(com|io|to|dev|edu)\/)[^ ]*/,'');
-              return(<div>
-                            <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
-                              <div>
-                                {restofMessage}
-                              </div>
-                          <a href={url} target="_blank" rel="noreferrer">{url}</a>
-                     </li>
-                </div>
+              
+              const words = message.body.split(' ');
+              return(
+                <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                {words.map((word,j)=>{
+                  const isLink = linkRegex.test(word);
+                    return(
+                      //TODO: THOMAS ADD CSS HERE PLZ TO CUT OUT NEW LINES BETWEEN THE TAGS
+                      <div key={j}>
+                        {isLink ? <a href={word} target="_blank" rel="noreferrer">{word} </a> : <div>{word}</div>}   
+                      </div>
+                    )
+                })}
+                  </li>
               )
             }
             else{

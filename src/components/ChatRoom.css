@@ -67,7 +67,7 @@ body{
 }
 
 .my-message {
-    background-color: #31a24c;
+    background-color: #038eff;
     margin-left: auto;
 }
 
@@ -80,7 +80,7 @@ body{
     font-size: 20px;
     font-weight: 600;
     color: white;
-    background: #31a24c;
+    background: #038eff;
     padding: 10px 12px;
     border: none;
 }

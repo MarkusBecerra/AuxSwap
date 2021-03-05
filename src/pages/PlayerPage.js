@@ -5,6 +5,9 @@ import './PlayerPage.css';
 import logo from '../logo.svg';
 import TokenContext from "../components/TokenContext";
 import NavBar from '../components/navBar';
+import SpotifyPlayer from 'react-spotify-web-playback';
+import SpotifyWebApi from "spotify-web-api-js";
+const sp = new SpotifyWebApi()
 
 function PlayerPage() {
 
@@ -112,6 +115,17 @@ function getData() {
             </p>
           )}
         </header>
+        <div className="spotify_sdk_player">
+          {
+            true ? <SpotifyPlayer
+            token={context.currtoken}
+            uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
+            autoPlay="true"
+            showSaveIcon="true"
+            name="Auxswap"
+            /> :null
+          }
+        </div>
       </div>
     );
 

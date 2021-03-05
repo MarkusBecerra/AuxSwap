@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect,useCallback } from "react";
 import * as $ from "jquery";
 import Player from "../components/Player";
 import './PlayerPage.css';
@@ -16,24 +16,6 @@ const[progress_ms, setProgress_ms] = React.useState(0);
 const[NoData, setNoData] = React.useState(false);
 const[didErrorOccur, setDidErrorOccur] = React.useState(false);
 
-
-//This uses fetch... 
-// const getDatav2 = async (token) => {
-//   const settings = {
-// headers: {'Authorization': 'Bearer ' + token}
-// }
-//   const response = await fetch('https://api.spotify.com/v1/me/player',settings);
-//   const data = await response.json();
-//         if(!data){
-//         setNoData(true);
-//         return;
-//       }
-//       console.log(data);
-//       setItem(data.item);
-//       setIs_playing(data.is_playing);
-//       setProgress_ms(data.progress_ms);
-//       setNoData(false);
-// }
 
 //Original API call function... this uses ajax(a jQuery function) to preform it...
 function getData() {
@@ -99,17 +81,19 @@ function getData() {
   //     }
   //     fetchData();
   // }, [currtoken]);
-
+  window.onbeforeunload = function () {return false;}
   useEffect(() => {
+    const interval =setInterval(()=>{
       getData();
-}, [context.currtoken]);
+    },1000);
+      return () =>{clearInterval(interval)}
+}, []);
 
 
     return (
       <div className="App">
         <NavBar/>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           {!NoData && (
             <Player
               item={item}

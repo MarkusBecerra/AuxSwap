@@ -37,3 +37,6 @@
         transform: rotate(360deg);
     }
 }
+.spotify_sdk_player{
+    display: none;
+}

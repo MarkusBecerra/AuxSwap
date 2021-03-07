@@ -19,40 +19,16 @@ function PlayerPage() {
   const [didErrorOccur, setDidErrorOccur] = React.useState(false);
   const [weeklyPlay, setweeklyplay] = React.useState([])
 
-  //Original API call function... this uses ajax(a jQuery function) to preform it...
-  function getData() {
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/player",
-      type: "GET",
-      beforeSend: xhr => {
-        xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
-      },
-      success: data => {
-        if (!data) {
-          setNoData(true);
-          return;
-        }
-        setItem(data.item);
-        setIs_playing(data.is_playing);
-        setProgress_ms(data.progress_ms);
-        setNoData(false);
-      },
-      error: error => {
-        console.log(error);
-        setNoData(true);
-        setDidErrorOccur(true);
-
-      }
-    });
-  }
+ 
 
   function getInfor() {
     //sp.getMyCurrentPlayingTrack()
     sp.getMyCurrentPlaybackState().then((data) => {
       if (!data) {
-        Frist_time()
+        //Frist_time()
         setNoData(true);
       } else {
+        //console.log(data)
         setItem(data.item);
         setIs_playing(data.is_playing);
         setProgress_ms(data.progress_ms);
@@ -68,10 +44,11 @@ function PlayerPage() {
   }
 
   function Frist_time() {
-    sp.getNewReleases().then(
+    sp.getFeaturedPlaylists().then(
       (data) => {
         console.log(data)
-        const res = data.albums.items[0].uri
+        const index = Math.floor(Math.random()*Math.floor(data.playlists.total -1))
+        const res = data.playlists.items[index].uri;
         const arr = [res];
         console.log(weeklyPlay);
         setweeklyplay(arr);
@@ -80,8 +57,11 @@ function PlayerPage() {
         console.log(error)
       }
     );
-    
   }
+  function handleSkip(){
+    sp.skipToNext()
+  }
+ 
 
   //TODO: DO NOT DELETE THE COMMENTED CODE DOWN BELOW. WE SHOULD PROBABLY CHOOSE THE BEST WAY TO USE THE "useEffect" CALLS. SO SHOULD WE 
   // USE STATE VARIABLES OR THE VARIABLES WE DELCARE IN THE "useEffect" FUNCTIONS....
@@ -121,18 +101,21 @@ function PlayerPage() {
   window.onbeforeunload = function () { return false; }
   useEffect(() => {
     sp.setAccessToken(context.currtoken)
+    Frist_time()
     const interval = setInterval(() => {
       //getData();
       getInfor();
     }, 1000);
+    
     return () => { clearInterval(interval) }
   }, [context.currtoken]);
 
 
   return (
-    <div className="App">
+    <div className="App" >
       <NavBar />
-      <header className="App-header">
+      <div onClick={()=>{handleSkip()}}>next</div>
+      <header className="App-header" >
         {!NoData && (
           <Player
             item={item}
@@ -151,11 +134,11 @@ function PlayerPage() {
           </p>
         )}
       </header>
-      {console.log(weeklyPlay)}
       <div className="spotify_sdk_player" >
         {
           true ? <SpotifyPlayer
             token={context.currtoken}
+            
             uris={weeklyPlay}
             autoPlay="true"
             showSaveIcon="true"

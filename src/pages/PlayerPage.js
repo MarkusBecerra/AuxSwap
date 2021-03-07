@@ -52,7 +52,6 @@ function PlayerPage() {
       if (!data) {
         Frist_time()
         setNoData(true);
-        return
       } else {
         setItem(data.item);
         setIs_playing(data.is_playing);
@@ -64,22 +63,24 @@ function PlayerPage() {
       setNoData(true);
       setDidErrorOccur(true);
     });
+    // console.log(weeklyPlay)
     //console.log("called")
   }
 
   function Frist_time() {
-    sp.getPlaylist('37i9dQZEVXcJZyENOWUFo7').then(
+    sp.getNewReleases().then(
       (data) => {
-        const res = data.uri
+        console.log(data)
+        const res = data.albums.items[0].uri
         const arr = [res];
+        console.log(weeklyPlay);
         setweeklyplay(arr);
-        //console.log(weeklyPlay);
-        return
+        return 
       }, (error) => {
         console.log(error)
       }
     );
-    return
+    
   }
 
   //TODO: DO NOT DELETE THE COMMENTED CODE DOWN BELOW. WE SHOULD PROBABLY CHOOSE THE BEST WAY TO USE THE "useEffect" CALLS. SO SHOULD WE 
@@ -150,7 +151,8 @@ function PlayerPage() {
           </p>
         )}
       </header>
-      <div className="spotify_sdk_player">
+      {console.log(weeklyPlay)}
+      <div className="spotify_sdk_player" >
         {
           true ? <SpotifyPlayer
             token={context.currtoken}

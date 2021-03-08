@@ -33,8 +33,8 @@ const getUserById = (req, res, next) => {
 
 // Add new User
 const addUser = (req, res, next) => {
-    const { name, email } = req.body;
-    pool.query('INSERT INTO users (name, email) VALUE ($1, $2)', [name, email], (error, results) => {
+    const { name, email, user_name } = req.body;
+    pool.query('INSERT INTO users (name, email, user_name) VALUES ($1, $2, $3)', [name, email, user_name], (error, results) => {
         if (!error) {
             res.status(201).send(`User has been added, with ID: ${results.insertId}`);
         } else {
@@ -46,8 +46,8 @@ const addUser = (req, res, next) => {
 // Update an existing User
 const updateUser = (req, res, next) => {
     const userId = Number(req.params.id);
-    const { name, email } = req.body;
-    pool.query('UPDATE users SET name = $1, email = $2 id = $3', [name, email, userId],
+    const { name, email, user_name } = req.body;
+    pool.query('UPDATE users SET name = $1, email = $2, user_name = $3 WHERE id = $4', [name, email, user_name, userId],
      (error, results) => {
         if (!error) {
             res.status(200).send(`User has been updated, with ID: ${userId}`);

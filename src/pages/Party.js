@@ -1,13 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import PartyHome from "./ChatHome.js";
+import PartyHome from "./PartyHome.js";
 import Chat from '../pages/Chat';
-import PartyRoom from "../components/ChatRoom";
+import PartyRoom from "../components/PartyRoom";
 import PlayerPage from '../pages/PlayerPage';
 
 function Party() {
+
   return (
+    
     <Router>
       <Switch>
         <Route exact path="/party" component={PartyHome} />

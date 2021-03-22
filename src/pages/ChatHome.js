@@ -17,7 +17,7 @@ const handleClick = () => {
 }
 
 const handleEnter = e => {    //handle enter function
-  if (e.keyCode == 13) {      //if the user hits enter
+  if (e.keyCode === 13) {      //if the user hits enter
     handleClick()       //call the send message function (basically hit send button)
   }
 };

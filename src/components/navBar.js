@@ -9,7 +9,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import './Home.css';
-import logo from '../yessir.jpg';
+// import logo from '../yessir.jpg';
 import './navBar.css';
 
 function NavBar(){

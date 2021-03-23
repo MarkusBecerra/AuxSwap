@@ -44,6 +44,7 @@ function NavBar(){
     useEffect(() => {
         getData();
         console.log("wedone");
+        console.log(token.currtoken);
   }, [token.currtoken]);
 
     return(

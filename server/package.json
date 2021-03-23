@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4",
+    "querystring": "^0.2.1",
     "socket.io": "^3.0.4"
   }
 }

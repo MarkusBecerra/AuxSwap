@@ -20,7 +20,7 @@ useEffect(() => {
     else if(token){
       props.JustToken(token);
     }
-  }, []);
+  }, [props]);
 
   return null;
 };

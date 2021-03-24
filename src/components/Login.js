@@ -39,7 +39,7 @@ function Login() {
                 // href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                 //   "%20"
                 // )}&response_type=token&show_dialog=true`}
-                href='http://localhost:8888'
+                href='http://localhost:4000/auth/login'
               >
                 Login to Spotify
               </a>

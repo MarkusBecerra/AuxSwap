@@ -1,11 +1,8 @@
-import React from 'react';
-import PlayerPage from '../pages/PlayerPage';
-import Party from '../pages/Party';
-import Chat from '../pages/Chat';
+import React, {useContext, useEffect, useState} from 'react';
+import * as $ from "jquery";
+import TokenContext from "./TokenContext";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   NavLink,
 } from "react-router-dom";
 import './Home.css';
@@ -13,6 +10,37 @@ import './Home.css';
 import './navBar.css';
 
 function NavBar(){
+    const token = useContext(TokenContext);
+    const [displayname, setDisplayName] = React.useState("");
+    const [imageurl,setImageUrl] = React.useState("");
+
+    function getData(){
+        $.ajax({
+            url: "https://api.spotify.com/v1/me",
+            type: "GET",
+            beforeSend: xhr =>{
+                xhr.setRequestHeader("Authorization", "Bearer " + token.currtoken);
+                
+            },
+            success: data =>{
+                if(!data){
+                    console.log("getem");
+                    return;
+                }
+                setDisplayName(data.display_name);
+                setImageUrl(data.images[0].url);
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+    }
+
+    useEffect(() => {
+        getData();
+        console.log(token.currtoken);
+  }, [token.currtoken]);
+
     return(
     <nav className="navClass">
     <div>
@@ -26,9 +54,9 @@ function NavBar(){
                 <li className ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
                 </li>
-                <li className ="navListElements">
-                    <NavLink to="/player"> Player</NavLink>
-                </li>
+
+                <li className="navListElements"> {displayname} </li>
+                <li><img src={imageurl}/></li>
             </ul>
     </nav>
     );

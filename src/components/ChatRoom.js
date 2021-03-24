@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import "./ChatRoom.css";
 import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
-import * as $ from "jquery";
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
 import SpotifySearch from "./SpotifySearch";
 import NavBar from './navBar';
@@ -65,14 +64,14 @@ const ChatRoom = (props) => {
     return false;
   }
 
-  const setSpotifyURIQueue = (message) => {
-    const array = message.match(spotifyRegex);
-    const songID = array[2];
-    const res = "spotify:track:".concat(songID);
-    const arr = currSong;
-    arr.push(res);
-    setCurrSong(arr);
-  }
+  // const setSpotifyURIQueue = (message) => {
+  //   const array = message.match(spotifyRegex);
+  //   const songID = array[2];
+  //   const res = "spotify:track:".concat(songID);
+  //   const arr = currSong;
+  //   arr.push(res);
+  //   setCurrSong(arr);
+  // }
 
     const setSpotifyURI = (message) => {
     const array = message.match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/);
@@ -153,7 +152,6 @@ const ChatRoom = (props) => {
         onKeyDown={handleEnter}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
-        className="new-message-input-field"
         id="new-message-input-field"
         onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
 

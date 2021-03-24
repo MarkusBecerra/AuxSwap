@@ -4,7 +4,7 @@ var querystring = require('querystring');
 const Router = express.Router;
 
 var client_id = '07edde060f0f46bf82f2a7f621354d2a'; // Your client id
-var client_secret = 'INSERT IT HERE'; // Your secret
+var client_secret = '8f0e089e81b74f44b4e0d5fee88d1436'; // Your secret
 var redirect_uri = 'http://localhost:4000/auth/callback'; // Your redirect uri
 
 let auth = Router();

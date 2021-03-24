@@ -54,9 +54,11 @@ function NavBar(){
                 <li className ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
                 </li>
-
-                <li className="navListElements"> {displayname} </li>
-                <li><img src={imageurl}/></li>
+                <div className="userNav">
+                    <li><img className="navImage" src={imageurl}/></li>
+                    <li className="displayName"> {displayname} </li>
+                   
+                </div>
             </ul>
     </nav>
     );

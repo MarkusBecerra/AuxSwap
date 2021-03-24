@@ -23,23 +23,24 @@ return(
             <header className="head1">Welcome to AuxSwap!</header>
             <img src={logo} className="logoHome" />
             <div class="row">
-                <a href="http://localhost:3000/party">
+                <a href="http://localhost:3000/chat">
                 <div class="column">
-                    <h2 className="head2">Party Lobbies</h2>
+                    <h2 className="head2">Chat</h2>
                     <ul>
-                        <li className="bullets">Join lobbies to listen together</li>
-                        <li className="bullets">Add songs to the queue</li>
-                        <li className="bullets">Hear new music and share with your friends</li>
+                    <li className="bullets">Chat with friends</li>
+                        <li className="bullets">Search and share songs</li> 
+                        <li className="bullets">Play songs directly in the chat</li> 
                     </ul>
                 </div>
                 </a>
-                <a href="http://localhost:3000/chat">
+                <a href="http://localhost:3000/party">
                 <div class="column2">
-                    <h2 className="head2">Chat</h2>
+                    <h2 className="head2">Party Lobbies</h2>
                     <ul>
-                        <li className="bullets">Chat with friends</li>
-                        <li className="bullets">Search and share songs</li> 
-                        <li className="bullets">Play songs directly in the chat</li> 
+                    <li className="bullets">Join lobbies to listen together</li>
+                        <li className="bullets">Add songs to the queue</li>
+                        <li className="bullets">Hear new music and share with your friends</li>
+                       
                     </ul>
                 </div>
                 </a>

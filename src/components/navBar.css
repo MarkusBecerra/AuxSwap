@@ -31,3 +31,21 @@
 .navListElements a:active {
     background-color: #31a24c;
   }
+
+.navImage {
+  float: right;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 45px;
+  border-radius: 50%;
+}
+
+.displayName {
+  float: right;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}

@@ -7,6 +7,7 @@ import {
   Redirect
 } from "react-router-dom";
 import TokenContext from "./components/TokenContext";
+import RefreshTokenContext from "./components/RefreshTokenContext";
 import Login from './components/Login';
 import Home from './components/Home';
 import Callback from './components/Callback';
@@ -18,22 +19,34 @@ import Chat from './pages/Chat';
 
 function App() {
   const[currtoken, setCurrToken] = React.useState(null);
+  const[refreshcurrtoken, setRefreshCurrToken] = React.useState(null);
 
     useEffect(() => {
-    const token = window.sessionStorage.getItem('token');
+    const token = window.localStorage.getItem('token');
+    const refresh = window.localStorage.getItem('refresh');
     if (token) {
       setCurrToken(token);
     };
+    if(refresh){
+      setRefreshCurrToken(refresh);
+    };
   }, []);
 
-  const updateToken = (token) => {
-    window.sessionStorage.setItem('token', token);
+  const updateToken = (token,refresh) => {
+    window.localStorage.setItem('token', token);
+    window.localStorage.setItem('refresh', refresh);
+    setCurrToken(token);
+    setRefreshCurrToken(refresh);
+  };
+  const JustToken = (token) => {
+    window.localStorage.setItem('token', token);
     setCurrToken(token);
   };
 
   //TODO: Move the last four routes into home.js without it breaking.... Why do they all need to be in one place?
     return (
     <TokenContext.Provider value={{currtoken}}>
+      <RefreshTokenContext.Provider value={{refreshcurrtoken}}>
         <Router>
           <Switch>
             <Route exact path="/">
@@ -43,7 +56,7 @@ function App() {
               {currtoken ? <Home/> : <Redirect to="/"/> }
             </Route>
             <Route path="/callback">
-              {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken}/> }
+              {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken,JustToken}/> }
             </Route>
             <Route exact path="/chat">
               <Chat/>
@@ -56,6 +69,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
+        </RefreshTokenContext.Provider>
     </TokenContext.Provider>
     );
 }

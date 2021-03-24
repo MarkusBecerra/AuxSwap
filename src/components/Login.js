@@ -4,7 +4,6 @@ import logo from '../images/logo_1_transparent.png'
 
 
 
-
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 
 const clientId = "07edde060f0f46bf82f2a7f621354d2a"
@@ -34,13 +33,13 @@ function Login() {
             Listen together and chat with your friends!
           
           </body>
-
           {/* <header className="App-header"> */}
               <a
                 className="Login-button"
-                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                  "%20"
-                )}&response_type=token&show_dialog=true`}
+                // href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                //   "%20"
+                // )}&response_type=token&show_dialog=true`}
+                href='http://localhost:4000/auth/login'
               >
                 Login to Spotify
               </a>

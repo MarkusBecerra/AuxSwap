@@ -16,9 +16,11 @@ useEffect(() => {
     let refresh = hash.refresh_token;
     if (token && refresh) {
       props.updateToken(token,refresh);
+      props.tokenflag(true);
     }
     else if(token){
       props.JustToken(token);
+      props.tokenflag(true);
     }
   }, [props]);
 

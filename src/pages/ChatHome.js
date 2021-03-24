@@ -24,7 +24,6 @@ const handleEnter = e => {    //handle enter function
 
   return (
     <div>
-      <NavBar/>
       <div className="home-container">
       <input
         type="text"

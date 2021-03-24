@@ -1,51 +1,28 @@
 import React, {useContext, useEffect, useState} from 'react';
-import * as $ from "jquery";
 import TokenContext from "./TokenContext";
+import Party from '../pages/Party';
+import Chat from '../pages/Chat';
 import {
   BrowserRouter as Router,
   NavLink,
+  Route
 } from "react-router-dom";
 import './Home.css';
 // import logo from '../yessir.jpg';
 import './navBar.css';
 
-function NavBar(){
-    const token = useContext(TokenContext);
+function NavBar(props){
     const [displayname, setDisplayName] = React.useState("");
     const [imageurl,setImageUrl] = React.useState("");
 
-    function getData(){
-        $.ajax({
-            url: "https://api.spotify.com/v1/me",
-            type: "GET",
-            beforeSend: xhr =>{
-                xhr.setRequestHeader("Authorization", "Bearer " + token.currtoken);
-                
-            },
-            success: data =>{
-                if(!data){
-                    console.log("getem");
-                    return;
-                }
-                setDisplayName(data.display_name);
-                setImageUrl(data.images[0].url);
-            },
-            error: error => {
-                console.log(error);
-            }
-        });
-    }
-
     useEffect(() => {
-        getData();
-        console.log(token.currtoken);
-  }, [token.currtoken]);
+        setDisplayName(props.displayname);
+        setImageUrl(props.imageurl);
+  }, [props.imageurl,props.displayname]);
 
     return(
     <nav className="navClass">
     <div>
-       {/* <img src={logo} alt="logo"/>
-      <h1> Stick'Me</h1> */}
     </div>
             <ul className="navList">
                 <li className ="navListElements">

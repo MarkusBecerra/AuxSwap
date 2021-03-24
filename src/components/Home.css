@@ -46,6 +46,8 @@ body{
     padding-bottom: 50px;
     min-height: 400px;
     word-wrap: break-word;
+    -webkit-transition: transform .7s ease-in-out;
+    
 }
 
 .column2{
@@ -61,10 +63,16 @@ body{
     padding-bottom: 50px;
     min-height: 400px;
     word-wrap: break-word;
+    -webkit-transition: transform .7s ease-in-out;
+
 }
 
-.row a:hover {
-    transform: scale(1.1);
+.column:hover {
+    transform: scale(1.05);
+}
+
+.column2:hover {
+    transform: scale(1.05);
 }
 
 .row{

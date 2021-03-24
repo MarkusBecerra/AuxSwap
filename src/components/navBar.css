@@ -4,12 +4,18 @@
     top: 0;
 }
 
+.navLogo {
+  float: left;
+  width: 45px;
+}
+
 .navList {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    height: 55px;
   }
   
 .navListElements {
@@ -23,6 +29,22 @@
     padding: 14px 16px;
     text-decoration: none;
   }
+.navListElementsLogo a {
+  display: block;
+  float: left;
+  width: 45px;
+  margin-top: 15px;
+  margin-left: 10px;
+  padding-right: 5px;
+}
+
+.navListElementsLogo a:hover{
+  background-color: #1d5b2b;
+}
+
+.navListElementsLogo a:active {
+  background-color: #31a24c;
+}
   
 .navListElements a:hover {
     background-color: #1d5b2b;

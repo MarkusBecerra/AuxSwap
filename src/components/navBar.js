@@ -6,7 +6,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import './Home.css';
-// import logo from '../yessir.jpg';
+import logo from '../images/logo_1_transparent.png'
 import './navBar.css';
 
 function NavBar(){
@@ -48,6 +48,11 @@ function NavBar(){
       <h1> Stick'Me</h1> */}
     </div>
             <ul className="navList">
+                <li className ="navListElementsLogo">
+                    <NavLink to="/home">
+                        <img src={logo} className="navLogo" />
+                    </NavLink>
+                </li>
                 <li className ="navListElements">
                     <NavLink to="/chat"> Chat </NavLink>
                 </li>

@@ -11,7 +11,6 @@ import RefreshTokenContext from "./components/RefreshTokenContext";
 import Login from './components/Login';
 import Home from './components/Home';
 import Callback from './components/Callback';
-import PlayerPage from './pages/PlayerPage';
 import Party from './pages/Party';
 import Chat from './pages/Chat';
 
@@ -56,16 +55,13 @@ function App() {
               {currtoken ? <Home/> : <Redirect to="/"/> }
             </Route>
             <Route path="/callback">
-              {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken,JustToken}/> }
+              {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken} JustToken={JustToken}/> }
             </Route>
             <Route exact path="/chat">
               <Chat/>
             </Route>
             <Route exact path="/party">
               <Party/>
-            </Route>
-            <Route exact path="/player">
-              <PlayerPage/>
             </Route>
           </Switch>
         </Router>

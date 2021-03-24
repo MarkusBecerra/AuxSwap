@@ -1,13 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import PlayerPage from '../pages/PlayerPage';
-import Party from '../pages/Party';
-import Chat from '../pages/Chat';
 import * as $ from "jquery";
 import TokenContext from "./TokenContext";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   NavLink,
 } from "react-router-dom";
 import './Home.css';
@@ -43,7 +38,6 @@ function NavBar(){
 
     useEffect(() => {
         getData();
-        console.log("wedone");
         console.log(token.currtoken);
   }, [token.currtoken]);
 
@@ -59,9 +53,6 @@ function NavBar(){
                 </li>
                 <li className ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
-                </li>
-                <li className ="navListElements">
-                    <NavLink to="/player"> Player</NavLink>
                 </li>
 
                 <li className="navListElements"> {displayname} </li>

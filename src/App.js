@@ -21,8 +21,8 @@ function App() {
   const[refreshcurrtoken, setRefreshCurrToken] = React.useState(null);
 
     useEffect(() => {
-    const token = window.localStorage.getItem('token');
-    const refresh = window.localStorage.getItem('refresh');
+    const token = window.sessionStorage.getItem('token');
+    const refresh = window.sessionStorage.getItem('refresh');
     if (token) {
       setCurrToken(token);
     };
@@ -32,13 +32,13 @@ function App() {
   }, []);
 
   const updateToken = (token,refresh) => {
-    window.localStorage.setItem('token', token);
-    window.localStorage.setItem('refresh', refresh);
+    window.sessionStorage.setItem('token', token);
+    window.sessionStorage.setItem('refresh', refresh);
     setCurrToken(token);
     setRefreshCurrToken(refresh);
   };
   const JustToken = (token) => {
-    window.localStorage.setItem('token', token);
+    window.sessionStorage.setItem('token', token);
     setCurrToken(token);
   };
 

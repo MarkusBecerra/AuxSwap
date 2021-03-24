@@ -23,7 +23,7 @@ return(
             <header className="head1">Welcome to AuxSwap!</header>
             <img src={logo} className="logoHome" />
             <div class="row">
-                <a href="http://localhost:3000/chat">
+                <NavLink to="/chat">
                 <div class="column">
                     <h2 className="head2">Chat</h2>
                     <ul>
@@ -32,8 +32,8 @@ return(
                         <li className="bullets">Play songs directly in the chat</li> 
                     </ul>
                 </div>
-                </a>
-                <a href="http://localhost:3000/party">
+                </NavLink>
+                <NavLink to="/party">
                 <div class="column2">
                     <h2 className="head2">Party Lobbies</h2>
                     <ul>
@@ -43,7 +43,7 @@ return(
                        
                     </ul>
                 </div>
-                </a>
+                </NavLink>
             </div>
 
             {/* <ul>

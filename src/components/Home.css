@@ -63,6 +63,10 @@ body{
     word-wrap: break-word;
 }
 
+.row a:hover {
+    transform: scale(1.1);
+}
+
 .row{
     margin: auto;
     display: block; 

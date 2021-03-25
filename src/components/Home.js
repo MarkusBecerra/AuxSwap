@@ -9,7 +9,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import './Home.css';
-import logo from '../logo.svg';
+import logo from '../images/logo_1_transparent.png'
 import NavBar from './navBar';
 
 
@@ -17,10 +17,34 @@ function Home(){
 
 return(
     <div>
-        <NavBar/>
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-            </header>
+            {/* <header className="App-header">
+            </header> */}
+            <header className="head1">Welcome to AuxSwap!</header>
+            <img src={logo} className="logoHome" />
+            <div class="row">
+                <NavLink to="/chat">
+                <div class="column">
+                    <h2 className="head2">Chat</h2>
+                    <ul>
+                    <li className="bullets">Chat with friends</li>
+                        <li className="bullets">Search and share songs</li> 
+                        <li className="bullets">Play songs directly in the chat</li> 
+                    </ul>
+                </div>
+                </NavLink>
+                <NavLink to="/party">
+                <div class="column2">
+                    <h2 className="head2">Party Lobbies</h2>
+                    <ul>
+                    <li className="bullets">Join lobbies to listen together</li>
+                        <li className="bullets">Add songs to the queue</li>
+                        <li className="bullets">Hear new music and share with your friends</li>
+                       
+                    </ul>
+                </div>
+                </NavLink>
+            </div>
+
             {/* <ul>
                 <li>
                     <NavLink to="/chat"> Chat </NavLink>
@@ -33,7 +57,7 @@ return(
                 </li>
             </ul> */}
 
-            <hr/>
+    
 {/*  Why doesn't this work?
             <Switch>
                 <Route exact path="/chat">

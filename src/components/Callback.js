@@ -8,14 +8,20 @@ useEffect(() => {
         if(item) {
             let parts = item.split("=");
             initial[parts[0]] = decodeURIComponent(parts[1]);
+            console.log(decodeURIComponent(parts[1]));
         }
         return initial;
     }, {});
     let token = hash.access_token;
-    if (token) {
-      props.updateToken(token);
+    console.log("ope",token);
+    let refresh = hash.refresh_token;
+    if (token && refresh) {
+      props.updateToken(token,refresh);
     }
-  }, []);
+    else if(token){
+      props.JustToken(token);
+    }
+  }, [props]);
 
   return null;
 };

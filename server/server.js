@@ -1,11 +1,25 @@
-const server = require("http").createServer();
+const app= require('express')();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const server = require("http").Server(app);
+
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
   },
 });
 const {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist} =require('./users.js')
-const PORT = 4000;
+const auth = require('./auth');
+app.use(cookieParser());
+  app.use(
+    bodyParser.json({
+      limit: 1024
+    })
+  );
+
+
+app.use('/auth',auth);
+const port = process.env.PORT || 4000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const Join_event = "newJoin"
 const Get_allUser="Get_users"
@@ -18,8 +32,8 @@ io.on("connection", (socket) => {
   const { roomId } = socket.handshake.query;
   if (roomId !=undefined)
     {socket.join(roomId);}
-  
-  
+
+
   // Listen for new messages
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
@@ -28,7 +42,7 @@ io.on("connection", (socket) => {
   //Listen for join party meessages
   socket.on(Join_event,({name,data,room})=>{
      const user=addUser({id:socket.id,name,data,room:room})
-     
+
      socket.join(user.room)
      io.to(user.room).emit(Get_room_data,{room:user.room,users:getUsersInRoom(user.room)})
      updateplaylist(user.id)
@@ -40,7 +54,7 @@ io.on("connection", (socket) => {
       setPlaylist({id:socket.id,song:song})
       io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   });
-  
+
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {
     console.log(`Client ${socket.id} diconnected`);
@@ -56,10 +70,10 @@ io.on("connection", (socket) => {
     {
       socket.leave(roomId);
     }
-    
+
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });

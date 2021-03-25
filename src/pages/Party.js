@@ -9,7 +9,7 @@ import PlayerPage from '../pages/PlayerPage';
 function Party() {
 
   return (
-    
+
     <Router>
       <Switch>
         <Route exact path="/party" component={PartyHome} />

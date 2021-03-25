@@ -1,34 +1,46 @@
-import React from 'react';
-import PlayerPage from '../pages/PlayerPage';
+import React, {useContext, useEffect, useState} from 'react';
+import TokenContext from "./TokenContext";
 import Party from '../pages/Party';
 import Chat from '../pages/Chat';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   NavLink,
+  Route
 } from "react-router-dom";
 import './Home.css';
-import logo from '../yessir.jpg';
+import logo from '../images/logo_1_transparent.png'
 import './navBar.css';
 
-function NavBar(){
+function NavBar(props){
+    const [displayname, setDisplayName] = React.useState("");
+    const [imageurl,setImageUrl] = React.useState("");
+
+    useEffect(() => {
+        setDisplayName(props.displayname);
+        setImageUrl(props.imageurl);
+  }, [props.imageurl,props.displayname]);
+
     return(
     <nav className="navClass">
     <div>
-       {/* <img src={logo} alt="logo"/>
-      <h1> Stick'Me</h1> */}
     </div>
             <ul className="navList">
+                <li className ="navListElementsLogo">
+                    <NavLink to="/home">
+                        <img src={logo} className="navLogo" />
+                    </NavLink>
+                </li>
                 <li className ="navListElements">
                     <NavLink to="/chat"> Chat </NavLink>
                 </li>
                 <li className ="navListElements">
                     <NavLink to="/party"> Party </NavLink>
                 </li>
-                <li className ="navListElements">
-                    <NavLink to="/player"> Player</NavLink>
-                </li>
+                <div className="userNav">
+                    <li><img className="navImage" src={imageurl}/></li>
+                    <li className="displayName"> {displayname} </li>
+                   
+                </div>
             </ul>
     </nav>
     );

@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import "./ChatRoom.css";
 import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
-import * as $ from "jquery";
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
 import SpotifySearch from "./SpotifySearch";
-import NavBar from './navBar';
 
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
@@ -65,14 +63,14 @@ const ChatRoom = (props) => {
     return false;
   }
 
-  const setSpotifyURIQueue = (message) => {
-    const array = message.match(spotifyRegex);
-    const songID = array[2];
-    const res = "spotify:track:".concat(songID);
-    const arr = currSong;
-    arr.push(res);
-    setCurrSong(arr);
-  }
+  // const setSpotifyURIQueue = (message) => {
+  //   const array = message.match(spotifyRegex);
+  //   const songID = array[2];
+  //   const res = "spotify:track:".concat(songID);
+  //   const arr = currSong;
+  //   arr.push(res);
+  //   setCurrSong(arr);
+  // }
 
     const setSpotifyURI = (message) => {
     const array = message.match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/);
@@ -84,7 +82,6 @@ const ChatRoom = (props) => {
 
   return (
   <div className="chat-room-page">
-    <NavBar/>
    <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
@@ -127,7 +124,8 @@ const ChatRoom = (props) => {
               return(
                 <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
                 {words.map((word,j)=>{
-                  const isLink = linkRegex.test(word);
+                  const tempRegex = /(http:|https:|ftp:)\/\/[a-zA-Z0-9]+[.][a-z]+\/*[^ \n]*/g;
+                  const isLink = tempRegex.test(word);
                     return(
                       //TODO: THOMAS ADD CSS HERE PLZ TO CUT OUT NEW LINES BETWEEN THE TAGS
                       <div key={j}>
@@ -153,7 +151,6 @@ const ChatRoom = (props) => {
         onKeyDown={handleEnter}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
-        className="new-message-input-field"
         id="new-message-input-field"
         onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
 

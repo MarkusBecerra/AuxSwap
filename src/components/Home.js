@@ -17,7 +17,6 @@ function Home(){
 
 return(
     <div>
-        <NavBar/>
             {/* <header className="App-header">
             </header> */}
             <header className="head1">Welcome to AuxSwap!</header>

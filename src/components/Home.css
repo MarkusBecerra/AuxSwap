@@ -47,7 +47,6 @@ body{
     min-height: 400px;
     word-wrap: break-word;
     -webkit-transition: transform .7s ease-in-out;
-    
 }
 
 .column2{
@@ -64,7 +63,6 @@ body{
     min-height: 400px;
     word-wrap: break-word;
     -webkit-transition: transform .7s ease-in-out;
-
 }
 
 .column:hover {
@@ -90,8 +88,12 @@ body{
   }
 
 /* below code makes columns stack when the page is resized small enough */
-@media screen and (max-width: 600px) {      
+@media screen and (max-width: 800px) {      
     .column {
-      width: 100%;
+        margin-bottom: 50px;
+        width: 100%;
+    }
+    .column2{
+        width: 100%;
     }
   }

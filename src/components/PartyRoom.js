@@ -32,7 +32,6 @@ function PartyRoom(props){
    
     return(
         <div>
-            <NavBar/>
             <div className="party-room-container">
                 <h1 className="party-room-title">Party room</h1>
                 <h2 className="room-name" >Room: {roomId}</h2>

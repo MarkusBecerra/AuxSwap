@@ -8,10 +8,37 @@ const removeUser =(id)=>{
 }
 const getUser =(id) => users.find((user)=>user.id ===id);
 const addUser = ({id,name,data,room})=>{
-    const user={id,name,data,room}
+    const playlist=[]
+    const user={id,name,data,room,playlist}
     users.push(user)
     return user
 }
 const getUsersInRoom =(room)=> users.filter((user)=>user.room ===room)
-
-module.exports = {addUser,removeUser,getUsersInRoom,getUser}
+const setPlaylist=(obj)=>{
+    const currentUser=getUser(obj.id)
+    const room=currentUser.room
+    users.map((user)=>{
+        if(user.room==room)
+        {
+            user.playlist.push(obj.song)
+        }
+    })
+}
+const getPlaylist=(id)=>{
+    const index=users.findIndex((user)=>user.id==id);
+    if(index !=-1){
+        return users[index].playlist
+    }
+}
+const updateplaylist=(id)=>{
+    const currentUser=getUser(id)
+    const room =currentUser.room
+    
+    users.map((user)=>{
+        if(user.room==room && user.id != currentUser.id)
+        {
+            user.playlist.map((song)=>currentUser.playlist.push(song));
+        }
+    })
+}
+module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist}

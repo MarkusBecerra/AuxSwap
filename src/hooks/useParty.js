@@ -4,6 +4,7 @@ import TokenContext from '../components/TokenContext';
 const SOCKET_SERVER_URL = "http://localhost:4000";
 const Join_event = "newJoin";
 const Get_room_data = "get_room_data";
+const SS_event="song_send"
 
 const useParty = (props) => {
     const [Username, setname] = useState('')
@@ -11,6 +12,7 @@ const useParty = (props) => {
     const [Userimage, setimage] = useState('')
     const context = useContext(TokenContext)
     const [memberlist, setMemberlist] = useState()
+    const [songList,setsonglist] = useState()
     const socketRef = useRef();
     
     useEffect(() => {
@@ -21,8 +23,8 @@ const useParty = (props) => {
         props.setAPi(props.spotify.setAccessToken(context.currtoken))
         
         props.spotify.getMe().then((data) => {
-            setimage(data.images[0].url)
-            setname(data.display_name)
+            setimage(data.body.images[0].url)
+            setname(data.body.display_name)
         }, (error) => {
             console.log(error)
         })
@@ -38,16 +40,21 @@ const useParty = (props) => {
             
             socketRef.current.on(Get_room_data,({ users })=>{
                 setMemberlist(users);
-               
+            });
+            socketRef.current.on(SS_event,({songs})=>{
+                setsonglist(songs);
+                
             });
             return () => {
                 socketRef.current.disconnect();
             }
         }
-    }, [Username, Userimage,roomNum])
+    }, [Username, Userimage,roomNum]);
+    const sendSong=(song)=>{
+        socketRef.current.emit(SS_event,{song})
+    }
     
-    
-    return {memberlist}
+    return {memberlist,songList,sendSong}
 };
 
 export default useParty;

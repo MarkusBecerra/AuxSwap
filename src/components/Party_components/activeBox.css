@@ -1,0 +1,26 @@
+.userContainer{
+    display: inline-block;
+    background-color: lightgray
+    
+}
+.userIcon{
+    height:auto;
+    width: 30px;
+    border-radius: 50%;
+    margin: 5px;
+    vertical-align: middle;
+    display: inline-block;
+    
+}
+.userName{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    margin: 5px;
+    
+}
+.userBlock{
+    background-color: yellow;
+    margin: 5px;
+}

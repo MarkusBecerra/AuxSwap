@@ -4,12 +4,13 @@ const io = require("socket.io")(server, {
     origin: "*",
   },
 });
-const {addUser,removeUser,getUsersInRoom,getUser} =require('./users.js')
+const {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist} =require('./users.js')
 const PORT = 4000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const Join_event = "newJoin"
 const Get_allUser="Get_users"
 const Get_room_data = "get_room_data"
+const SS_event="song_send"
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);
 
@@ -30,8 +31,15 @@ io.on("connection", (socket) => {
      
      socket.join(user.room)
      io.to(user.room).emit(Get_room_data,{room:user.room,users:getUsersInRoom(user.room)})
+     updateplaylist(user.id)
+     io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   });
-  //listen for get data
+  //listen for song data
+  socket.on(SS_event,({song})=>{
+      const user=getUser(socket.id)
+      setPlaylist({id:socket.id,song:song})
+      io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
+  });
   
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {

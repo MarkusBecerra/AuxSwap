@@ -23,7 +23,6 @@ function App() {
   const[refreshcurrtoken, setRefreshCurrToken] = React.useState(null);
   const [displayname, setDisplayName] = React.useState("");
   const [imageurl,setImageUrl] = React.useState("");
-  const [tokenflag, setTokenFlag] = React.useState(true);
 
     useEffect(() => {
 
@@ -44,72 +43,34 @@ function App() {
               setImageUrl(data.images[0].url);
           },
           error: error => {
-              setCurrToken(false);
               console.log("IN GET DATA ERROR",token);
               console.log(error);
               
           }
       });
       };
-    const token = window.localStorage.getItem('token');
-    const refresh = window.localStorage.getItem('refresh');
-    if (token != null) {
+    const token = window.sessionStorage.getItem('token');
+    const refresh = window.sessionStorage.getItem('refresh');
+    if (token) {
       setCurrToken(token);
       const promise = fetchData(token);
-      if(tokenflag == false){
-        setCurrToken(null);
-      }
-      if(refresh && tokenflag == true){
+      if(refresh){
         setRefreshCurrToken(refresh);
       };
     };
   }, []);
 
-//   function getData(){
-//     $.ajax({
-//         url: "https://api.spotify.com/v1/me",
-//         type: "GET",
-//         beforeSend: xhr =>{
-//             xhr.setRequestHeader("Authorization", "Bearer " + currtoken);
-            
-//         },
-//         success: data =>{
-//             console.log("IN GET DATA",currtoken);
-//             if(!data){
-//                 console.log("getem");
-//                 return false ;
-//             }
-//             setDisplayName(data.display_name);
-//             setImageUrl(data.images[0].url);
-//             return true;
-//         },
-//         error: error => {
-//             console.log("IN GET DATA ERROR",currtoken);
-//             return false;
-//             console.log(error);
-            
-//         }
-//     });
-// }
-
-
-
-
 
   const updateToken = (token,refresh) => {
-    window.localStorage.setItem('token', token);
-    window.localStorage.setItem('refresh', refresh);
+    window.sessionStorage.setItem('token', token);
+    window.sessionStorage.setItem('refresh', refresh);
     setCurrToken(token);
     setRefreshCurrToken(refresh);
   };
 
 
-  const updateTokenFlag = (token) => {
-    setTokenFlag(token);
-  };
-
   const JustToken = (token) => {
-    window.localStorage.setItem('token', token);
+    window.sessionStorage.setItem('token', token);
     setCurrToken(token);
   };
 
@@ -120,13 +81,13 @@ function App() {
       <Router>
           <Switch>
             <Route exact path="/">
-              {tokenflag ? <Redirect to="/home"/> : <Login/>}
+              {currtoken ? <Redirect to="/home"/> : <Login/>}
             </Route>
             <Route exact path="/home">
-              {tokenflag ? <div> <NavBar displayname={displayname} imageurl = {imageurl} /><Home/> </div>: <Redirect to="/"/> }
+              {currtoken ? <div> <NavBar displayname={displayname} imageurl = {imageurl} /><Home/> </div>: <Redirect to="/"/> }
             </Route>
             <Route path="/callback">
-              {tokenflag ? <Redirect to="/home"/> : <Callback updateToken={updateToken} JustToken={JustToken} tokenflag = {updateTokenFlag}/> }
+              {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken} JustToken={JustToken}/> }
             </Route>
             <Route exact path="/chat">
             <NavBar displayname={displayname} imageurl = {imageurl} /> <Chat/>

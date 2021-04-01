@@ -1,0 +1,25 @@
+diff --git a/node_modules/react-spotify-web-playback/esm/components/Volume.js b/node_modules/react-spotify-web-playback/esm/components/Volume.js
+index e5df369..1c0d465 100644
+--- a/node_modules/react-spotify-web-playback/esm/components/Volume.js
++++ b/node_modules/react-spotify-web-playback/esm/components/Volume.js
+@@ -61,6 +61,11 @@ var Volume = /** @class */ (function (_super) {
+             var y = _a.y;
+             var setVolume = _this.props.setVolume;
+             var volume = Math.round(y) / 100;
++
++            if(volume === 0)
++            {
++                volume = Number(0).toPrecision(2);
++            }
+             clearTimeout(_this.timeout);
+             _this.timeout = window.setTimeout(function () {
+                 setVolume(volume);
+@@ -90,7 +95,7 @@ var Volume = /** @class */ (function (_super) {
+         var _a = this.state, isOpen = _a.isOpen, volume = _a.volume;
+         var _b = this.props, playerPosition = _b.playerPosition, _c = _b.styles, altColor = _c.altColor, bgColor = _c.bgColor, color = _c.color;
+         var icon = React.createElement(VolumeHigh, null);
+-        if (volume === 0) {
++        if (volume === Number(0).toPrecision(2) ) {
+             icon = React.createElement(VolumeMute, null);
+         }
+         else if (volume <= 0.5) {

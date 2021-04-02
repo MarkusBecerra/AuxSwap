@@ -60,6 +60,8 @@ body{
     word-break: break-word;
     border-radius: 6px;
     color: white;
+    height: auto;
+    overflow: hidden;
 }
 
 .my-message {

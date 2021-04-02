@@ -48,7 +48,7 @@ const SpotifySearch = (props) => {
             if(!data){
 
             }
-            console.log(data);
+            // console.log(data);
             data.tracks.items.forEach(element => {
                 setTopResults(topResults => [...topResults, element])
             });   
@@ -79,7 +79,7 @@ const SpotifySearch = (props) => {
 
                       return <li className="song-info-list-item">
                       <div>
-                        <img className="search-images" key={index.external_urls.spotify} src={index.album.images[0].url} title={index.name} onClick={() => {appendSongToMessage(index.external_urls.spotify);setTopResults([]);topResults.length=0;document.getElementById('searchbar').value=""}}/>
+                        <img className="search-images" key={index.external_urls.spotify} src={index.album.images[0].url} onClick={() => {appendSongToMessage(index.external_urls.spotify);setTopResults([]);topResults.length=0;document.getElementById('searchbar').value=""}}/>
                         {/* <div className="song-name">{index.name}<br></br>{index.artists[0].name}</div> */}
                         <div className="song-name">{index.name}</div>
                         <div className="song-artist">{index.artists[0].name}</div>

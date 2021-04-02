@@ -7,18 +7,13 @@ export default function SearchBar({api,handleSongSend}) {
     const [currentApi, setApi] = useState()
     const [useForSearch, setUseSearch] = useState("")
     const [result, setresult] = useState([])
-    const [songForsend,setsongForsend] = useState()
+    
 
     //console.log(result)
-    function chooseYes(){
-        handleSongSend(songForsend)
-        setsongForsend()
-    }
-    function chooseNo(){
-        setsongForsend()
-    }
+
     function setsong(song){
-        setsongForsend(song)
+        
+        handleSongSend(song)
         //console.log(song)
         setUseSearch("")
     }
@@ -29,7 +24,7 @@ export default function SearchBar({api,handleSongSend}) {
     useEffect(() => {
         if (!currentApi) return
         if (!useForSearch) return setresult([])
-        setsongForsend()
+       
         currentApi.searchTracks(useForSearch).then((data) => {
             setresult(
                 data.body.tracks.items.map(track => {
@@ -61,14 +56,6 @@ export default function SearchBar({api,handleSongSend}) {
                 
             </div>
             <div className="decision-box">
-                {songForsend? (
-                    <div>
-                        <img src={songForsend.image}/>
-                        {songForsend.songName}
-                        <button onClick={chooseYes}>Yes send!</button>
-                        <button onClick={chooseNo}>No dont send!</button>
-                    </div>
-                ):null}
             </div>
         </div>
     )

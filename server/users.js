@@ -41,4 +41,15 @@ const updateplaylist=(id)=>{
         }
     })
 }
-module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist}
+
+const PeakPlsylist=(id)=>{
+    const currentUser=getUser(id)
+    //console.log(currentUser.playlist[0])
+    return currentUser.playlist[0]
+}
+const PopPlaylist=(id)=>{
+    const user=getUser(id)
+    user.playlist.shift()
+    console.log(user.playlist)
+}
+module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist,PeakPlsylist,PopPlaylist}

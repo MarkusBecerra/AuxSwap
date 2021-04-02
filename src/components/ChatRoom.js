@@ -22,7 +22,6 @@ const ChatRoom = (props) => {
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
   const [check, setCheck] = React.useState(true);
-
   const toggle = React.useCallback(() => setCheck(!check));
 
   const handleNewMessageChange = (event) => {
@@ -55,9 +54,9 @@ const ChatRoom = (props) => {
   }
 
   // pull message from db 
-  const retriveDetailsFromServer = async (room) => {
+  const retriveDetailsFromServer = (room) => {
     if (check){
-      await axios.get(`http://localhost:4000/chat/${room}`, {
+      axios.get(`http://localhost:4000/chat/${room}`, {
       params: {
         id: room
       }
@@ -121,7 +120,7 @@ const ChatRoom = (props) => {
       <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">
           <ol className="messages-list">
-          {retriveDetailsFromServer(roomId),
+          {retriveDetailsFromServer(roomId), //get chat history
           messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

@@ -1,6 +1,7 @@
 import {useEffect,useContext,useState} from 'react'
 import Script from 'react-load-script'
 import TokenContext from '../TokenContext';
+
 export default function Player({handleID,SDK}) {
     
     const context = useContext(TokenContext)

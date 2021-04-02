@@ -33,8 +33,15 @@ const ChatRoom = (props) => {
     if(newMessage === ""){
           setNewMessage("");
       return;
-    }
+    };
     sendMessage(newMessage);
+    // This will scroll to the bottom of the messages after a message is sent
+    // we want to timeout so that it occurs only after a song is rendered, otherwise
+    // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
+    var chats = document.getElementById("messages-container");
+    setTimeout(() => {
+      chats.scrollTop = 1000000000;
+    },100);
     setNewMessage("");
   };
 
@@ -88,7 +95,7 @@ const ChatRoom = (props) => {
       <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
       </div>
-        <div className="messages-container">
+        <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {messages.map((message, i) => {
 
@@ -122,7 +129,7 @@ const ChatRoom = (props) => {
               )
             }
             else if(isMessageLink(message.body)){
-              
+
               const words = message.body.split(' ');
               return(
                 <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
@@ -186,6 +193,7 @@ const ChatRoom = (props) => {
     </div>
 
   );
+  
 };
 
 export default ChatRoom;

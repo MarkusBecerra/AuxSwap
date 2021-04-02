@@ -34,7 +34,7 @@ const context = useContext(TokenContext);
   useEffect(() => {
       getSongImage(props.message);
 },[]);
-    return(<img src={image}></img>)
+    return(<img className="track-message-image" src={image}></img>)
 }
 
 export default SpotifyTrackMessage

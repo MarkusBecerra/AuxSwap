@@ -49,7 +49,7 @@ const ChatRoom = (props) => {
         id: roomId,
         content: message
     }
-    axios.post('http://localhost:5000/chat', payload).catch(function (err) {
+    axios.post('http://localhost:4000/chat', payload).catch(function (err) {
         alert(err.message);
     })
   }
@@ -57,7 +57,7 @@ const ChatRoom = (props) => {
   // pull message from db 
   const retriveDetailsFromServer = async (room) => {
     if (check){
-      await axios.get(`http://localhost:5000/chat/${room}`, {
+      await axios.get(`http://localhost:4000/chat/${room}`, {
       params: {
         id: room
       }

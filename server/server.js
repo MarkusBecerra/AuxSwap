@@ -1,11 +1,15 @@
-const app= require('express')();
+const app = require('express')();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const server = require("http").Server(app);
+const cors = require('cors');
+const db1 = require('./utils/users');
+const db2 = require('./utils/messages');
+const db3 = require('./utils/chatroom');
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: 'http://localhost:3000',
   },
 });
 const auth = require('./auth');
@@ -15,10 +19,18 @@ app.use(cookieParser());
       limit: 1024
     })
   );
+const corsOptions = {
+    origin: 'http://localhost:3000', //Frontend url
+}
 
-
+// Setting up server requirement
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
+app.use(cors(corsOptions));
 app.use('/auth',auth);
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 io.on("connection", (socket) => {
@@ -40,6 +52,39 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+// Get main site
+app.get('/', (req, res, next) => {
+  res.send('Mainpage');
+});
+
+// Get all users
+app.get('/users', cors(corsOptions), db1.getUser);
+
+// Get a user by his/her id 
+app.get('/users/:id', cors(corsOptions), db1.getUserById);
+
+// add a new user
+app.post('/users', cors(corsOptions), db1.addUser);
+
+// update an existing user
+app.put('/users/:id', cors(corsOptions), db1.updateUser);
+
+// remove an existing user
+app.delete('/users/:id', cors(corsOptions), db1.removeUser);
+
+// Get chat history by session_id
+app.get('/messages/:id', cors(corsOptions), db2.getMessageById);
+
+// Add a piece of message by session_id
+app.post('/messages/:id', cors(corsOptions), db2.addMessage);
+
+// Get chat history by session_id
+app.get('/chat/:id', cors(corsOptions), db3.getChatById);
+
+// Add a piece of message by session_id
+app.post('/chat', cors(corsOptions), db3.addChatMessage);
+
+// Start server listening
+server.listen(PORT, () => {
+  console.log(`App is Listening on port ${PORT}`);
 });

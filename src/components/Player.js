@@ -1,3 +1,7 @@
+//credit: https://levelup.gitconnected.com/how-to-build-a-spotify-player-with-react-in-15-minutes-7e01991bc4b6
+//THIS IS ONLY A PLACEHOLDER FOR NOW. THIS COMPONENT WILL NOT MAKE INTO THE FINAL VERSION OF AUXSWAP
+
+
 import React from "react";
 import "./Player.css";
 const Player = props => {

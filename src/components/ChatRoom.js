@@ -85,6 +85,9 @@ const ChatRoom = (props) => {
    <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
+      <div>
+        <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
+      </div>
         <div className="messages-container">
           <ol className="messages-list">
           {messages.map((message, i) => {
@@ -160,9 +163,9 @@ const ChatRoom = (props) => {
         Send
       </button>
 
-      <div>
+      {/* <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
-      </div>
+      </div> */}
 
         <div>
           {showPlayer ? <button onClick={() => setShowPlayer(false)}>

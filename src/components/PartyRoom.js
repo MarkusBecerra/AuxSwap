@@ -6,6 +6,8 @@ import SearchBar from "./Party_components/SearchBar"
 import SongQueue from "./Party_components/SongQueue"
 import useParty from "../hooks/useParty";
 import SpotifyWebApi from "spotify-web-api-node";
+import "./PartyRoom.css"
+
 const sp = new SpotifyWebApi()
 
 function PartyRoom(props){
@@ -33,7 +35,7 @@ function PartyRoom(props){
     return(
         <div>
             <div className="party-room-container">
-                <h1 className="party-room-title">Party room</h1>
+                <h1 className="party-room-title">Party Room</h1>
                 <h2 className="room-name" >Room: {roomId}</h2>
                 <div className="user-container">
                 <ActiveBox members={member}/>

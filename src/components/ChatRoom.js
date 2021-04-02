@@ -5,6 +5,7 @@ import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
 import SpotifySearch from "./SpotifySearch";
+import axios from 'axios';
 
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
@@ -20,6 +21,9 @@ const ChatRoom = (props) => {
   const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
+  const [check, setCheck] = React.useState(true);
+
+  const toggle = React.useCallback(() => setCheck(!check));
 
   const handleNewMessageChange = (event) => {
     event.preventDefault()
@@ -35,9 +39,39 @@ const ChatRoom = (props) => {
       return;
     }
     sendMessage(newMessage);
+    sendDetailsToServer(newMessage);
     setNewMessage("");
   };
 
+  // add message to db
+  const sendDetailsToServer = (message) => {
+    const payload = {
+        id: roomId,
+        content: message
+    }
+    axios.post('http://localhost:5000/chat', payload).catch(function (err) {
+        alert(err.message);
+    })
+  }
+
+  // pull message from db 
+  const retriveDetailsFromServer = async (room) => {
+    if (check){
+      await axios.get(`http://localhost:5000/chat/${room}`, {
+      params: {
+        id: room
+      }
+      }, { responseType: 'json' }).then((res) => {
+        for (let i = 0; i < res.data.length; i++) {
+          sendMessage(res.data[i].content)
+        }
+      }).catch(function (err) {
+        console.log(err.type);
+      });
+      toggle();
+    }
+    
+  }
 
   const handleEnter = e => {    //handle enter function
     if (e.keyCode === 13) {      //if the user hits enter
@@ -87,8 +121,8 @@ const ChatRoom = (props) => {
       <h2 className="room-name">Room: {roomId}</h2>
         <div className="messages-container">
           <ol className="messages-list">
-          {messages.map((message, i) => {
-
+          {retriveDetailsFromServer(roomId),
+          messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));
               const spotifyLinks = Array.from(spotifyLinkSet);

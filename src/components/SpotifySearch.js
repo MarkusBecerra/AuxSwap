@@ -48,7 +48,7 @@ const SpotifySearch = (props) => {
             if(!data){
 
             }
-            // console.log(data);
+            console.log(data);
             data.tracks.items.forEach(element => {
                 setTopResults(topResults => [...topResults, element])
             });   
@@ -69,19 +69,29 @@ const SpotifySearch = (props) => {
 
     },[trackName]);
     return(
-        
         <div>
-            <input type="search" id="searchbar" autoComplete="off" className="send-search-button" onChange={() => {setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);}} />
-        
-        <h1>RESULTS </h1>
-        <ul>
-            {/* <li> */}
-                {topResults.slice(0, numSearchResults).map(index => {
-                    return <img key={index.external_urls.spotify} src={index.album.images[2].url} title={index.name} onClick={() => {appendSongToMessage(index.external_urls.spotify)}}/>
-                })}
-            {/* </li> */}
-        </ul>
-        
+        <br></br>
+            <input placeholder="Search for a song" type="search" id="searchbar" autoComplete="off" className="song-searchbar" onChange={() => {setTopResults([]);topResults.length=0; setTrackName(document.getElementById('searchbar').value);}} />
+        <div className="result-container">
+          <ul className="result-list">
+              
+                  {topResults.slice(0, numSearchResults).map(index => {
+
+                      return <li className="song-info-list-item">
+                      <div>
+                        <img className="search-images" key={index.external_urls.spotify} src={index.album.images[0].url} title={index.name} onClick={() => {appendSongToMessage(index.external_urls.spotify)}}/>
+                        <div className="song-name">{index.name}<br></br>{index.artists[0].name}</div>
+                        {/* <div className="song-artist">{index.artists[0].name}</div> */}
+
+                      </div>
+                      </li>
+
+
+                  })}
+                  
+              
+          </ul>
+        </div>
       </div>
     )
         

@@ -60,10 +60,13 @@ body{
     word-break: break-word;
     border-radius: 6px;
     color: white;
+    height: auto;
+    overflow: hidden;
 }
 
 .my-message {
-    background-color: #038eff;
+    /* background-color: #038eff; */
+    background-color: #31a24c;
     margin-left: auto;
 }
 
@@ -76,7 +79,8 @@ body{
     font-size: 20px;
     font-weight: 600;
     color: white;
-    background: #038eff;
+    /* background: #038eff; */
+    background: #31a24c;
     padding: 10px 12px;
     border: none;
 }

@@ -1,0 +1,35 @@
+.track-message-image {
+    width: 100px;
+    border: white 1px solid;
+}
+
+.search-images {
+    width: 100px;
+    /* float: left; */
+    border: white 2px solid;
+    /* border-radius: 22px; */
+    
+}
+
+.song-name {
+    color: white;
+    /* float: right; */
+    display: block;
+    padding-left: 125px;
+    font-size: 30px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+
+.song-artist {
+    color: white;
+    /* float: right; */
+    display: block;
+    padding-left: 125px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+}
+
+.song-message-container {
+    /* height: auto; */
+}

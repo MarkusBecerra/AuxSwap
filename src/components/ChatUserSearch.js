@@ -51,6 +51,14 @@ const SpotifyUserSearch = (props) => {
         }
       });
         }
+        else
+        {
+          console.log("else")
+          setUserID("");
+          setUserDisplayName("");
+          setUserImage("");
+                
+        }
       }
       useEffect((props) => {
         getUserSearch();
@@ -58,14 +66,14 @@ const SpotifyUserSearch = (props) => {
     return(
         <div>
         <br></br>
-            <input placeholder="Search for a user" type="search" id="searchbar" autoComplete="off" className="user-searchbar" onChange={() => {setUserID(document.getElementById('searchbar').value)}} />
-        <div className="result-container">
-          <ul className="result-list">
+            <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value)}} />
+        <div className="result-containerChatUserSearch">
+          <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
               
-                      <li className="user-info-item">
+                      <li className="user-info-itemChatUserSearch">
                       <div>
-                        <img className="search-image" src={userImage}/>
-                        <div className="user-display-name">{userDisplayName}</div>
+                        <img className="search-imageChatUserSearch" src={userImage}/>
+                        <div className="user-display-nameChatUserSearch">{userDisplayName}</div>
 
                       </div>
                       </li>

@@ -23,10 +23,7 @@ function App() {
   const[refreshcurrtoken, setRefreshCurrToken] = React.useState(null);
   const [displayname, setDisplayName] = React.useState("");
   const [imageurl,setImageUrl] = React.useState("");
-
-    useEffect(() => {
-
-      const fetchData = async (token) => {
+  const fetchData = async (token) => {
        await $.ajax({
           url: "https://api.spotify.com/v1/me",
           type: "GET",
@@ -49,28 +46,32 @@ function App() {
           }
       });
       };
-    const token = window.sessionStorage.getItem('token');
-    const refresh = window.sessionStorage.getItem('refresh');
+
+    useEffect(() => {
+
+
+    const token = window.localStorage.getItem('token');
+    const refresh = window.localStorage.getItem('refresh');
     if (token) {
       setCurrToken(token);
-      const promise = fetchData(token);
+      fetchData(token);
       if(refresh){
         setRefreshCurrToken(refresh);
       };
     };
-  }, []);
+  }, [currtoken]);
 
 
   const updateToken = (token,refresh) => {
-    window.sessionStorage.setItem('token', token);
-    window.sessionStorage.setItem('refresh', refresh);
+    window.localStorage.setItem('token', token);
+    window.localStorage.setItem('refresh', refresh);
     setCurrToken(token);
     setRefreshCurrToken(refresh);
   };
 
 
   const JustToken = (token) => {
-    window.sessionStorage.setItem('token', token);
+    window.localStorage.setItem('token', token);
     setCurrToken(token);
   };
 

@@ -19,16 +19,16 @@ const useParty = (props) => {
     const socketRef = useRef();
     
    
-    // function SDKPlay(songUrl,device_id){
-    //     $.ajax({
-    //         url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-    //         type: "PUT",
-    //         data: '{"uris": ["'+songUrl+'"]}',
-    //         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + context.currtoken );},
-    //        });
-    // }
+    function SDKPlay(songUrl){
+        $.ajax({
+            url: "https://api.spotify.com/v1/me/player/play?device_id=" + window.onSpotifyWebPlaybackSDKReady().SDK_ID,
+            type: "PUT",
+            data: '{"uris": ["'+songUrl+'"]}',
+            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + context.currtoken );},
+           });
+    }
     useEffect(() => {
-        //console.log("called first ?")
+        console.log("called first ?")
         window.onbeforeunload = function () { return false; }
         setroomNum(props.room)
         
@@ -56,6 +56,7 @@ const useParty = (props) => {
             socketRef.current.on(SS_event,({songs})=>{
                 setsonglist(songs);  
             });
+            peakTop()
             socketRef.current.on(Get_topList,({song})=>{
                 setcurrentSong(song)
             });
@@ -63,7 +64,7 @@ const useParty = (props) => {
             return () => {
                 
                 socketRef.current.disconnect();
-                window.onSpotifyWebPlaybackSDKReady().disconnect()
+                window.onSpotifyWebPlaybackSDKReady().SDK_object.disconnect()
                 
             }
         }
@@ -88,7 +89,7 @@ const useParty = (props) => {
             setcurrentSong(song)
         });
     }
-    return {memberlist,songList,sendSong,currentSong,peakTop,nextSong}
+    return {memberlist,songList,sendSong,currentSong,peakTop,nextSong,SDKPlay}
 };
 
 export default useParty;

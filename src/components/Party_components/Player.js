@@ -1,77 +1,18 @@
 import {useEffect,useContext,useState} from 'react'
 import Script from 'react-load-script'
 import TokenContext from '../TokenContext';
-import * as $ from "jquery";
-export default function Player({partyOb}) {
+
+export default function Player() {
     
     const context = useContext(TokenContext)
-    var [SDK,setSDK]=useState()
+    const [SDK,setSDK]=useState()
     const [DeviceID,setDevice]=useState()
-    
+   
     useEffect(()=>{
         window.onSpotifyWebPlaybackSDKReady=()=>{
-           return SDK
+           return {SDK_object:SDK,SDK_ID:DeviceID}
         }
     })
-    
-    useEffect(()=>{
-        if(!partyOb)return
-        if(!partyOb.songList) return
-        console.log("changed in player")
-        partyOb.peakTop()
-    },[partyOb.songList])
-
-    useEffect(()=>{
-        if(!partyOb)return
-        if(!partyOb.currentSong) return
-        if(!SDK) return
-        SDK.getCurrentState().then(state => {
-            if(!state){
-                SDKPlay(partyOb.currentSong.songUrl,DeviceID)
-                return
-            }
-            if(state.track_window.current_track.uri!=partyOb.currentSong.songUrl)
-            {
-                SDKPlay(partyOb.currentSong.songUrl,DeviceID)
-                return
-            }
-            
-        })
-        
-    },[partyOb.currentSong])
-
-    useEffect(()=>{
-        if(!SDK) return
-        if(!partyOb) return
-        if(!partyOb.currentSong) return
-        const interv=setInterval(()=>{
-            SDK.getCurrentState().then(state => {
-                if(!state) return
-                
-                if(state.paused==true){
-                    partyOb.nextSong()
-                    return
-                }
-            })
-        },1000)
-
-        return ()=>{
-            clearInterval(interv)
-            
-        }
-    })
-
-    
-
-    function SDKPlay(songUrl,device_id){
-        $.ajax({
-            url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-            type: "PUT",
-            data: '{"uris": ["'+songUrl+'"]}',
-            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + context.currtoken );},
-            
-           });
-    }
     
     function handleLoad(){
         const player = new window.Spotify.Player({

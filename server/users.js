@@ -30,7 +30,7 @@ const getPlaylist=(id)=>{
         return users[index].playlist
     }
 }
-const updateplaylist=(id)=>{
+const updateplaylist =(id)=>{
     const currentUser=getUser(id)
     const room =currentUser.room
     

@@ -60,17 +60,28 @@
     float: left;
     border: white 2px solid;
     /* border-radius: 22px; */
+    
 }
 
 .search-imageChatUserSearch[src=""] {
     display: none;
 }
 
+/* This one will match when the user exists */
 .user-display-nameChatUserSearch {
     color: white;
-    /* float: right; */
     display: block;
-    padding-left: 125px;
+    padding-left: 125px;;
+    font-size: 30px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+
+/* This one will match when the image doesn't exist and we wnat to
+say "User does not exist", without having that test be padded to the right */
+.user-display-nameChatUserSearch_2 {
+    color: white;
+    display: block;
     font-size: 30px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 

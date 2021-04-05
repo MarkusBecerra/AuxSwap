@@ -35,9 +35,8 @@ function App() {
               
           },
           success: data =>{
-              console.log("IN GET DATA",token);
               if(!data){
-                  console.log("getem");
+                  console.log("null values");
               }
               setDisplayName(data.display_name);
               setImageUrl(data.images[0].url);
@@ -53,7 +52,7 @@ function App() {
     const refresh = window.sessionStorage.getItem('refresh');
     if (token) {
       setCurrToken(token);
-      const promise = fetchData(token);
+      fetchData(token);
       if(refresh){
         setRefreshCurrToken(refresh);
       };

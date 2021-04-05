@@ -13,7 +13,6 @@ useEffect(() => {
         return initial;
     }, {});
     let token = hash.access_token;
-    console.log("ope",token);
     let refresh = hash.refresh_token;
     if (token && refresh) {
       props.updateToken(token,refresh);

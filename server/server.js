@@ -47,6 +47,7 @@ io.on("connection", (socket) => {
 
      socket.join(user.room)
      io.to(user.room).emit(Get_room_data,{room:user.room,users:getUsersInRoom(user.room)})
+     console.log(user.name," join")
      updateplaylist(user.id)
      io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   });
@@ -54,6 +55,7 @@ io.on("connection", (socket) => {
   socket.on(SS_event,({song})=>{
       const user=getUser(socket.id)
       setPlaylist({id:socket.id,song:song})
+      
       io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   });
   socket.on(Get_topList,()=>{
@@ -62,8 +64,8 @@ io.on("connection", (socket) => {
   });
   socket.on(next_song,()=>{
     const user=getUser(socket.id)
-    
     PopPlaylist(user.id)
+    io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   })
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {

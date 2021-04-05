@@ -18,6 +18,7 @@ export default function SearchBar({api,handleSongSend}) {
         setUseSearch("")
     }
     useEffect(() => {
+        
         if (!api) return
         setApi(api)
     }, [api])

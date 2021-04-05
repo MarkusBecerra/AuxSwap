@@ -18,26 +18,20 @@ function PartyRoom(props){
     const [spotifyApi,setAPi]=useState(sp)
     const [member,setmember] = useState()
     const [localsongList,setSonglist] = useState([])
-    const [deviceID,setDeviceID] = useState()
-    const [playerOBJ,setPlayerObj]=useState()
-    const  party= useParty({room:roomId,spotify:spotifyApi,setAPi,SDK:playerOBJ,ID:deviceID});
+   
+    const  party= useParty({room:roomId,spotify:spotifyApi,setAPi});
     //console.log(localsongList)
     function handleSongSend(song){
         party.sendSong(song)
     }
-    function handleDeviceID(ID_num){
-        setDeviceID(ID_num)
-    }
-    function handleSDK(obj){
-        setPlayerObj(obj)
-    }
+  
    
     useEffect(()=>{
         if(!party.songList) return
         setSonglist(party.songList)
         
     },[party.songList])
-   
+    
     useEffect(()=>{
         setmember(party.memberlist)
     },[party.memberlist])
@@ -60,7 +54,7 @@ function PartyRoom(props){
                     )}
                 
                 </div>
-               <Player handleID={handleDeviceID} SDK={handleSDK}/>
+               <Player partyOb={party}/>
             </div>
         </div>
 

@@ -2,18 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import * as $ from "jquery";
 import './ChatUserSearch.css';
 import TokenContext from './TokenContext'
-import SpotifyPlayer from 'react-spotify-web-playback';
 
 const SpotifyUserSearch = (props) => {
     const context = useContext(TokenContext);  
-    const [userID, setUserID] = React.useState('');
-    const [userDisplayName, setUserDisplayName] = React.useState('');
-    const [userImage, setUserImage] = React.useState('');
+    const [userID, setUserID] = useState('');
+    const [userDisplayName, setUserDisplayName] = useState('');
+    const [userImage, setUserImage] = useState('');
 
   
     const getUserSearch = (props) => {
 
-        if(userID != "")
+        if(userID !== '')
         {
         $.ajax({
         url: `https://api.spotify.com/v1/users/${userID}`,
@@ -67,18 +66,18 @@ const SpotifyUserSearch = (props) => {
         <div>
         <br></br>
             <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value)}} />
-        <div className="result-containerChatUserSearch">
-          <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
-              
-                      <li className="user-info-itemChatUserSearch">
-                      <div>
+                  {userDisplayName!=='' ? <div className="result-containerChatUserSearch">
+                        <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
+                        <li className="user-info-itemChatUserSearch">
+                        <div>
                         <img className="search-imageChatUserSearch" src={userImage}/>
                         <div className="user-display-nameChatUserSearch">{userDisplayName}</div>
-
                       </div>
                       </li>
           </ul>
         </div>
+ : null}
+
       </div>
     )
         

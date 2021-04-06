@@ -30,7 +30,7 @@ const getPlaylist=(id)=>{
         return users[index].playlist
     }
 }
-const updateplaylist =(id)=>{
+const updateplaylist=(id)=>{
     const currentUser=getUser(id)
     const room =currentUser.room
     
@@ -41,14 +41,4 @@ const updateplaylist =(id)=>{
         }
     })
 }
-
-const PeakPlsylist=(id)=>{
-    const currentUser=getUser(id)
-    //console.log(currentUser.playlist[0])
-    return currentUser.playlist[0]
-}
-const PopPlaylist=(id)=>{
-    const user=getUser(id)
-    user.playlist.shift()
-}
-module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist,PeakPlsylist,PopPlaylist}
+module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist}

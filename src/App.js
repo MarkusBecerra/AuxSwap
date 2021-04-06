@@ -23,6 +23,7 @@ function App() {
   const[refreshcurrtoken, setRefreshCurrToken] = React.useState(null);
   const [displayname, setDisplayName] = React.useState("");
   const [imageurl,setImageUrl] = React.useState("");
+
     useEffect(() => {
 
       const fetchData = async (token) => {
@@ -77,7 +78,6 @@ function App() {
     return (
     <TokenContext.Provider value={{currtoken}}>
       <RefreshTokenContext.Provider value={{refreshcurrtoken}}>
-        
       <Router>
           <Switch>
             <Route exact path="/">

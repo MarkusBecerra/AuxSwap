@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NavBar from '../components/navBar';
-import Player from '../components/Party_components/Player'
 import "./PartyHome.css";
 
 const PartyHome = () => {
@@ -25,7 +24,6 @@ const handleEnter = e => {    //handle enter function
 
   return (
     <div>
-      <Player />
       <div className="home-container">
       <input
         type="text"

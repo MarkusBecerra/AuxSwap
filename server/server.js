@@ -6,6 +6,7 @@ const cors = require('cors');
 const db1 = require('./utils/users');
 const db2 = require('./utils/messages');
 const db3 = require('./utils/chatroom');
+const db4 = require('./utils/chat');
 
 const io = require("socket.io")(server, {
   cors: {
@@ -83,6 +84,15 @@ app.get('/chat/:id', cors(corsOptions), db3.getChatById);
 
 // Add a piece of message by session_id
 app.post('/chat', cors(corsOptions), db3.addChatMessage);
+
+// Get session by userID
+app.get('/session/:user', cors(corsOptions), db4.getSessionByUser);
+
+// Add one session
+app.post('/session', cors(corsOptions), db4.createSession);
+
+// Add two sessions
+app.post('/sessions', cors(corsOptions), db4.createTwoSession);
 
 // Start server listening
 server.listen(PORT, () => {

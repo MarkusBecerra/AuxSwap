@@ -16,7 +16,7 @@ export default function SongTab({song,setsong}) {
         <div dclassName="result-container">
           <ul className="result-list-party">
               
-                 <li className="song-info-list-item" onClick={handleClick}>
+                 <li className="song-info-list-item-party" onClick={handleClick}>
                       <div>
                         <img className="search-images" src={song.image} />
                         <div className="song-name">{song.songName}</div>

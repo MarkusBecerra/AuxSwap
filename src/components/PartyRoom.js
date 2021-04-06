@@ -7,6 +7,7 @@ import SongQueue from "./Party_components/SongQueue"
 import CurrentPlay from"./Party_components/CurrentPlay"
 import useParty from "../hooks/useParty";
 import Player from "./Party_components/Player"
+import "./PartyRoom.css"
 
 import SpotifyWebApi from "spotify-web-api-node";
 const sp = new SpotifyWebApi()
@@ -46,8 +47,9 @@ function PartyRoom(props){
         <div>
             <div className="party-room-container">
                 <h1 className="party-room-title">Party room</h1>
-                <h2 className="room-name" >Room: {roomId}</h2>
+                <h2 className="party-room-name" >Room: {roomId}</h2>
                 <div className="user-container">
+                    <h3 className="user-title">Active Users</h3>
                 <ActiveBox members={member}/>
                 </div>
                 <div className="Search-Bar">

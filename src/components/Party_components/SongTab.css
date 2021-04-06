@@ -1,0 +1,23 @@
+.song-name-party {
+color:blue;
+}
+
+.artist-name-party {
+color:white;
+}
+
+.result-list-party { 
+    margin: 0px;
+    padding: 10px;
+    display: block;
+    max-width: 350px;
+    word-break: break-word;
+    /* list-style-type: disc; 
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;  */
+    border: white 2px solid;
+    background-color: rgb(0, 0, 0);
+}

@@ -2,6 +2,7 @@ import React from 'react'
 
 export default function SongTab({song,setsong}) {
     function handleClick(){
+        if(!song)return
         setsong(song)
     }
     return (

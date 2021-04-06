@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NavBar from '../components/navBar';
 import "./ChatHome.css";
+import ChatUserSearch from '../components/ChatUserSearch'
+
 
 const ChatHome = () => {
   const [roomName, setRoomName] = React.useState("");
@@ -33,10 +35,14 @@ const handleEnter = e => {    //handle enter function
         onChange={handleRoomNameChange}
         className="text-input-field"
       />
+      
       <Link to={`/chat/${roomName}`} className="enter-room-button">
         Join room
       </Link>
+      <ChatUserSearch></ChatUserSearch>
+      
       </div>
+
     </div>
   );
 };

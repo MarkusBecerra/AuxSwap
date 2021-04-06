@@ -54,7 +54,7 @@ body{
 }
 
 .message-item {
-    width: 55%;
+    width: fit-content;
     margin: 8px;
     padding: 12px 8px;
     word-break: break-word;
@@ -65,7 +65,7 @@ body{
 }
 
 .my-message {
-    /* background-color: #038eff; */
+    /* background-color: #038eff; old blue color */
     background-color: #31a24c;
     margin-left: auto;
 }

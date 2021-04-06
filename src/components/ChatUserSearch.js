@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import * as $ from "jquery";
 import './ChatUserSearch.css';
 import TokenContext from './TokenContext'
+import { Link } from "react-router-dom";
 
 const SpotifyUserSearch = (props) => {
     const context = useContext(TokenContext);  
@@ -70,7 +71,11 @@ const SpotifyUserSearch = (props) => {
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
                         <div>
-                        <img className="search-imageChatUserSearch" src={userImage}/>
+                          
+                          <Link to={`/chat/1`}>
+                              <img className="search-imageChatUserSearch" src={userImage} />
+                          </Link>
+                         
                         <div className="user-display-nameChatUserSearch">{userDisplayName}</div>
                       </div>
                       </li>
@@ -82,7 +87,7 @@ const SpotifyUserSearch = (props) => {
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
                         <div>
-                        <img className="search-imageChatUserSearch" src={userImage}/>
+
                         <div className="user-display-nameChatUserSearch_2">{userDisplayName}</div>
                       </div>
                       </li>

@@ -5,6 +5,7 @@ import useChat from "../hooks/useChat";
 import TokenContext from './TokenContext';
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
 import SpotifySearch from "./SpotifySearch";
+import axios from 'axios';
 
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
@@ -20,6 +21,8 @@ const ChatRoom = (props) => {
   const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
+  const [check, setCheck] = React.useState(true);
+  const toggle = React.useCallback(() => setCheck(!check));
 
   const handleNewMessageChange = (event) => {
     event.preventDefault()
@@ -33,11 +36,49 @@ const ChatRoom = (props) => {
     if(newMessage === ""){
           setNewMessage("");
       return;
-    }
+    };
     sendMessage(newMessage);
+    sendDetailsToServer(newMessage);
+    // This will scroll to the bottom of the messages after a message is sent
+    // we want to timeout so that it occurs only after a song is rendered, otherwise
+    // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
+    var chats = document.getElementById("messages-container");
+    setTimeout(() => {
+      chats.scrollTop = 1000000000;
+    },100);
     setNewMessage("");
   };
 
+  // add message to db
+  const sendDetailsToServer = (message) => {
+    console.log(`message: ${message}`)
+    const payload = {
+        id: roomId,
+        content: message
+    }
+    axios.post('http://localhost:4000/chat', payload).catch(function (err) {
+        alert(err.message);
+    })
+  }
+
+  // pull message from db
+  const retriveDetailsFromServer = (room) => {
+    if (check){
+      axios.get(`http://localhost:4000/chat/${room}`, {
+      params: {
+        id: room
+      }
+      }, { responseType: 'json' }).then((res) => {
+        for (let i = 0; i < res.data.length; i++) {
+          sendMessage(res.data[i].content)
+        }
+      }).catch(function (err) {
+        console.log(err.type);
+      });
+      toggle();
+    }
+
+  }
 
   const handleEnter = e => {    //handle enter function
     if (e.keyCode === 13) {      //if the user hits enter
@@ -85,14 +126,17 @@ const ChatRoom = (props) => {
    <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
       <h2 className="room-name">Room: {roomId}</h2>
-        <div className="messages-container">
+      <div>
+        <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
+      </div>
+        <div className="messages-container" id="messages-container">
           <ol className="messages-list">
-          {messages.map((message, i) => {
-
+          {retriveDetailsFromServer(roomId), //get chat history
+          messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));
               const spotifyLinks = Array.from(spotifyLinkSet);
-              const restofMessage = (message.body).replace(/[ \n]*spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/([0-9a-z-A-Z]{22})([?]si=[a-zA-Z0-9]{22})?([ \n]*)/g,''); 
+              const restofMessage = (message.body).replace(/[ \n]*spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/([0-9a-z-A-Z]{22})([?]si=[a-zA-Z0-9]{22})?([ \n]*)/g,'');
               const isRestOfMessageEmpty = restofMessage === '';
               return (
                   <div>
@@ -119,7 +163,7 @@ const ChatRoom = (props) => {
               )
             }
             else if(isMessageLink(message.body)){
-              
+
               const words = message.body.split(' ');
               return(
                 <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
@@ -129,7 +173,7 @@ const ChatRoom = (props) => {
                     return(
                       //TODO: THOMAS ADD CSS HERE PLZ TO CUT OUT NEW LINES BETWEEN THE TAGS
                       <div key={j}>
-                        {isLink ? <a href={word} target="_blank" rel="noreferrer">{word} </a> : <div>{word}</div>}   
+                        {isLink ? <a href={word} target="_blank" rel="noreferrer">{word} </a> : <div>{word}</div>}
                       </div>
                     )
                 })}
@@ -160,9 +204,9 @@ const ChatRoom = (props) => {
         Send
       </button>
 
-      <div>
+      {/* <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
-      </div>
+      </div> */}
 
         <div>
           {showPlayer ? <button onClick={() => setShowPlayer(false)}>
@@ -183,6 +227,7 @@ const ChatRoom = (props) => {
     </div>
 
   );
+
 };
 
 export default ChatRoom;

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
     "jquery": "^3.5.1",
@@ -25,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npx patch-package"
   },
   "eslintConfig": {
     "extends": [

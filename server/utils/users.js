@@ -10,7 +10,7 @@ const pool = new Pool({
 
 // Get all user info
 const getUser = (req, res, next) => {
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+    pool.query('SELECT * FROM users', (error, results) => {
         if (!error) {
             res.status(200).json(results.rows);
         } else {
@@ -21,8 +21,8 @@ const getUser = (req, res, next) => {
 
 // Get a single user by ID
 const getUserById = (req, res, next) => {
-    const userId = Number(req.params.id);
-    pool.query('SELECT * FROM users WHERE id = $1', [userId], (error, results) => {
+    const userId = req.params.id;
+    pool.query('SELECT * FROM users WHERE user_id = $1', [userId], (error, results) => {
         if (!error) {
             res.status(200).json(results.rows);
         } else {
@@ -33,10 +33,10 @@ const getUserById = (req, res, next) => {
 
 // Add new User
 const addUser = (req, res, next) => {
-    const { name, email, user_name } = req.body;
-    pool.query('INSERT INTO users (name, email, user_name) VALUES ($1, $2, $3)', [name, email, user_name], (error, results) => {
+    const { name, email, id } = req.body;
+    pool.query('INSERT INTO users (name, email, user_id) VALUES ($1, $2, $3)', [name, email, id], (error, results) => {
         if (!error) {
-            res.status(201).send(`User has been added, with ID: ${results.insertId}`);
+            res.status(201).send(`User has been added`);
         } else {
             res.status(404).send(error.message);
         }
@@ -45,12 +45,12 @@ const addUser = (req, res, next) => {
 
 // Update an existing User
 const updateUser = (req, res, next) => {
-    const userId = Number(req.params.id);
-    const { name, email, user_name } = req.body;
-    pool.query('UPDATE users SET name = $1, email = $2, user_name = $3 WHERE id = $4', [name, email, user_name, userId],
+    const id = req.params.id;
+    const { name, email } = req.body;
+    pool.query('UPDATE users SET name = $1, email = $2 WHERE user_id = $3', [name, email, id],
      (error, results) => {
         if (!error) {
-            res.status(200).send(`User has been updated, with ID: ${userId}`);
+            res.status(200).send(`User has been updated, ID: ${id}`);
         } else {
             res.status(404).send(error.message);
         }

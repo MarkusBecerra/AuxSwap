@@ -50,8 +50,21 @@ const createTwoSession = (req, res, next) => {
     })
 }
 
+// delete session
+const deleteSession = (req, res, next) => {
+    const session = String(req.params.sessionID);
+    pool.query('DELETE FROM chat WHERE session_id = $1', [session], (error, results) => {
+        if (!error) {
+            res.status(200).send(`successfully deleted the session ${session}`);
+        } else {
+            res.status(404).send(error.message);
+        }
+    })
+}
+
 module.exports = {
     getSessionByUsers,
     createSession,
-    createTwoSession
+    createTwoSession,
+    deleteSession
 }

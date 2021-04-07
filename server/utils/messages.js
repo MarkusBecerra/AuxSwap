@@ -8,7 +8,7 @@ const pool = new Pool({
     port: '5432'
 })
 
-// Get Message from a specific session
+// Get Message from a specific session //* AKA: get chat history from a specific seesion
 const getMessageBySession = (req, res, next) => {
     const sessionId = String(req.params.session);
     pool.query('SELECT sender_id, content FROM messages WHERE session_id = $1', [sessionId], (error, results) => {
@@ -48,7 +48,7 @@ const addMessage = (req, res, next) => {
 
 // Clear Message history by session
 const deleteMessage = (req, res, next) => {
-    const session = req.params.session;
+    const session = String(req.params.session);
     pool.query('DELETE FROM messages WHERE session_id = $1',
                  [session], (error, results) => {
         if (!error) {

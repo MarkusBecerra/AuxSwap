@@ -73,11 +73,15 @@ app.put('/users/:id', cors(corsOptions), db1.updateUser);
 // remove an existing user
 app.delete('/users/:id', cors(corsOptions), db1.removeUser);
 
-// Get chat history by session_id
+
+//! DO not use this atm
+// Get chat history by session_id 
 app.get('/chat/:id', cors(corsOptions), db3.getChatById);
 
 // Add a piece of message by session_id
 app.post('/chat', cors(corsOptions), db3.addChatMessage);
+
+
 
 // Get session by yourID and your receiver's ID
 app.get('/session/:user1/:user2', cors(corsOptions), db4.getSessionByUsers);
@@ -87,6 +91,11 @@ app.post('/session', cors(corsOptions), db4.createSession);
 
 // Add two sessions
 app.post('/sessions', cors(corsOptions), db4.createTwoSession);
+
+// delete session
+app.delete('/session/:sessionID', cors(corsOptions), db4.deleteSession);
+
+
 
 // Get Message from a specific session
 app.get('/messages/:session', cors(corsOptions), db2.getMessageBySession);
@@ -99,6 +108,8 @@ app.post('/messages', cors(corsOptions), db2.addMessage);
 
 // Clear Message history by session
 app.delete('/messages/:session', cors(corsOptions), db2.deleteMessage);
+
+
 
 // Start server listening
 server.listen(PORT, () => {

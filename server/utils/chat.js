@@ -9,10 +9,12 @@ const pool = new Pool({
     port: '5432'
 })
 
-// return chat session if by username
-const getSessionByUser = (req, res, next) => {
-    const userID = req.params.user;
-    pool.query('SELECT session_id FROM chat WHERE user_id = $1', [userID], (error, results) => {
+// return chat session by yourID and someone's ID
+const getSessionByUsers = (req, res, next) => {
+    const user1 = req.params.user1;
+    const user2 = req.params.user2;
+    pool.query('SELECT session_id FROM chat WHERE user_id = $1 AND \
+                session_id IN (SELECT session_id FROM chat WHERE user_id = $2)', [user1, user2], (error, results) => {
         if (!error) {
             res.status(200).send(results.rows);
         } else {
@@ -49,7 +51,7 @@ const createTwoSession = (req, res, next) => {
 }
 
 module.exports = {
-    getSessionByUser,
+    getSessionByUsers,
     createSession,
     createTwoSession
 }

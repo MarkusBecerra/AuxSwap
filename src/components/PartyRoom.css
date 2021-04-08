@@ -1,0 +1,23 @@
+.party-room-container {
+    margin: 16px;
+}
+
+.party-room-title {
+    margin-top: 0;
+    color: white;
+}
+
+.party-room-name {
+    margin-top: -10px;
+    color: white;
+}
+
+
+.user-container {
+    float: right;
+    margin-right: 40px;
+}
+
+.user-title {
+    color: white;
+}

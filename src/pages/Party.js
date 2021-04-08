@@ -1,14 +1,24 @@
-import React from 'react';
-import NavBar from '../components/navBar';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function Party()
-{
-    return (
-        <div>
-            <h1> HI </h1>
-        </div>
+import PartyHome from "./PartyHome.js";
+import Chat from '../pages/Chat';
+import PartyRoom from "../components/PartyRoom";
+import PlayerPage from '../pages/PlayerPage';
 
-    )
+function Party() {
+
+  return (
+
+    <Router>
+      <Switch>
+        <Route exact path="/party" component={PartyHome} />
+        <Route exact path="/party/:roomId" component={PartyRoom} />
+        <Route exact path="/player" component={PlayerPage}/>
+        <Route exact path="/chat" component={Chat}/>
+      </Switch>
+    </Router>
+  );
 }
 
-export default Party
+export default Party;

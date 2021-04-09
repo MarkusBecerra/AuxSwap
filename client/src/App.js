@@ -85,7 +85,7 @@ function App() {
             <Route exact path="/home">
               {currtoken ? <div> <NavBar displayname={displayname} imageurl = {imageurl} /><Home/> </div>: <Redirect to="/"/> }
             </Route>
-            <Route path="/callback">
+            <Route path="/callbackpage">
               {currtoken ? <Redirect to="/home"/> : <Callback updateToken={updateToken} JustToken={JustToken}/> }
             </Route>
             <Route exact path="/chat">

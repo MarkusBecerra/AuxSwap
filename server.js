@@ -112,10 +112,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// Get main site
-app.get('/', (req, res, next) => {
-  res.send('Mainpage');
-});
 
 // Get all users
 app.get('/users', cors(corsOptions), db1.getUser);

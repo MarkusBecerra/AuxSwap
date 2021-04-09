@@ -5,11 +5,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./server.js",
-    "client": "cd client && npm start",
-    "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
-    "client:build": "cd client && npm run build"
+"dev": "react-scripts start",
+"start": "serve -s build",
+"build": "react-scripts build",
+"test": "react-scripts test --env=jsdom",
+"eject": "react-scripts eject",
+"heroku-postbuild": "npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "pg": "^8.5.1",
     "querystring": "^0.2.1",
     "request": "~2.83.0",
+    "serve": "^11.3.2",
     "socket.io": "^3.0.4"
   }
 }

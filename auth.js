@@ -4,9 +4,9 @@ require("dotenv").config();
 var querystring = require('querystring');
 const Router = express.Router;
 
-var client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
-var client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
-var redirect_uri = `${process.env.REACT_APP_API_URL}/auth/callback`; // Your redirect uri
+var client_id = "07edde060f0f46bf82f2a7f621354d2a"; // Your client id
+var client_secret = "8f0e089e81b74f44b4e0d5fee88d1436"; // Your secret
+var redirect_uri = `https://auxswaptest.herokuapp.com/auth/callback`; // Your redirect uri
 
 let auth = Router();
 /**

@@ -28,7 +28,7 @@ app.use(cors());
 // Require Route
 const api = require('./routes/routes');
 // Configure app to use route
-app.use('/api/', api);
+app.use('/api', api);
 
 // This middleware informs the express application to serve our compiled React files
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {

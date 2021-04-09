@@ -1,50 +1,28 @@
 {
-  "name": "auxswap-react",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.0",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.5.3",
-    "cookie-parser": "^1.4.5",
-    "jquery": "^3.5.1",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
-    "react-dom": "^17.0.1",
-    "react-load-script": "^0.0.6",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "react-spotify-web-playback": "^0.8.1",
-    "socket.io-client": "^3.1.1",
-    "spotify-web-api-js": "^1.5.1",
-    "spotify-web-api-node": "^5.0.2",
-    "web-vitals": "^0.2.4"
-  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "npx patch-package"
+    "start": "nodemon ./server.js",
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+  "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+  "client:build": "cd client && npm run build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^6.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.0",
+    "nodemon": "^2.0.4",
+    "pg": "^8.5.1",
+    "querystring": "^0.2.1",
+    "request": "~2.83.0",
+    "socket.io": "^3.0.4"
   }
 }

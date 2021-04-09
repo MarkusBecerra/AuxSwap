@@ -6,7 +6,7 @@ const Router = express.Router;
 
 var client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
 var client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
-var redirect_uri = `${process.env.REACT_APP_API_URL}/auth/login`; // Your redirect uri
+var redirect_uri = `${process.env.REACT_APP_API_URL}/auth/callback`; // Your redirect uri
 
 let auth = Router();
 /**

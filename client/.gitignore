@@ -9,9 +9,6 @@ package-lock.json
 /coverage
 .nyc_output
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local

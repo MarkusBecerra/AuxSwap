@@ -1,0 +1,7 @@
+{
+  "env": {
+"REACT_APP_API_URL":"http://localhost:4000",
+"REACT_APP_CLIENT_ID":"07edde060f0f46bf82f2a7f621354d2a",
+"REACT_APP_CLIENT_SECRET":"8f0e089e81b74f44b4e0d5fee88d1436"
+  }
+}

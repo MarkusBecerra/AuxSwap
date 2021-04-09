@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const path = require('path');
+
 const db1 = require('./utils/users');
 const db2 = require('./utils/messages');
 const db3 = require('./utils/chatroom');
@@ -38,19 +38,18 @@ const Get_room_data = "get_room_data"
 const SS_event="song_send"
 const Get_topList="get_top_list"
 const next_song = "get_next"
-const api = require('./routes/routes.js');
+const api = require('./auth');
 // Configure app to use route
-app.use('/api', api);
+app.use('/auth', auth);
 // Start server listening
 // This middleware informs the express application to serve our compiled React files
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+    const path = require('path');
     app.use(express.static(path.join(__dirname, 'client/build')));
 
-    // app.get('*', function (req, res) {
-    //     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    // });
-
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
 };
 app.get('*', (req, res) => {
     res.status(200).json({

@@ -38,7 +38,7 @@ function Login() {
           
           </body>
           {/* <header className="App-header"> */}
-              <a className="Login-button" href={`/api/auth/login`} >
+              <a className="Login-button" href={`/auth/login`} >
                 Login to Spotify
               </a>
           {/* </header> */}

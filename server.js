@@ -14,7 +14,6 @@ const io = require("socket.io")(server, {
   },
 });
 const {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist,PeakPlsylist,PopPlaylist} =require('./users.js')
-const auth = require('./auth');
 app.use(cookieParser());
   app.use(
     bodyParser.json({
@@ -31,7 +30,6 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 app.use(cors(corsOptions));
-app.use('/auth',auth);
 const PORT = process.env.PORT || 5000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const Join_event = "newJoin"
@@ -55,7 +53,9 @@ app.get('*', (req, res) => {
     });
 });
 
-
+const api = require('./routes/routes.js');
+// Configure app to use route
+app.use('/api', api);
 // Start server listening
 server.listen(PORT, () => {
   console.log(`App is Listening on port ${PORT}`);
@@ -119,29 +119,29 @@ io.on("connection", (socket) => {
 });
 
 
-// Get all users
-app.get('/users', cors(corsOptions), db1.getUser);
+// // Get all users
+// app.get('/users', cors(corsOptions), db1.getUser);
 
-// Get a user by his/her id
-app.get('/users/:id', cors(corsOptions), db1.getUserById);
+// // Get a user by his/her id
+// app.get('/users/:id', cors(corsOptions), db1.getUserById);
 
-// add a new user
-app.post('/users', cors(corsOptions), db1.addUser);
+// // add a new user
+// app.post('/users', cors(corsOptions), db1.addUser);
 
-// update an existing user
-app.put('/users/:id', cors(corsOptions), db1.updateUser);
+// // update an existing user
+// app.put('/users/:id', cors(corsOptions), db1.updateUser);
 
-// remove an existing user
-app.delete('/users/:id', cors(corsOptions), db1.removeUser);
+// // remove an existing user
+// app.delete('/users/:id', cors(corsOptions), db1.removeUser);
 
-// Get chat history by session_id
-app.get('/messages/:id', cors(corsOptions), db2.getMessageById);
+// // Get chat history by session_id
+// app.get('/messages/:id', cors(corsOptions), db2.getMessageById);
 
-// Add a piece of message by session_id
-app.post('/messages/:id', cors(corsOptions), db2.addMessage);
+// // Add a piece of message by session_id
+// app.post('/messages/:id', cors(corsOptions), db2.addMessage);
 
-// Get chat history by session_id
-app.get('/chat/:id', cors(corsOptions), db3.getChatById);
+// // Get chat history by session_id
+// app.get('/chat/:id', cors(corsOptions), db3.getChatById);
 
-// Add a piece of message by session_id
-app.post('/chat', cors(corsOptions), db3.addChatMessage);
+// // Add a piece of message by session_id
+// app.post('/chat', cors(corsOptions), db3.addChatMessage);

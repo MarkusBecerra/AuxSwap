@@ -38,7 +38,7 @@ const ChatRoom = (props) => {
       return;
     };
     sendMessage(newMessage);
-    sendDetailsToServer(newMessage);
+    //sendDetailsToServer(newMessage);
     // This will scroll to the bottom of the messages after a message is sent
     // we want to timeout so that it occurs only after a song is rendered, otherwise
     // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
@@ -131,7 +131,7 @@ const ChatRoom = (props) => {
       </div>
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
-          {retriveDetailsFromServer(roomId), //get chat history
+          {//retriveDetailsFromServer(roomId), //get chat history
           messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

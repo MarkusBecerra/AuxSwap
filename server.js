@@ -38,7 +38,10 @@ const Get_room_data = "get_room_data"
 const SS_event="song_send"
 const Get_topList="get_top_list"
 const next_song = "get_next"
-
+const api = require('./routes/routes.js');
+// Configure app to use route
+app.use('/api', api);
+// Start server listening
 // This middleware informs the express application to serve our compiled React files
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
     app.use(express.static(path.join(__dirname, 'client/build')));
@@ -53,10 +56,7 @@ app.get('*', (req, res) => {
     });
 });
 
-const api = require('./routes/routes.js');
-// Configure app to use route
-app.use('/api', api);
-// Start server listening
+
 server.listen(PORT, () => {
   console.log(`App is Listening on port ${PORT}`);
 });

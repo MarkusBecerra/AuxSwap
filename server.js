@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors(corsOptions));
 app.use('/auth',auth);
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const Join_event = "newJoin"
 

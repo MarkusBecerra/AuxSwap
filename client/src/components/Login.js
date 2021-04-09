@@ -38,7 +38,7 @@ function Login() {
           
           </body>
           {/* <header className="App-header"> */}
-              <a className="Login-button" href={`${process.env.REACT_APP_API_URL}/auth/login`} >
+              <a className="Login-button" href={`${process.env.REACT_APP_API_URL}/api/auth/login`} >
                 Login to Spotify
               </a>
           {/* </header> */}

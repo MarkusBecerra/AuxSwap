@@ -38,7 +38,7 @@ const Get_room_data = "get_room_data"
 const SS_event="song_send"
 const Get_topList="get_top_list"
 const next_song = "get_next"
-const api = require('./auth');
+const auth = require('./auth');
 // Configure app to use route
 app.use('/auth', auth);
 // Start server listening

@@ -62,16 +62,6 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 };
-app.get('*', (req, res) => {
-    res.status(200).json({
-        msg: 'Catch All'
-    });
-});
-
-
-// server.listen(PORT, () => {
-//   console.log(`App is Listening on port ${PORT}`);
-// });
 
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);

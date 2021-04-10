@@ -4,9 +4,9 @@ require("dotenv").config();
 var querystring = require('querystring');
 const Router = express.Router;
 
-var client_id = "07edde060f0f46bf82f2a7f621354d2a"; // Your client id
-var client_secret = "8f0e089e81b74f44b4e0d5fee88d1436"; // Your secret
-var redirect_uri = `https://auxswaptest.herokuapp.com/auth/callback`; // Your redirect uri
+var client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
+var client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
+var redirect_uri = `${process.env.REACT_APP_HOST}/auth/callback`; // Your redirect uri
 
 let auth = Router();
 /**
@@ -80,7 +80,7 @@ auth.get('/callback', function(req, res) {
             refresh_token = body.refresh_token;
 
         // we can also pass the token to the browser to make requests from there
-   res.redirect('https://auxswaptest.herokuapp.com/callbackpage#' +
+   res.redirect(process.env.REACT_APP_API_URL + '/callbackpage#' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token

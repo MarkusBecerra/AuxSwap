@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 import TokenContext from '../components/TokenContext';
 import * as $ from "jquery";
-const SOCKET_SERVER_URL = "http://localhost:4000";
+const SOCKET_SERVER_URL = process.env.REACT_APP_HOST;
 const Join_event = "newJoin";
 const Get_room_data = "get_room_data";
 const SS_event="song_send"

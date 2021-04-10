@@ -1,3 +1,4 @@
+// ! This file is used for self chatting, not for one-to-one chatting
 const Pool = require('pg').Pool
 
 const pool = new Pool({

@@ -54,10 +54,10 @@ auth.get('/callback', function(req, res) {
   var storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
+    res.render('/callbackpage#', {
+      access_token: null,
+      expires_in: null
+      });
   } else {
     res.clearCookie(stateKey);
     var authOptions = {
@@ -78,17 +78,6 @@ auth.get('/callback', function(req, res) {
 
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
-
-        var options = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        // request.get(options, function(error, response, body) {
-        //   console.log(body);
-        // });
 
         // we can also pass the token to the browser to make requests from there
         res.render('https://auxswaptest.herokuapp.com/callbackpage#', {

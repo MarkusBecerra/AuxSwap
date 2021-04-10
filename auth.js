@@ -80,10 +80,11 @@ auth.get('/callback', function(req, res) {
             refresh_token = body.refresh_token;
 
         // we can also pass the token to the browser to make requests from there
-        res.render('https://auxswaptest.herokuapp.com/callbackpage#', {
+   res.redirect('https://auxswaptest.herokuapp.com/callbackpage#' +
+          querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
-          });
+          }));
       } else {
         res.redirect('/#' +
           querystring.stringify({

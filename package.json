@@ -3,36 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.0",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.5.3",
-    "jquery": "^3.5.1",
-    "randexp": "^0.5.3",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "react-spotify-web-playback": "^0.8.1",
-    "socket.io-client": "^3.1.1",
-    "web-vitals": "^0.2.4"
-  },
-  "scripts": {
-    "client-install": "npm install --prefix client",
-    "build": "concurrently \"cd client && npm run build\" \"npm build \"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd ./client && npm start ",
-    "server-prod": "node server.js",
-    "server": "nodemon server.js",
-    "start": "node server.js",
-    "start:dev": "concurrently --kill-others  \"npm run client\" \"npm run server\" ",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
     "body-parser": "^1.18.3",
     "concurrently": "^6.0.1",
     "cookie-parser": "^1.4.5",
@@ -46,5 +16,18 @@
     "request": "~2.83.0",
     "serve": "^11.3.2",
     "socket.io": "^3.0.4"
-  }
+  },
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "build": "concurrently \"cd client && npm run build\" \"npm build \"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd ./client && npm start ",
+    "server-prod": "node server.js",
+    "server": "nodemon server.js",
+    "start": "node server.js",
+    "start:dev": "concurrently --kill-others  \"npm run client\" \"npm run server\" ",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "",
+  "license": "ISC"
 }

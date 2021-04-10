@@ -7,7 +7,7 @@ const db1 = require('./utils/users');
 const db2 = require('./utils/messages');
 const db3 = require('./utils/chatroom');
 const app = express();
-const server = require("http").Server(app);
+const server = require("https").Server(app);
 const io = require("socket.io")(server, {
   cors: {
     origin: '*',

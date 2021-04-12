@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import NavBar from '../components/navBar';
-import "./PartyHome.css";
 
+import "./PartyHome.css";
+import Player from '../components/Party_components/Player'
 const PartyHome = () => {
   const [roomName, setRoomName] = React.useState("");
   const history = useHistory();
@@ -24,6 +24,7 @@ const handleEnter = e => {    //handle enter function
 
   return (
     <div>
+      <Player />
       <div className="home-container">
       <input
         type="text"
@@ -34,7 +35,7 @@ const handleEnter = e => {    //handle enter function
         className="text-input-field"
       />
       <Link to={`/party/${roomName}`} className="enter-room-button">
-        Join room2
+        Join Party
       </Link>
       </div>
     </div>

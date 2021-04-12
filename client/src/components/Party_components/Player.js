@@ -2,22 +2,24 @@ import {useEffect,useContext,useState} from 'react'
 import Script from 'react-load-script'
 import TokenContext from '../TokenContext';
 
-export default function Player({handleID,SDK}) {
+export default function Player() {
     
     const context = useContext(TokenContext)
+    const [SDK,setSDK]=useState()
+    const [DeviceID,setDevice]=useState()
 
     useEffect(()=>{
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            handleLoad();
-          };
+        window.onSpotifyWebPlaybackSDKReady=()=>{
+            return {SDK_object:SDK,SDK_ID:DeviceID}
+         }
     })
     function handleLoad(){
-        const token=context.currtoken;
+        
         const player = new window.Spotify.Player({
-            name:'Aux2',
-            getOAuthToken: cb=>{cb(token);}
+            name:'AuxSwap',
+            getOAuthToken: cb=>{cb(context.currtoken);}
         });
-        console.log(player)
+        //console.log(player)
         player.addListener('initialization_error', ({ message }) => { console.error(message); });
         player.addListener('authentication_error', ({ message }) => { console.error(message); });
         player.addListener('account_error', ({ message }) => { console.error(message); });
@@ -29,14 +31,14 @@ export default function Player({handleID,SDK}) {
     // Ready
         player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
-        handleID(device_id)
+        setDevice(device_id)
         });
         // Not Ready
         player.addListener('not_ready', ({ device_id }) => {
         console.log('Device ID has gone offline', device_id);
         });
         player.connect()
-        SDK(player)
+        setSDK(player)
     }
     return (
         <div>

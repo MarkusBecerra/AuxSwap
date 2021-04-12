@@ -15,7 +15,7 @@
     "querystring": "^0.2.1",
     "randexp": "^0.5.3",
     "react-spotify-web-playback": "^0.8.1",
-    "request": "~2.83.0",
+    "request": "^2.88.2",
     "serve": "^11.3.2",
     "socket.io": "^3.0.4"
   },

@@ -17,17 +17,14 @@ const useParty = (props) => {
     const [songList,setsonglist] = useState()
     const [currentSong,setcurrentSong]=useState()
     const socketRef = useRef();
-    const [SDK,setSDK]=useState()
-    const [deviceID,setDeviceID]=useState()
-    const [isplaying,setPlaying]=useState(false)
     
-    function SDKPlay(songUrl,device_id){
+    
+    function SDKPlay(songUrl){
         $.ajax({
-            url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+            url: "https://api.spotify.com/v1/me/player/play?device_id=" + window.onSpotifyWebPlaybackSDKReady().SDK_ID,
             type: "PUT",
             data: '{"uris": ["'+songUrl+'"]}',
             beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + context.currtoken );},
-            success:setPlaying(true),
            });
     }
     useEffect(() => {
@@ -44,44 +41,9 @@ const useParty = (props) => {
             console.log(error)
         })
     }, [props.room, context.currtoken])
-    useEffect(()=>{
-        if(!props.SDK) return
-        setSDK(props.SDK)
-    },[props.SDK])
-    useEffect(()=>{
-        if(!props.ID) return
-        setDeviceID(props.ID)
-    },[props.ID])
-
-    useEffect(()=>{
-        if(!SDK)return
-        if(!deviceID) return
-        if(!currentSong) return
-        SDK.getCurrentState().then(state=>{
-            
-            if(!state){
-                if(!isplaying) SDKPlay(currentSong.songUrl,deviceID);
-                return;
-            }
-            if(state.paused==true&&isplaying)
-            {
-                setPlaying(false)
-                nextSong()
-                return
-            }
-            if(state.paused==true&&!isplaying)
-            {
-                SDKPlay(currentSong.songUrl,deviceID)
-                return
-            }
-            console.log(state)
-        });
-       
-    },[currentSong])
-
     
     useEffect(() => {
-        if (!SDK) return
+       
         if (Username != '' && Userimage != '') {
             
             socketRef.current = socketIOClient(SOCKET_SERVER_URL, { query:roomNum });
@@ -100,7 +62,7 @@ const useParty = (props) => {
             peakTop()
             return () => {
                 socketRef.current.disconnect();
-                SDK.disconnect();
+                window.onSpotifyWebPlaybackSDKReady().SDK_object.disconnect()
             }
         }
     }, [Username, Userimage,roomNum]);
@@ -111,16 +73,18 @@ const useParty = (props) => {
     const nextSong=()=>{
         console.log("next....")
         socketRef.current.emit(next_song)
+        socketRef.current.on(SS_event,({songs})=>{
+                setsonglist(songs);  
+            });
       
     }
     const peakTop = ()=>{
-        const c= setInterval(()=>{
-            socketRef.current.emit(Get_topList)
-        },1000)
-        return ()=>{clearInterval(c)}
-       
+        socketRef.current.emit(Get_topList)
+        socketRef.current.on(Get_topList,({song})=>{
+            setcurrentSong(song)
+        });
     }
-    return {memberlist,songList,sendSong,currentSong}
+    return {memberlist,songList,sendSong,currentSong,peakTop,nextSong,SDKPlay}
 };
 
 export default useParty;

@@ -1,8 +1,8 @@
 .result-list-party { 
-    margin: 0px;
+    margin: 2px;
     padding: 10px;
     display: block;
-    max-width: 350px;
+    
     word-break: break-word;
     /* list-style-type: disc; 
     margin-block-start: 1em;
@@ -12,10 +12,32 @@
     padding-inline-start: 40px;  */
     border: white 2px solid;
     background-color: rgb(0, 0, 0);
+    cursor: pointer;
+    appearance: auto;
+}
+.result-list-party:empty{
+    display: none;
 }
 
 .song-info-list-item-party {
     list-style-type: none;
     color: white;
     margin-bottom: 50px;
+    width: 40vh;
+   
+}
+.search-images{
+    float: left;
+
+    width:90px;
+    
+}
+.song-name{
+    
+    font-size: 20px;
+    color: bisque;
+}
+.song-artist{
+    
+    font-size: 15px;
 }

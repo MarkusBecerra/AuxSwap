@@ -100,6 +100,7 @@ io.on("connection", (socket) => {
     const user=getUser(socket.id)
 
     PopPlaylist(user.id)
+    io.to(user.room).emit(SS_event,{room:user.room,songs:getPlaylist(user.id)})
   })
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {

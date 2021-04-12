@@ -46,6 +46,7 @@ export default function SearchBar({api,handleSongSend}) {
                 placeholder="Enter song name"
                 value={useForSearch}
                 onChange={event => setUseSearch(event.target.value)}
+                className="search-bar"
             />
             <div className="song-box">
                 {

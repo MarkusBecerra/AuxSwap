@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext, useEffect} from "react";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import "./ChatRoom.css";
 import useChat from "../hooks/useChat";
@@ -6,24 +6,57 @@ import TokenContext from './TokenContext';
 import SpotifyTrackMessage from "./SpotifyTrackMessage";
 import SpotifySearch from "./SpotifySearch";
 import axios from 'axios';
+import * as $ from "jquery";
+
 
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
 
+
 const ChatRoom = (props) => {
+
+  const context = useContext(TokenContext);
   const spotifyRegex = /(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/g;
   const linkRegex = /(http:|https:|ftp:)\/\/[a-zA-Z0-9]+[.][a-z]+\/*[^ \n]*/g;
   const { roomId } = props.match.params;
+  // const [curUserID, setCurUserID] = React.useState("")
+  const [currUserID, setCurrUserID] = React.useState("");
+  React.useEffect(() => {
+    const id = async() => {
+      if(!context.currtoken)
+      {
+        return "";
+      }
+      await $.ajax({
+          url: "https://api.spotify.com/v1/me",
+          type: "GET",
+          beforeSend: xhr =>{
+              xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
+              
+          },
+          success: data =>{
+              if(!data){
+                  console.log("null values");
+              }
+              setCurrUserID(data.id);
+          },
+          error: error => {
+              console.log("IN GET DATA ERROR", context.currtoken);
+              console.log(error);  
+          }
+      });
+    }
+    id();
+  }, []);
+
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
   const [currSong, setCurrSong] = React.useState([]);
-  const context = useContext(TokenContext);
   const [showPlayer, setShowPlayer] = React.useState(false);
   const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
   const [check, setCheck] = React.useState(true);
   const toggle = React.useCallback(() => setCheck(!check));
-
   const handleNewMessageChange = (event) => {
     event.preventDefault()
     if(hitEnter !== true){                 //if the enter key hasn't been pressed
@@ -37,7 +70,7 @@ const ChatRoom = (props) => {
           setNewMessage("");
       return;
     };
-    sendMessage(newMessage);
+    sendMessage(newMessage, true);
     //sendDetailsToServer(newMessage);
     // This will scroll to the bottom of the messages after a message is sent
     // we want to timeout so that it occurs only after a song is rendered, otherwise
@@ -50,34 +83,43 @@ const ChatRoom = (props) => {
   };
 
   // add message to db
-  const sendDetailsToServer = (message) => {
+  const sendDetailsToServer = (message, sessionID) => {
     console.log(`message: ${message}`)
     const payload = {
-        id: roomId,
+        session: sessionID,
+        userID: currUserID,
         content: message
     }
-    axios.post('/chat', payload).catch(function (err) {
+    axios.post(`${process.env.REACT_APP_HOST}/messages`, payload).catch(function (err) {
         alert(err.message);
     })
   }
 
   // pull message from db
-  const retriveDetailsFromServer = (room) => {
-    if (check){
-      axios.get(`/chat/${room}`, {
-      params: {
-        id: room
-      }
-      }, { responseType: 'json' }).then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-          sendMessage(res.data[i].content)
+  const retrieveDetailsFromServer = async (room) => {
+    if (currUserID) {
+      if (check){
+        await axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
+        params: {
+          id: room
         }
-      }).catch(function (err) {
-        console.log(err.type);
-      });
-      toggle();
+        }, { responseType: 'json' }).then((res) => {
+          for (let i = 0; i < res.data.length; i++) {
+            if(res.data[i].sender_id == currUserID)
+            {
+              sendMessage(res.data[i].content, true);
+            }
+            else{
+              sendMessage(res.data[i].content, false);
+            }
+            console.log(res.data[i].sender_id, currUserID);
+          }
+        }).catch(function (err) {
+          console.log(err.type);
+        });
+        toggle();
+      }
     }
-
   }
 
   const handleEnter = e => {    //handle enter function
@@ -120,6 +162,33 @@ const ChatRoom = (props) => {
     const arr = [res];
     setCurrSong(arr);
   }
+  useEffect(() => {
+    if(!context.currtoken)
+    {
+      return;
+    }
+     $.ajax({
+        url: "https://api.spotify.com/v1/me",
+        type: "GET",
+        beforeSend: xhr =>{
+            xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
+            
+        },
+        success: data =>{
+            if(!data){
+                console.log("null values");
+            }
+            // setCurUserID(data.id);
+        },
+        error: error => {
+            console.log("IN GET DATA ERROR", context.currtoken);
+            console.log(error);
+            
+        }
+    });
+    
+ 
+}, []);
 
   return (
   <div className="chat-room-page">
@@ -131,7 +200,8 @@ const ChatRoom = (props) => {
       </div>
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
-          {//retriveDetailsFromServer(roomId), //get chat history
+          {
+          retrieveDetailsFromServer("IRYC3TKay"), //get chat history
           messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

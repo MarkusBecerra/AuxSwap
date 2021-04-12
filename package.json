@@ -13,7 +13,8 @@
     "nodemon": "^2.0.4",
     "pg": "^8.5.1",
     "querystring": "^0.2.1",
-    "request": "~2.83.0",
+    "randexp": "^0.5.3",
+    "request": "^2.88.2",
     "serve": "^11.3.2",
     "socket.io": "^3.0.4"
   },

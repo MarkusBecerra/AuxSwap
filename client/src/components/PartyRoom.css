@@ -15,9 +15,28 @@
 
 .user-container {
     float: right;
-    margin-right: 40px;
+    margin-right: 20px;
+    
 }
 
 .user-title {
     color: white;
+}
+.Search-Bar{
+    float: left;
+    margin-right: 20vh;
+    
+    position: absolute;
+    z-index: 999;
+    
+}
+.song-container{
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    overflow-y: auto;
+    height: 65vh;
+}
+.song-container:empty{
+    display: none;
 }

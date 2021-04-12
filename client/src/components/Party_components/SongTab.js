@@ -13,7 +13,7 @@ export default function SongTab({song,setsong}) {
         //    <div className="artist-name-party">{song.artist}</div>
         // </div>
 
-        <div dclassName="result-container">
+        <div className="song_re">
           <ul className="result-list-party">
               
                  <li className="song-info-list-item-party" onClick={handleClick}>

@@ -50,6 +50,5 @@ const PeakPlaylist=(id)=>{
 const PopPlaylist=(id)=>{
     const user=getUser(id)
     user.playlist.shift()
-    console.log(user.playlist)
 }
 module.exports = {addUser,removeUser,getUsersInRoom,getUser,setPlaylist,getPlaylist,updateplaylist,PeakPlaylist,PopPlaylist}

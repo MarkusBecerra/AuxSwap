@@ -96,10 +96,10 @@ const ChatRoom = (props) => {
   }
 
   // pull message from db
-  const retrieveDetailsFromServer = async (room) => {
+  const retrieveDetailsFromServer = (room) => {
     if (currUserID) {
       if (check){
-        await axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
+        axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
         params: {
           id: room
         }

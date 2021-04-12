@@ -29,7 +29,7 @@ const SS_event="song_send"
 const Get_topList="get_top_list"
 const next_song = "get_next"
 
-
+console.log(`heroku port: ${process.env.PORT}, PORT: ${PORT}`);
 
 
 

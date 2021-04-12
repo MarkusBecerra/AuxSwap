@@ -99,6 +99,7 @@ const ChatRoom = (props) => {
   const retrieveDetailsFromServer = (room) => {
     if (currUserID) {
       if (check){
+        console.log(`server url: ${process.env.REACT_APP_HOST}/messages/${room}`)
         axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
         params: {
           id: room

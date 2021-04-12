@@ -35,7 +35,7 @@ const handleEnter = e => {    //handle enter function
         className="text-input-field"
       />
       <Link to={`/party/${roomName}`} className="enter-room-button">
-        Join room2
+        Join Party
       </Link>
       </div>
     </div>

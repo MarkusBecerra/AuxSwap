@@ -25,6 +25,12 @@ function PartyRoom(props){
     function handleSongSend(song){
         party.sendSong(song)
     }
+    function handleVolume(event){
+        if(!window.onSpotifyWebPlaybackSDKReady().SDK_object) return
+        if(!localSDK) return
+        localSDK.setVolume(event.target.value/100)
+        //console.log(event.target.value)
+    }
     useLayoutEffect(()=>{
         if(!window.onSpotifyWebPlaybackSDKReady().SDK_object) return
         setSDK(window.onSpotifyWebPlaybackSDKReady().SDK_object)
@@ -35,7 +41,7 @@ function PartyRoom(props){
         setSonglist(party.songList)
         party.peakTop()
     },[party.songList])
-   
+    
     useEffect(()=>{
         setmember(party.memberlist)
     },[party.memberlist])
@@ -83,6 +89,9 @@ function PartyRoom(props){
                 <div className="user-container">
                     <h3 className="user-title">Active Users</h3>
                 <ActiveBox members={member}/>
+                <div className="volume_control">
+                <input type="range" min="1" max="100" className="slider" onChange={handleVolume}></input>
+                </div>
                 </div>
                 <div className="Search-Bar">
                 <SearchBar api={spotifyApi} handleSongSend={handleSongSend}/>

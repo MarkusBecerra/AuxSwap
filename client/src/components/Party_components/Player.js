@@ -16,7 +16,7 @@ export default function Player() {
     function handleLoad(){
         
         const player = new window.Spotify.Player({
-            name:'Aux2',
+            name:'AuxSwap',
             getOAuthToken: cb=>{cb(context.currtoken);}
         });
         //console.log(player)

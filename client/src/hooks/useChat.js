@@ -27,7 +27,9 @@ const useChat = (roomId) => {
   }, [roomId]);
 
   const deleteMessages = () => {
-    setMessages([]);
+    // console.log(`before: ${messages}`);
+    setMessages((messages) => []);
+    // console.log(`after: ${messages}`);
   };
 
   const sendMessage = (messageBody, isCurrent) => {

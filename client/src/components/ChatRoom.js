@@ -59,9 +59,8 @@ const ChatRoom = (props) => {
 
   React.useLayoutEffect(() => {
     id();
-    deleteMessages();
-    forceUpdate();
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+    forceUpdate();
   }, [currUserID]);
 
 
@@ -92,7 +91,6 @@ const ChatRoom = (props) => {
 
   // add message to db
   const sendDetailsToServer = (message, sessionID) => {
-    console.log(`message: ${message}`)
     const payload = {
         session: 'xG7Y7IoU2',
         userID: currUserID,
@@ -105,7 +103,8 @@ const ChatRoom = (props) => {
 
   // pull message from db
   const retrieveDetailsFromServer = (room) => {
-    console.log('here');
+    // deleteMessages();
+    
     if (currUserID) {
       if (check){
         axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
@@ -118,7 +117,6 @@ const ChatRoom = (props) => {
           },
         }, { responseType: 'json' }).then((res) => {
           for (let i = 0; i < res.data.length; i++) {
-            console.log(`sending: ${i}`);
             if(res.data[i].sender_id == currUserID)
             {
               sendMessage(res.data[i].content, true);
@@ -127,6 +125,7 @@ const ChatRoom = (props) => {
               sendMessage(res.data[i].content, false);
             }
           }
+          deleteMessages();
         }).catch(function (err) {
           console.log(err.type);
         });
@@ -187,7 +186,7 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
-            console.log(messages),
+           console.log(`${messages}`),
            messages.map((message, i) => {
              if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

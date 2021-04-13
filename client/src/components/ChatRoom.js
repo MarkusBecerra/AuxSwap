@@ -40,6 +40,7 @@ const ChatRoom = (props) => {
                   console.log("null values");
               }
               setCurrUserID(data.id);
+              retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
           },
           error: error => {
               console.log("IN GET DATA ERROR", context.currtoken);
@@ -97,6 +98,7 @@ const ChatRoom = (props) => {
 
   // pull message from db
   const retrieveDetailsFromServer = (room) => {
+    
     console.log(`currentUser: ${currUserID}`);
     if (currUserID) {
       if (check){
@@ -160,13 +162,14 @@ const ChatRoom = (props) => {
   //   setCurrSong(arr);
   // }
 
-    const setSpotifyURI = (message) => {
-    const array = message.match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/);
-    const songID = array[2];
-    const res = "spotify:track:".concat(songID);
-    const arr = [res];
-    setCurrSong(arr);
+  const setSpotifyURI = (message) => {
+  const array = message.match(/(spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/)([0-9a-z-A-Z]{22})/);
+  const songID = array[2];
+  const res = "spotify:track:".concat(songID);
+  const arr = [res];
+  setCurrSong(arr);
   }
+
   useEffect(() => {
     if(!context.currtoken)
     {
@@ -191,9 +194,8 @@ const ChatRoom = (props) => {
             
         }
     });
-    
  
-}, []);
+  }, []);
 
   return (
   <div className="chat-room-page">
@@ -206,7 +208,6 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
-          retrieveDetailsFromServer("xG7Y7IoU2"), //get chat history
           messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

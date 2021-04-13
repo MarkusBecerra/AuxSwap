@@ -118,6 +118,7 @@ const ChatRoom = (props) => {
           },
         }, { responseType: 'json' }).then((res) => {
           for (let i = 0; i < res.data.length; i++) {
+            console.log(`sending: ${i}`);
             if(res.data[i].sender_id == currUserID)
             {
               sendMessage(res.data[i].content, true);
@@ -186,6 +187,7 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
+            console.log(messages),
            messages.map((message, i) => {
              if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

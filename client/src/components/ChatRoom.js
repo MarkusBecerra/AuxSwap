@@ -22,7 +22,7 @@ const ChatRoom = (props) => {
   // const [curUserID, setCurUserID] = React.useState("")
   const [currUserID, setCurrUserID] = React.useState("");
   React.useEffect(() => {
-    const id = async() => {
+    const id = async () => {
       if(!context.currtoken)
       {
         return "";
@@ -172,31 +172,6 @@ const ChatRoom = (props) => {
   useEffect(() => {
     deleteMessages();
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
-    console.log(messages);
-    if(!context.currtoken)
-    {
-      return;
-    }
-     $.ajax({
-        url: "https://api.spotify.com/v1/me",
-        type: "GET",
-        beforeSend: xhr =>{
-            xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
-            
-        },
-        success: data =>{
-            if(!data){
-                console.log("null values");
-            }
-            // setCurUserID(data.id);
-        },
-        error: error => {
-            console.log("IN GET DATA ERROR", context.currtoken);
-            console.log(error);
-            
-        }
-    });
- 
   }, [currUserID]);
 
   return (

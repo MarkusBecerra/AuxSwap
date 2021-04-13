@@ -53,7 +53,6 @@ const SpotifyUserSearch = (props) => {
         }
         else
         {
-          console.log("else")
           setUserID("");
           setUserDisplayName("");
           setUserImage("");

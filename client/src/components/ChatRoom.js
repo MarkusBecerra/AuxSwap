@@ -71,7 +71,7 @@ const ChatRoom = (props) => {
       return;
     };
     sendMessage(newMessage, true);
-    //sendDetailsToServer(newMessage);
+    sendDetailsToServer(newMessage);
     // This will scroll to the bottom of the messages after a message is sent
     // we want to timeout so that it occurs only after a song is rendered, otherwise
     // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
@@ -86,7 +86,7 @@ const ChatRoom = (props) => {
   const sendDetailsToServer = (message, sessionID) => {
     console.log(`message: ${message}`)
     const payload = {
-        session: sessionID,
+        session: 'xG7Y7IoU2',
         userID: currUserID,
         content: message
     }
@@ -97,6 +97,7 @@ const ChatRoom = (props) => {
 
   // pull message from db
   const retrieveDetailsFromServer = (room) => {
+    console.log(`currentUser: ${currUserID}`);
     if (currUserID) {
       if (check){
         console.log(`server url: ${process.env.REACT_APP_HOST}/messages/${room}`)
@@ -109,7 +110,6 @@ const ChatRoom = (props) => {
             'Content-Type': 'application/json',
           },
         }, { responseType: 'json' }).then((res) => {
-          console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
             if(res.data[i].sender_id == currUserID)
             {
@@ -206,7 +206,7 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
-          retrieveDetailsFromServer("IRYC3TKay"), //get chat history
+          retrieveDetailsFromServer("xG7Y7IoU2"), //get chat history
           messages.map((message, i) => {
             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

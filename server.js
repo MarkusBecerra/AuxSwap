@@ -53,15 +53,6 @@ app.use('/auth', auth);
 
 
 // Start server listening
-// This middleware informs the express application to serve our compiled React files
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-    const path = require('path');
-    app.use(express.static(path.join(__dirname, 'client/build')));
-
-    // app.get('*', function (req, res) {
-    //     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    // });
-};
 
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);
@@ -157,6 +148,16 @@ app.get('/messages/:session/:user', cors(corsOptions), db2.getMessageByUserAndSe
 app.post('/messages', cors(corsOptions), db2.addMessage);
 // Clear Message history by session
 app.delete('/messages/:session', cors(corsOptions), db2.deleteMessage);
+
+// This middleware informs the express application to serve our compiled React files
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  const path = require('path');
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  app.get('/*', function (req, res) {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+};
 
 // Start server listening
 server.listen(PORT, () => {

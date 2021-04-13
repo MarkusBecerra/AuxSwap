@@ -26,6 +26,10 @@ const useChat = (roomId) => {
     };
   }, [roomId]);
 
+  const deleteMessages = () => {
+    setMessages([]);
+  };
+
   const sendMessage = (messageBody, isCurrent) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
@@ -34,7 +38,7 @@ const useChat = (roomId) => {
     });
   };
 
-  return { messages, sendMessage };
+  return { messages, sendMessage, deleteMessages };
 };
 
 export default useChat;

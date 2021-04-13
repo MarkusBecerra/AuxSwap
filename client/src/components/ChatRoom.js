@@ -13,7 +13,6 @@ import * as $ from "jquery";
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
 
-
 const ChatRoom = (props) => {
 
   const context = useContext(TokenContext);
@@ -51,7 +50,7 @@ const ChatRoom = (props) => {
     id();
   }, []);
 
-  const { messages, sendMessage } = useChat(roomId);
+  const { messages, sendMessage, deleteMessages } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
   const [currSong, setCurrSong] = React.useState([]);
   const [showPlayer, setShowPlayer] = React.useState(false);
@@ -171,7 +170,9 @@ const ChatRoom = (props) => {
   }
 
   useEffect(() => {
+    deleteMessages();
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+    console.log(messages);
     if(!context.currtoken)
     {
       return;

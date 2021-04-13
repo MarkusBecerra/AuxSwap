@@ -21,34 +21,43 @@ const ChatRoom = (props) => {
   const { roomId } = props.match.params;
   // const [curUserID, setCurUserID] = React.useState("")
   const [currUserID, setCurrUserID] = React.useState("");
-  React.useEffect(() => {
-    const id = async () => {
-      if(!context.currtoken)
-      {
-        return "";
-      }
-      await $.ajax({
-          url: "https://api.spotify.com/v1/me",
-          type: "GET",
-          beforeSend: xhr =>{
-              xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
-              
-          },
-          success: data =>{
-              if(!data){
-                  console.log("null values");
-              }
-              setCurrUserID(data.id);
-              // retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
-          },
-          error: error => {
-              console.log("IN GET DATA ERROR", context.currtoken);
-              console.log(error);  
-          }
-      });
+  const [isloaded, setLoaded] = React.useState(false);
+
+  const id = async () => {
+    if(!context.currtoken)
+    {
+      return "";
     }
+    await $.ajax({
+        url: "https://api.spotify.com/v1/me",
+        type: "GET",
+        beforeSend: xhr =>{
+            xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
+            
+        },
+        success: data =>{
+            if(!data){
+                console.log("null values");
+            }
+            setCurrUserID(data.id);
+            console.log(`right after set: ${currUserID}`);
+        },
+        error: error => {
+            console.log("IN GET DATA ERROR", context.currtoken);
+            console.log(error);  
+        }
+    });
+  }
+
+  React.useEffect(() => {
     id();
-  }, []);
+    console.log(`after id: ${currUserID}`);
+  }, [currUserID]);
+
+  React.useLayoutEffect(() => {
+    deleteMessages();
+    retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+  }, [currUserID]);
 
   const { messages, sendMessage, deleteMessages } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
@@ -96,13 +105,10 @@ const ChatRoom = (props) => {
   }
 
   // pull message from db
-  const retrieveDetailsFromServer = (room) => {
-    
-    console.log(`currentUser: ${currUserID}`);
+  const retrieveDetailsFromServer = async (room) => {
     if (currUserID) {
       if (check){
-        console.log(`server url: ${process.env.REACT_APP_HOST}/messages/${room}`)
-        axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
+        await axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
           params: {
             id: room
           },
@@ -168,11 +174,6 @@ const ChatRoom = (props) => {
   const arr = [res];
   setCurrSong(arr);
   }
-
-  useEffect(() => {
-    deleteMessages();
-    retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
-  }, [currUserID]);
 
   return (
   <div className="chat-room-page">

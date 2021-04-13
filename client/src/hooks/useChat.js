@@ -8,6 +8,10 @@ const useChat = (roomId) => {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
 
+  const deleteMessages = () => {
+    setMessages([]);
+  };
+
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
       query: { roomId },
@@ -26,11 +30,6 @@ const useChat = (roomId) => {
     };
   }, [roomId]);
 
-  const deleteMessages = () => {
-    // console.log(`before: ${messages}`);
-    setMessages((messages) => []);
-    // console.log(`after: ${messages}`);
-  };
 
   const sendMessage = (messageBody, isCurrent) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {

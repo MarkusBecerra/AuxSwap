@@ -7,7 +7,7 @@ const SOCKET_SERVER_URL = process.env.REACT_APP_HOST;
 const useChat = (roomId) => {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
-
+  
   const deleteMessages = () => {
     setMessages([]);
   };
@@ -20,7 +20,7 @@ const useChat = (roomId) => {
     socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
       const incomingMessage = {
         ...message,
-        ownedByCurrentUser: message.isMe,
+        isCurrentUser: ! (message.senderID === socketRef.current.id)
       };
       setMessages((messages) => [...messages, incomingMessage]);
     });
@@ -31,11 +31,10 @@ const useChat = (roomId) => {
   }, [roomId]);
 
 
-  const sendMessage = (messageBody, isCurrent) => {
+  const sendMessage = (messageBody) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: socketRef.current.id,
-      isMe: isCurrent
     });
   };
 

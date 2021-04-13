@@ -12,7 +12,6 @@ import * as $ from "jquery";
 
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
-
 const ChatRoom = (props) => {
 
   const context = useContext(TokenContext);
@@ -61,10 +60,13 @@ const ChatRoom = (props) => {
 
   })
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
   }, [currUserID]);
 
+  // React.useLayoutEffect(() => {
+  //   retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+  // }, [messages]);
 
   const handleNewMessageChange = (event) => {
     event.preventDefault()
@@ -79,16 +81,18 @@ const ChatRoom = (props) => {
           setNewMessage("");
       return;
     };
-    sendMessage(newMessage, true);
+    sendMessage(newMessage);
     sendDetailsToServer(newMessage);
     // This will scroll to the bottom of the messages after a message is sent
     // we want to timeout so that it occurs only after a song is rendered, otherwise
     // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
     var chats = document.getElementById("messages-container");
+    // retrieveDetailsFromServer('xG7Y7IoU2');
     setTimeout(() => {
       chats.scrollTop = 1000000000;
     },100);
     setNewMessage("");
+    
   };
 
   // add message to db
@@ -105,6 +109,7 @@ const ChatRoom = (props) => {
 
   // pull message from db
   const retrieveDetailsFromServer = (room) => {
+    console.log("here");
     if (currUserID) {
       if (check){
         axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
@@ -116,25 +121,24 @@ const ChatRoom = (props) => {
             'Content-Type': 'application/json',
           },
         }, { responseType: 'json' }).then((res) => {
-          setMessages((messages) => []);
+          // setMessages((messages) => []);
+          console.log("retrive from db here");
           for (let i = 0; i < res.data.length; i++) {
             if(res.data[i].sender_id == currUserID)
             {
               // sendMessage(res.data[i].content, true);
               const incomingMessage = {
                 body: res.data[i].content,
-                senderId: "",
-                isMe: true,
-                ownedByCurrentUser: true,
+                senderId: res.data[i].sender_id,
+                isCurrentUser: true,
               };
               setMessages((messages) => [...messages, incomingMessage]);
             }
             else{
               const incomingMessage = {
                 body: res.data[i].content,
-                senderId: "",
-                isMe: false,
-                ownedByCurrentUser: false,
+                senderId: res.data[i].sender_id,
+                isCurrentUser: false,
               };
               setMessages((messages) => [...messages, incomingMessage]);
               // sendMessage(res.data[i].content, false);
@@ -210,14 +214,14 @@ const ChatRoom = (props) => {
               const isRestOfMessageEmpty = restofMessage === '';
               return (
                   <div>
-                      {!isRestOfMessageEmpty ? <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                      {!isRestOfMessageEmpty ? <li key={i} className={`message-item ${ message.isCurrentUser ? "my-message" : "received-message" }`}>
                             <div>
                                 {restofMessage}
                             </div>
                         </li> : null}
                     {spotifyLinks.map((spotifyLink,m_key)=>{
                         return(
-                          <li key={m_key} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                          <li key={m_key} className={`message-item ${ message.isCurrentUser ? "my-message" : "received-message" }`}>
                               <div  onClick={()=> {
                                   setSpotifyURI(spotifyLink);
                                   setShowPlayer(true);
@@ -236,7 +240,7 @@ const ChatRoom = (props) => {
 
               const words = message.body.split(' ');
               return(
-                <li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+                <li key={i} className={`message-item ${ message.isCurrentUser ? "my-message" : "received-message" }`}>
                 {words.map((word,j)=>{
                   const tempRegex = /(http:|https:|ftp:)\/\/[a-zA-Z0-9]+[.][a-z]+\/*[^ \n]*/g;
                   const isLink = tempRegex.test(word);
@@ -251,7 +255,7 @@ const ChatRoom = (props) => {
               )
             }
             else{
-              return (<li key={i} className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message" }`}>
+              return (<li key={i} className={`message-item ${ message.isCurrentUser ? "my-message" : "received-message" }`}>
                           {message.body}
                      </li>)
             }

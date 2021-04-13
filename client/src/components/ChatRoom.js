@@ -40,7 +40,7 @@ const ChatRoom = (props) => {
                   console.log("null values");
               }
               setCurrUserID(data.id);
-              retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+              // retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
           },
           error: error => {
               console.log("IN GET DATA ERROR", context.currtoken);
@@ -171,6 +171,7 @@ const ChatRoom = (props) => {
   }
 
   useEffect(() => {
+    retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
     if(!context.currtoken)
     {
       return;
@@ -195,7 +196,7 @@ const ChatRoom = (props) => {
         }
     });
  
-  }, []);
+  }, [currUserID]);
 
   return (
   <div className="chat-room-page">

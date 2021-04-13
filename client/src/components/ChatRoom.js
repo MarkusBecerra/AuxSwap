@@ -21,7 +21,7 @@ const ChatRoom = (props) => {
   const { roomId } = props.match.params;
   // const [curUserID, setCurUserID] = React.useState("")
   const [currUserID, setCurrUserID] = React.useState("");
-  const { messages, sendMessage, deleteMessages } = useChat(roomId);
+  const { messages, sendMessage, setMessages } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
   const [currSong, setCurrSong] = React.useState([]);
   const [showPlayer, setShowPlayer] = React.useState(false);
@@ -56,12 +56,13 @@ const ChatRoom = (props) => {
         }
     });
   }
+  React.useEffect(() => {
+    id();
+
+  })
 
   React.useLayoutEffect(() => {
-    deleteMessages();
-    id();
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
-    forceUpdate();
   }, [currUserID]);
 
 
@@ -115,13 +116,28 @@ const ChatRoom = (props) => {
             'Content-Type': 'application/json',
           },
         }, { responseType: 'json' }).then((res) => {
+          setMessages((messages) => []);
           for (let i = 0; i < res.data.length; i++) {
             if(res.data[i].sender_id == currUserID)
             {
-              sendMessage(res.data[i].content, true);
+              // sendMessage(res.data[i].content, true);
+              const incomingMessage = {
+                body: res.data[i].content,
+                senderId: "",
+                isMe: true,
+                ownedByCurrentUser: true,
+              };
+              setMessages((messages) => [...messages, incomingMessage]);
             }
             else{
-              sendMessage(res.data[i].content, false);
+              const incomingMessage = {
+                body: res.data[i].content,
+                senderId: "",
+                isMe: false,
+                ownedByCurrentUser: false,
+              };
+              setMessages((messages) => [...messages, incomingMessage]);
+              // sendMessage(res.data[i].content, false);
             }
           }
         }).catch(function (err) {
@@ -184,7 +200,8 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
-            console.log(`${messages}`),
+            // console.log(`${messages}`),
+           console.log(messages.length),
            messages.map((message, i) => {
              if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));

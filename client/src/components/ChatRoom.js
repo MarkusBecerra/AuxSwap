@@ -21,7 +21,15 @@ const ChatRoom = (props) => {
   const { roomId } = props.match.params;
   // const [curUserID, setCurUserID] = React.useState("")
   const [currUserID, setCurrUserID] = React.useState("");
-  const [isloaded, setLoaded] = React.useState(false);
+  const { messages, sendMessage, deleteMessages } = useChat(roomId);
+  const [newMessage, setNewMessage] = React.useState("");
+  const [currSong, setCurrSong] = React.useState([]);
+  const [showPlayer, setShowPlayer] = React.useState(false);
+  const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
+  const [check, setCheck] = React.useState(true);
+  const toggle = React.useCallback(() => setCheck(!check));
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
   const id = async () => {
     if(!context.currtoken)
@@ -49,23 +57,14 @@ const ChatRoom = (props) => {
     });
   }
 
-  React.useEffect(() => {
-    id();
-    console.log(`after id: ${currUserID}`);
-  }, [currUserID]);
-
   React.useLayoutEffect(() => {
+    id();
     deleteMessages();
+    forceUpdate();
     retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
   }, [currUserID]);
 
-  const { messages, sendMessage, deleteMessages } = useChat(roomId);
-  const [newMessage, setNewMessage] = React.useState("");
-  const [currSong, setCurrSong] = React.useState([]);
-  const [showPlayer, setShowPlayer] = React.useState(false);
-  const [hitEnter, setEnter] = React.useState(false);         //this state tracks if the enter key was hit within the text field
-  const [check, setCheck] = React.useState(true);
-  const toggle = React.useCallback(() => setCheck(!check));
+
   const handleNewMessageChange = (event) => {
     event.preventDefault()
     if(hitEnter !== true){                 //if the enter key hasn't been pressed
@@ -105,10 +104,11 @@ const ChatRoom = (props) => {
   }
 
   // pull message from db
-  const retrieveDetailsFromServer = async (room) => {
+  const retrieveDetailsFromServer = (room) => {
+    console.log('here');
     if (currUserID) {
       if (check){
-        await axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
+        axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
           params: {
             id: room
           },
@@ -186,8 +186,8 @@ const ChatRoom = (props) => {
         <div className="messages-container" id="messages-container">
           <ol className="messages-list">
           {
-          messages.map((message, i) => {
-            if(isMessageSpotifyTrack(message.body)){
+           messages.map((message, i) => {
+             if(isMessageSpotifyTrack(message.body)){
               const spotifyLinkSet = new Set((message.body).match(spotifyRegex));
               const spotifyLinks = Array.from(spotifyLinkSet);
               const restofMessage = (message.body).replace(/[ \n]*spotify:track:|https:\/\/[a-z]+\.spotify\.com\/track\/([0-9a-z-A-Z]{22})([?]si=[a-zA-Z0-9]{22})?([ \n]*)/g,'');

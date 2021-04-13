@@ -99,12 +99,13 @@ const ChatRoom = (props) => {
   const retrieveDetailsFromServer = (room) => {
     if (currUserID) {
       if (check){
-        console.log(`server url: ${process.env.REACT_APP_HOST}/messages/${room}`)
+        console.log(`server url: ${process.env.REACT_APP_HOST}:${process.env.PORT}/messages/${room}`)
         axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
         params: {
           id: room
         }
         }, { responseType: 'json' }).then((res) => {
+          console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
             if(res.data[i].sender_id == currUserID)
             {
@@ -113,7 +114,6 @@ const ChatRoom = (props) => {
             else{
               sendMessage(res.data[i].content, false);
             }
-            console.log(res.data[i].sender_id, currUserID);
           }
         }).catch(function (err) {
           console.log(err.type);

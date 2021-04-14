@@ -43,7 +43,7 @@ const createTwoSession = (req, res, next) => {
     const session = new RandExp(/^[0-9a-zA-Z]{9}$/).gen();
     pool.query('INSERT INTO chat (user_id, session_id) VALUES ($1, $3), ($2, $3)', [user1, user2, session], (error, results) => {
         if (!error) {
-            res.status(200).send(`successfully created session for user ${user1} and ${user2}, with ID: ${session}`);
+            res.status(200).send([`successfully created session for user ${user1} and ${user2}, with ID: ${session}`, session]);
         } else {
             res.status(404).send(error.message);
         }

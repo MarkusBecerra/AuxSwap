@@ -4,14 +4,15 @@ import './ChatUserSearch.css';
 import TokenContext from './TokenContext'
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import ChatRoom from "./ChatRoom";
 
 const SpotifyUserSearch = (props) => {
     const context = useContext(TokenContext);  
     const [userID, setUserID] = useState('');
     const [userDisplayName, setUserDisplayName] = useState('');
     const [userImage, setUserImage] = useState('');
-    let sessionID = '';
-    let curUserID = '';
+    const [sessionID, setSessionID] = useState(''); 
+    const [curUserID, setcurUserID] = useState('');
 
     const id = async () => {
       if(!context.currtoken)
@@ -29,7 +30,7 @@ const SpotifyUserSearch = (props) => {
               if(!data){
                   console.log("null values");
               }
-              curUserID = data.id;
+              setcurUserID(data.id);
           },
           error: error => {
               console.log("IN GET DATA ERROR", context.currtoken);
@@ -93,8 +94,8 @@ const SpotifyUserSearch = (props) => {
     },[userID]);
     
     // check the session between two person, if exists, then return session id, else create session
-    const getSession = () => {
-      axios.get(`${process.env.REACT_APP_HOST}/session/${userID}/${curUserID}`, {
+    const getSession = async() => {
+      await axios.get(`${process.env.REACT_APP_HOST}/session/${userID}/${curUserID}`, {
         params: {
           user1: userID,
           user2: curUserID
@@ -104,20 +105,21 @@ const SpotifyUserSearch = (props) => {
           'Content-Type': 'application/json',
         },
       }).then((res) => {
-        if (res == undefined) {
-          // create session
-          console.log("not exist")
-        }
-        else {
-          sessionID = res.data[0].session_id;
-          console.log(sessionID);
-        }
+        setSessionID(res.data[0].session_id);
       }).catch(function (err) {
-        console.log(err.type);
+        // create seesion
+        const payload = {
+          user1: curUserID,
+          user2: userID
+        }
+        axios.post(`${process.env.REACT_APP_HOST}/sessions`, payload).then((res) => {
+          setSessionID(res.data[1]);
+          console.log(res.data[1]);
+        }).catch(function (err) {
+            alert(err.message);
+        })
       });
-      setTimeout(() => {
-        
-      }, 3000);
+     
     }
 
     return(
@@ -128,8 +130,9 @@ const SpotifyUserSearch = (props) => {
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
                         <div>
-                          
-                          <Link to={`/chat/1`}>
+
+                          {/* <button><img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/></button> */}
+                          <Link to={`/chat/${sessionID}`}>
                             <img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/>
                           </Link>
                          
@@ -154,7 +157,7 @@ const SpotifyUserSearch = (props) => {
 
       </div>
     )
-        
-    }
     
-    export default SpotifyUserSearch
+  }
+    
+  export default SpotifyUserSearch

@@ -61,7 +61,7 @@ const ChatRoom = (props) => {
   })
 
   React.useEffect(() => {
-    retrieveDetailsFromServer("xG7Y7IoU2"); //get chat history
+    retrieveDetailsFromServer(roomId); //get chat history
   }, [currUserID]);
 
   // React.useLayoutEffect(() => {
@@ -82,7 +82,7 @@ const ChatRoom = (props) => {
       return;
     };
     sendMessage(newMessage);
-    sendDetailsToServer(newMessage);
+    sendDetailsToServer(newMessage, roomId);
     // This will scroll to the bottom of the messages after a message is sent
     // we want to timeout so that it occurs only after a song is rendered, otherwise
     // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
@@ -96,9 +96,9 @@ const ChatRoom = (props) => {
   };
 
   // add message to db
-  const sendDetailsToServer = (message, sessionID) => {
+  const sendDetailsToServer = (message, roomId) => {
     const payload = {
-        session: 'xG7Y7IoU2',
+        session: roomId,
         userID: currUserID,
         content: message
     }
@@ -108,13 +108,13 @@ const ChatRoom = (props) => {
   }
 
   // pull message from db
-  const retrieveDetailsFromServer = (room) => {
+  const retrieveDetailsFromServer = (roomId) => {
     console.log("here");
     if (currUserID) {
       if (check){
-        axios.get(`${process.env.REACT_APP_HOST}/messages/${room}`, {
+        axios.get(`${process.env.REACT_APP_HOST}/messages/${roomId}`, {
           params: {
-            id: room
+            id: roomId
           },
           headers: {
             'Accept': 'application/json',
@@ -301,7 +301,6 @@ const ChatRoom = (props) => {
     </div>
 
   );
-
 };
 
 export default ChatRoom;

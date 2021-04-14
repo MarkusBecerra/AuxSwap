@@ -30,10 +30,20 @@ const SpotifyUserSearch = (props) => {
               if(!data){
                   console.log("null values");
               }
+              if(userID != "" && (data.id == userID))
+              {
+                document.getElementById('user_searchbar').value = "";
+                setUserID("");
+                setUserDisplayName("You cannot chat with yourself");
+                setUserImage("");
+
+                return;
+              }
+
               setcurUserID(data.id);
           },
           error: error => {
-              console.log("IN GET DATA ERROR", context.currtoken);
+              // console.log("IN GET DATA ERROR", context.currtoken);
               console.log(error);  
           }
       });
@@ -63,7 +73,7 @@ const SpotifyUserSearch = (props) => {
           }
           else
           {
-            console.log(`userData: ${data}`);
+            // console.log(`userData: ${data}`);
             setUserDisplayName(data.display_name);
             if(data.images.length > 0)
             {
@@ -78,6 +88,9 @@ const SpotifyUserSearch = (props) => {
       },
       error: error => {
         console.log(error);
+        setUserID("");
+        setUserDisplayName("");
+        setUserImage("");
       }
     });
       }
@@ -137,7 +150,7 @@ const SpotifyUserSearch = (props) => {
         <div className="ChatUserSearch-container">
         <br></br>
             <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value.toLowerCase())}} />
-                  {userDisplayName!=='' && userImage!=='' ? <div className="result-containerChatUserSearch">
+                  {userDisplayName!=='' && userImage!=='' && (curUserID.toLowerCase() != userID.toLowerCase()) ? <div className="result-containerChatUserSearch">
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
                         <div>
@@ -155,7 +168,20 @@ const SpotifyUserSearch = (props) => {
         </div>
  : null}
 
-{userDisplayName!=='' && userImage=='' ? <div className="result-containerChatUserSearch">
+{userDisplayName!=='' && userDisplayName != "You cannot chat with yourself" && userImage=='' ? <div className="result-containerChatUserSearch">
+                        <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
+                        <li className="user-info-itemChatUserSearch">
+                        <div>
+
+                        <div className="user-display-nameChatUserSearch_2">{userDisplayName}</div>
+                      </div>
+                      </li>
+          </ul>
+        </div>
+ : null}
+
+
+{userDisplayName == "You cannot chat with yourself" ? <div className="result-containerChatUserSearch">
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
                         <div>
@@ -171,5 +197,9 @@ const SpotifyUserSearch = (props) => {
     )
     
   }
+
+
+
+  
     
   export default SpotifyUserSearch

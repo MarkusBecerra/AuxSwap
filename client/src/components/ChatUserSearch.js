@@ -95,6 +95,7 @@ const SpotifyUserSearch = (props) => {
     
     // TODO: clicking too fast can result multiple chat sessions, and change chat room title to your chat mate
     // TODO: make sure clicking yourself 
+    // TODO: fix auto scroll when someone sends messages
     // check the session between two person, if exists, then return session id, else create session
     const getSession = async() => {
       await axios.get(`${process.env.REACT_APP_HOST}/session/${userID}/${curUserID}`, {

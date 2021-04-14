@@ -93,6 +93,8 @@ const SpotifyUserSearch = (props) => {
       getUserSearch();
     },[userID]);
     
+    // TODO: clicking too fast can result multiple chat sessions, and change chat room title to your chat mate
+    // TODO: make sure clicking yourself 
     // check the session between two person, if exists, then return session id, else create session
     const getSession = async() => {
       await axios.get(`${process.env.REACT_APP_HOST}/session/${userID}/${curUserID}`, {
@@ -133,7 +135,7 @@ const SpotifyUserSearch = (props) => {
     return(
         <div>
         <br></br>
-            <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value)}} />
+            <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value.toLowerCase())}} />
                   {userDisplayName!=='' && userImage!=='' ? <div className="result-containerChatUserSearch">
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">
@@ -141,6 +143,7 @@ const SpotifyUserSearch = (props) => {
 
                           {/* <button><img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/></button> */}
                           <Link to={`/chat/${sessionID}`}>
+
                             <img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/>
                           </Link>
                          

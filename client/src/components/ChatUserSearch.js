@@ -105,21 +105,30 @@ const SpotifyUserSearch = (props) => {
           'Content-Type': 'application/json',
         },
       }).then((res) => {
-        setSessionID(res.data[0].session_id);
-      }).catch(function (err) {
-        // create seesion
-        const payload = {
-          user1: curUserID,
-          user2: userID
+        if (res.data.length == 0)
+        {
+          console.log("Its empty, need to post add one");
+          // create seesion
+          const payload = {
+            user1: curUserID,
+            user2: userID
+          }
+          axios.post(`${process.env.REACT_APP_HOST}/sessions`, payload).then((res) => {
+            setSessionID(res.data[1]);
+            console.log(`successful: ${res.data[1]}`);
+          }).catch(function (err) {
+            setSessionID(err.message);
+            console.log(`existed: ${err.message}`);
+          })
         }
-        axios.post(`${process.env.REACT_APP_HOST}/sessions`, payload).then((res) => {
-          setSessionID(res.data[1]);
-          console.log(res.data[1]);
-        }).catch(function (err) {
-            alert(err.message);
-        })
+        else {
+          setSessionID(res.data[0].session_id);
+          console.log("Not empty")
+        }
+        
+      }).catch(function (err) {
+        console.log(`err: ${err.message}`);
       });
-     
     }
 
     return(

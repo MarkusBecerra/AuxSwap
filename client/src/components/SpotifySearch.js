@@ -8,7 +8,7 @@ const SpotifySearch = (props) => {
     const context = useContext(TokenContext);  
     const [topResults, setTopResults] = React.useState([]);
     const [trackName, setTrackName] = React.useState("")
-    const numSearchResults = 5; //number of results we want to return
+    const numSearchResults = 10; //number of results we want to return
 
     // a workaround to programatically trigger the onChange event of the
     // new-message-input-field, so that it sets the new message

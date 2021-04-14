@@ -33,7 +33,8 @@
     margin: 0px;
     padding: 10px;
     display: block; 
-    
+    overflow-y: scroll;
+    height: 65vh;
     /* list-style-type: disc; 
     margin-block-start: 1em;
     margin-block-end: 1em;

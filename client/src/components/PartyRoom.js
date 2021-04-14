@@ -92,11 +92,13 @@ function PartyRoom(props){
                 <h1 className="party-room-title">Party room</h1>
                 <h2 className="party-room-name" >Room: {roomId}</h2>
                 <div className="user-container">
+                    <div className="volume_control">
+                        <input type="range" min="0" max="100" className="slider" onChange={handleVolume}></input>
+                    </div>
                     <h3 className="user-title">Active Users</h3>
+                
                 <ActiveBox members={member}/>
-                <div className="volume_control">
-                <input type="range" min="0" max="100" className="slider" onChange={handleVolume}></input>
-                </div>
+                
                 </div>
                 <div className="Search-Bar">
                 <SearchBar api={spotifyApi} handleSongSend={handleSongSend}/>

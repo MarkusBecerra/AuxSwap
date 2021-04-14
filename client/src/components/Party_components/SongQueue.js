@@ -6,9 +6,13 @@ export default function SongQueue({song}) {
     return (
         <div>
             <div>
-           <img src={song.image}/>
-           <div className="song-name">{song.songName}</div>
-           <div className="artist-name">{song.artist}</div>
+                <ul className="result-list-party">
+                    <li className="song-info-list-item-party">
+                        <img className="search-images-party" src={song.image}/>
+                        <div className="song-name-party">{song.songName}</div>
+                        <div className="artist-name-party">{song.artist}</div>
+                    </li>
+                </ul>
             </div>
         </div>
     )

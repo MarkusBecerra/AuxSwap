@@ -197,7 +197,7 @@ const ChatRoom = (props) => {
   <div className="chat-room-page">
    <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
-      <h2 className="room-name">Room: {roomId}</h2>
+      <h2 className="room-name">{currUserID}</h2>
       <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
       </div>

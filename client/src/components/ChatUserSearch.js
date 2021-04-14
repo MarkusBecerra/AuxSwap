@@ -117,13 +117,12 @@ const SpotifyUserSearch = (props) => {
             setSessionID(res.data[1]);
             console.log(`successful: ${res.data[1]}`);
           }).catch(function (err) {
-            setSessionID(err.message);
-            console.log(`existed: ${err.message}`);
+            console.log(`err: ${err.message}`);
           })
         }
         else {
           setSessionID(res.data[0].session_id);
-          console.log("Not empty")
+          console.log("Already exist");
         }
         
       }).catch(function (err) {

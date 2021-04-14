@@ -27,20 +27,7 @@ const handleEnter = e => {    //handle enter function
   return (
     <div>
       <div className="home-container">
-      <input
-        type="text"
-        placeholder="Room"
-        value={roomName}
-        onKeyDown={handleEnter}
-        onChange={handleRoomNameChange}
-        className="text-input-field"
-      />
-      
-      <Link to={`/chat/${roomName}`} className="enter-room-button">
-        Join room
-      </Link>
-      <ChatUserSearch></ChatUserSearch>
-      
+        <ChatUserSearch></ChatUserSearch>
       </div>
 
     </div>

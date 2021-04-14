@@ -55,6 +55,7 @@ body{
 
 .message-item {
     width: fit-content;
+    max-width: 50%;
     margin: 8px;
     padding: 12px 8px;
     word-break: break-word;

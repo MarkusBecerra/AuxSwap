@@ -1,26 +1,22 @@
+.ChatUserSearch-container {
+    position: fixed;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    flex-direction: column;
+}
+
+
 .user-searchbarChatUserSearch {
-    /* -webkit-writing-mode: horizontal-tb !important; */
-    text-rendering: auto;
-    color: -internal-light-dark(black, white);
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    appearance: auto;
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-    -webkit-rtl-ordering: logical;
-    cursor: text;
-    margin: 0em;
-    font: 400 13.3333px Arial;
-    padding: 1px 2px;
-    border-width: 2px;
-    border-style: inset;
-    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-    border-image: initial;
-    border-radius: 2px;
+    padding: 24px 12px;
+    border-radius: 7px;
+    font-size: 24px;
+}
+
+.user-searchbarChatUserSearch:focus {
+    outline: none;
 }
 
 .user-info-itemChatUserSearch {
@@ -37,17 +33,13 @@
     margin: 0px;
     padding: 10px;
     display: block; 
+    overflow: hidden;
     
-    /* list-style-type: disc; 
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;  */
     border: white 2px solid;
     background-color: rgb(0, 0, 0);
 
 }
+
 .result-listChatUserSearch:empty {
     display: none;
 }
@@ -56,7 +48,7 @@
 
 
 .search-imageChatUserSearch {
-    width: 100px;
+    width: 200px;
     float: left;
     border: white 2px solid;
     /* border-radius: 22px; */
@@ -71,7 +63,7 @@
 .user-display-nameChatUserSearch {
     color: white;
     display: block;
-    padding-left: 125px;;
+    padding-left: 225px;;
     font-size: 30px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 
@@ -92,8 +84,11 @@ say "User does not exist", without having that test be padded to the right */
 }
 
 .result-containerChatUserSearch {
-    position: absolute;
+    /* position: relative; */
+    height: 0px;
     z-index: 999;
+    width: auto;
+    
     /* bottom: 18.5%; */
 }
 

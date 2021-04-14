@@ -11,8 +11,8 @@ const pool = new Pool({
 
 // return chat session by yourID and someone's ID
 const getSessionByUsers = (req, res, next) => {
-    const user1 = req.params.user1;
-    const user2 = req.params.user2;
+    const user1 = String(req.params.user1);
+    const user2 = String(req.params.user2);
     pool.query('SELECT session_id FROM chat WHERE user_id = $1 AND \
                 session_id IN (SELECT session_id FROM chat WHERE user_id = $2)', [user1, user2], (error, results) => {
         if (!error) {

@@ -28,8 +28,13 @@ function PartyRoom(props){
     function handleVolume(event){
         if(!window.onSpotifyWebPlaybackSDKReady().SDK_object) return
         if(!localSDK) return
-        localSDK.setVolume(event.target.value/100)
-        //console.log(event.target.value)
+        var volume = event.target.value / 100;
+        if(volume === 0){
+            volume = 0.0000000000001;
+        }
+
+        localSDK.setVolume(parseFloat(volume));
+        console.log(volume);
     }
     useLayoutEffect(()=>{
         if(!window.onSpotifyWebPlaybackSDKReady().SDK_object) return
@@ -90,7 +95,7 @@ function PartyRoom(props){
                     <h3 className="user-title">Active Users</h3>
                 <ActiveBox members={member}/>
                 <div className="volume_control">
-                <input type="range" min="1" max="100" className="slider" onChange={handleVolume}></input>
+                <input type="range" min="0" max="100" className="slider" onChange={handleVolume}></input>
                 </div>
                 </div>
                 <div className="Search-Bar">

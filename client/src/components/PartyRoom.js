@@ -34,7 +34,7 @@ function PartyRoom(props){
         }
 
         localSDK.setVolume(parseFloat(volume));
-        console.log(volume);
+        // console.log(volume);
     }
     useLayoutEffect(()=>{
         if(!window.onSpotifyWebPlaybackSDKReady().SDK_object) return

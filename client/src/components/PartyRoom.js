@@ -6,7 +6,7 @@ import SearchBar from "./Party_components/SearchBar"
 import SongQueue from "./Party_components/SongQueue"
 import CurrentPlay from"./Party_components/CurrentPlay"
 import useParty from "../hooks/useParty";
-
+import {v4 as uuidv4} from 'uuid';
 import "./PartyRoom.css"
 
 import SpotifyWebApi from "spotify-web-api-node";
@@ -46,14 +46,19 @@ function PartyRoom(props){
         setmember(party.memberlist)
     },[party.memberlist])
     useEffect(()=>{
-        if(!party.currentSong) return
         if(!localSDK) return
+        if(!party.currentSong) 
+        {
+            localSDK.nextTrack()
+            return
+        }
+        
         localSDK.getCurrentState().then(state=>{
             if(!state){
                 party.SDKPlay(party.currentSong.songUrl)
                 return
             }
-            if(state.track_window.current_track.uri!=party.currentSong.songUrl)
+            if(state.track_window.current_track.uri!=party.currentSong.songUrl||state.paused==true)
             {
                 party.SDKPlay(party.currentSong.songUrl)
                 return
@@ -70,7 +75,8 @@ function PartyRoom(props){
                 {
                     if(localsongList.length>0)
                     {
-                        party.nextSong()
+                        console.log("next song")
+                        party.nextSong() 
                     }
                     
                 }
@@ -99,7 +105,7 @@ function PartyRoom(props){
                 <div className="song-container">
                     {localsongList.map((song)=>
                         
-                        (<SongQueue song={song} key={song.songUrl}/>)
+                        (<SongQueue song={song} key={uuidv4()}/>)
                     )}
                 
                 </div>

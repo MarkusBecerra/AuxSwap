@@ -16,7 +16,8 @@
     "randexp": "^0.5.3",
     "request": "^2.88.2",
     "serve": "^11.3.2",
-    "socket.io": "^3.0.4"
+    "socket.io": "^3.0.4",
+    "uuid": "^3.4.0"
   },
   "scripts": {
     "client-install": "npm install --prefix client",

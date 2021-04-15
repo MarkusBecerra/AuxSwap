@@ -5,8 +5,26 @@ import TokenContext from './TokenContext'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import ChatRoom from "./ChatRoom";
+import { useHistory } from "react-router-dom";
+
+import {useRef} from 'react';
+
+
 
 const SpotifyUserSearch = (props) => {
+
+    let btnRef = useRef();
+
+
+    const onBtnClick = e => {
+      if(btnRef.current){
+        btnRef.current.setAttribute("disabled", "disabled");
+      }
+      getSession();
+    }
+    
+
+    const history = useHistory();
     const context = useContext(TokenContext);  
     const [userID, setUserID] = useState('');
     const [userDisplayName, setUserDisplayName] = useState('');
@@ -123,7 +141,7 @@ const SpotifyUserSearch = (props) => {
       }).then((res) => {
         if (res.data.length == 0)
         {
-          console.log("Its empty, need to post add one");
+          // console.log("Its empty, need to post add one");
           // create seesion
           const payload = {
             user1: curUserID,
@@ -131,20 +149,29 @@ const SpotifyUserSearch = (props) => {
           }
           axios.post(`${process.env.REACT_APP_HOST}/sessions`, payload).then((res) => {
             setSessionID(res.data[1]);
-            console.log(`successful: ${res.data[1]}`);
+            // console.log(`successful: ${res.data[1]}`);
           }).catch(function (err) {
             console.log(`err: ${err.message}`);
           })
         }
         else {
           setSessionID(res.data[0].session_id);
-          console.log("Already exist");
+          // console.log("Already exist");
         }
         
       }).catch(function (err) {
         console.log(`err: ${err.message}`);
       });
     }
+
+    useEffect((props) => {
+      // LINK TO
+     
+      history.push(`/chat/${sessionID}`);
+
+
+
+    },[sessionID]);
 
     return(
         <div className="ChatUserSearch-container">
@@ -155,12 +182,10 @@ const SpotifyUserSearch = (props) => {
                         <li className="user-info-itemChatUserSearch">
                         <div>
 
-                          {/* <button><img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/></button> */}
-                          <Link to={`/chat/${sessionID}`}>
 
-                            <img onClick={getSession}className="search-imageChatUserSearch" src={userImage}/>
-                          </Link>
-                         
+                            <input type="image" ref={btnRef} className="search-imageChatUserSearch" src={userImage} onClick={onBtnClick} />
+      
+
                         <div className="user-display-nameChatUserSearch">{userDisplayName}</div>
                       </div>
                       </li>

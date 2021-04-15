@@ -60,6 +60,7 @@ function PartyRoom(props){
             }
             if(state.track_window.current_track.uri!=party.currentSong.songUrl||state.paused==true)
             {
+                localSDK.nextTrack()
                 party.SDKPlay(party.currentSong.songUrl)
                 return
             }

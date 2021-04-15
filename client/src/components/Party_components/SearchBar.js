@@ -15,7 +15,7 @@ export default function SearchBar({api,handleSongSend}) {
         
         handleSongSend(song)
         //console.log(song)
-        setUseSearch("")
+        //setUseSearch("")
     }
     useEffect(() => {
         if (!api) return
@@ -39,23 +39,25 @@ export default function SearchBar({api,handleSongSend}) {
             )
         })
     }, [useForSearch, currentApi])
+   
     return (
         <div className="search-box">
             <FormControl
                 type="search"
-                placeholder="Enter song name"
+                placeholder="Search for a song"
                 value={useForSearch}
                 onChange={event => setUseSearch(event.target.value)}
                 className="search-bar"
             />
             <div className="song-box">
                 {
-                    result.map(song=>(
+                    
+                    result.length>0 ? result.map(song=>(
                         <SongTab song={song} key={song.songUrl} setsong={setsong}/>
-                    ))
+                    )):<p className="message">Search a Song to add to queue</p>
                 }
-                
             </div>
+                
             <div className="decision-box">
             </div>
         </div>

@@ -13,3 +13,15 @@
     height: max-content;
     
 }
+.message{
+    text-align: center;
+    color:rgb(60, 216, 29);
+    border: 1px solid white;
+    padding:1px;
+    margin-top: 80%;
+    font-size: 15px;
+    appearance: auto;
+}
+.search-box{
+    text-align: center;
+}

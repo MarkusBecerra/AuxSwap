@@ -14,8 +14,6 @@ export default function SearchBar({api,handleSongSend}) {
     function setsong(song){
         
         handleSongSend(song)
-        //console.log(song)
-        setUseSearch("")
     }
     useEffect(() => {
         if (!api) return

@@ -8,8 +8,5 @@
     
 }
 .search-bar{
-    flex-direction: column;
     padding-top: 2px;
-    height: max-content;
-    
 }

@@ -9,7 +9,6 @@ import axios from 'axios';
 import * as $ from "jquery";
 
 
-
 //CREDIT: https://github.com/gilbarbara/react-spotify-web-playback
 
 const ChatRoom = (props) => {
@@ -29,6 +28,38 @@ const ChatRoom = (props) => {
   const toggle = React.useCallback(() => setCheck(!check));
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
+  const [displayUserID, setDisplayUserID] = React.useState("");
+
+
+
+
+  const getSession = async () => {
+
+    axios.get(`${process.env.REACT_APP_HOST}/session/${roomId}`, {
+      params: {
+        session_id: roomId
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }, { responseType: 'json' }).then((res) => {
+
+
+      for (let i = 0; i < res.data.length; i++) {
+        if(res.data[i].user_id != currUserID)
+        {
+          setDisplayUserID(res.data[i].user_id);
+        }
+      }
+    }).catch(function (err) {
+      console.log(err.type);
+    });
+  }
+
+
+
+
 
   const id = async () => {
     if(!context.currtoken)
@@ -57,7 +88,7 @@ const ChatRoom = (props) => {
   }
   React.useEffect(() => {
     id();
-
+    getSession();
   })
 
   React.useEffect(() => {
@@ -87,7 +118,7 @@ const ChatRoom = (props) => {
     // we want to timeout so that it occurs only after a song is rendered, otherwise
     // it scrolls to the bottom, then renders the song, and now it's no longer at the bottom
     var chats = document.getElementById("messages-container");
-    // retrieveDetailsFromServer('xG7Y7IoU2');
+   
     setTimeout(() => {
       chats.scrollTop = 1000000000;
     },100);
@@ -197,7 +228,7 @@ const ChatRoom = (props) => {
   <div className="chat-room-page">
    <div className="chat-room-container">
     <h1 className="chat-room-title">Chat Room</h1>
-      <h2 className="room-name">{currUserID}</h2>
+      <h2 className="room-name">{displayUserID}</h2>
       <div>
         <SpotifySearch>SPOTIFY SEARCH</SpotifySearch>
       </div>

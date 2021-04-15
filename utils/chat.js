@@ -23,6 +23,25 @@ const getSessionByUsers = (req, res, next) => {
     })
 }
 
+
+
+
+const getUsersBySession = (req, res, next) => {
+    const session = String(req.params.session_id);
+
+    pool.query('SELECT user_id FROM chat WHERE session_id = $1', [session], (error, results) => {
+        if (!error) {
+            res.status(200).send(results.rows);
+        } else {
+            res.status(404).send(error.message);
+        }
+    })
+}
+
+
+
+
+
 // make chat single session
 const createSession = (req, res, next) => {
     const { userID } = req.body;
@@ -66,5 +85,6 @@ module.exports = {
     getSessionByUsers,
     createSession,
     createTwoSession,
-    deleteSession
+    deleteSession,
+    getUsersBySession
 }

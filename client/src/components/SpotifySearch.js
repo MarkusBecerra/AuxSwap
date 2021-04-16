@@ -3,6 +3,7 @@ import * as $ from "jquery";
 import './SpotifySearch.css';
 import TokenContext from './TokenContext'
 import SpotifyPlayer from 'react-spotify-web-playback';
+import {v4 as uuidv4} from 'uuid';
 
 const SpotifySearch = (props) => {
     const context = useContext(TokenContext);  
@@ -79,7 +80,7 @@ const SpotifySearch = (props) => {
 
                       return <li className="song-info-list-item">
                       <div>
-                        <img className="search-images" key={index.external_urls.spotify} src={index.album.images[0].url} onClick={() => {appendSongToMessage(index.external_urls.spotify);setTopResults([]);topResults.length=0;document.getElementById('searchbar').value=""}}/>
+                        <img className="search-images" key={uuidv4()} src={index.album.images[0].url} onClick={() => {appendSongToMessage(index.external_urls.spotify);setTopResults([]);topResults.length=0;document.getElementById('searchbar').value=""}}/>
                         {/* <div className="song-name">{index.name}<br></br>{index.artists[0].name}</div> */}
                         <div className="song-name">{index.name}</div>
                         <div className="song-artist">{index.artists[0].name}</div>

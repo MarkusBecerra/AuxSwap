@@ -1,31 +1,36 @@
 .chat-user-search-container {
-    clear: both;
+    /* transform: translate(0, -50%);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+    /* position: fixed;  */
+    /* margin: auto; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-
-
-
+.existing-chats-container {
+    position: relative;
+    margin-top: 100px;
+    margin-left: 50px;
+}
 
 .ChatUserSearch-container {
-    background-color: orange;
-    position: fixed;
-    
-    margin: auto;
-    left: 25%;
-    right: 25%;
-    top: 50%;
-    transform: translate(0, -50%);
-    display: flex;
-    flex-direction: column;
+    min-width: 250px;
+    margin-left: 100px;
+    margin-top: 300px;
+    margin-right: 10%;
+    width: 60%;
+
 }
-
-
-
 
 .user-searchbarChatUserSearch {
     padding: 24px 12px;
     border-radius: 7px;
     font-size: 24px;
+    width: 100%;
+    
 }
 
 .user-searchbarChatUserSearch:focus {
@@ -36,6 +41,8 @@
     list-style-type: none;
     color: white;
     margin-bottom: 80px;
+    word-break: break-all;
+
     
 }
 .user-info-itemChatUserSearch:empty {
@@ -43,6 +50,8 @@
 }
 
 .result-listChatUserSearch {
+    white-space: nowrap;
+
     margin: 0px;
     padding: 10px;
     display: block; 
@@ -68,25 +77,13 @@
     
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .search-imageChatUserSearch[src=""] {
     display: none;
 }
 
 /* This one will match when the user exists */
 .user-display-nameChatUserSearch {
+    word-break: break-word;
     color: white;
     display: block;
     padding-left: 225px;;
@@ -98,6 +95,9 @@
 /* This one will match when the image doesn't exist and we wnat to
 say "User does not exist", without having that test be padded to the right */
 .user-display-nameChatUserSearch_2 {
+    word-break: break-all;
+    overflow-wrap: break-word;
+
     color: white;
     display: block;
     font-size: 30px;
@@ -131,15 +131,7 @@ say "User does not exist", without having that test be padded to the right */
 
 
 
-.existing-chats-container {
-    position: fixed;
-    margin: left;
-    left: 5%;
-    top: 20%;
-    transform: translate(0, -50%);
-    display: flex;
-    flex-direction: column;
-}
+
 
 
 .existing-chat-image {
@@ -149,13 +141,6 @@ say "User does not exist", without having that test be padded to the right */
     /* border-radius: 22px; */
     
 }
-
-.existing-chats-container {
-    position: absolute;
-    background-color: red;
-
-}
-
 
 .existing-chat-item {
     list-style-type: none;
@@ -176,9 +161,8 @@ say "User does not exist", without having that test be padded to the right */
 
 
 .existing-chats-list {
-    background-color: blue;
 
-    position: fixed;
+    /* position: fixed; */
     margin: 0px;
     padding: 10px;
     display: block; 
@@ -186,7 +170,7 @@ say "User does not exist", without having that test be padded to the right */
     height: 65vh;
   
     border: white 2px solid;
-    /* background-color: rgb(0, 0, 0); */
+    background-color: rgb(0, 0, 0);
     width: 250px;
 }
 .existing-chats:empty {

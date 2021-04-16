@@ -141,7 +141,14 @@ app.post('/chat', cors(corsOptions), db3.addChatMessage);
 // Get session by yourID and your receiver's ID
 app.get('/session/:user1/:user2', cors(corsOptions), db4.getSessionByUsers);
 
+
 app.get('/session/:session_id', cors(corsOptions), db4.getUsersBySession);
+
+
+app.get('/sessions/:user_id', cors(corsOptions), db4.getExistingChats);
+
+
+
 
 
 // Add one session

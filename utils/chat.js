@@ -38,7 +38,17 @@ const getUsersBySession = (req, res, next) => {
     })
 }
 
-
+const getExistingChats = (req, res, next) => {
+    const user_ID = String(req.params.user_id);
+   
+    pool.query('SELECT c2.user_id, c2.session_id FROM chat c1 JOIN chat c2 ON c1.user_id= $1 AND c2.user_id <> $1 AND c1.session_id=c2.session_id', [user_ID], (error, results) => {
+        if (!error) {
+            res.status(200).send(results.rows);
+        } else {
+            res.status(404).send(error.message);
+        }
+    })
+}
 
 
 
@@ -86,5 +96,6 @@ module.exports = {
     createSession,
     createTwoSession,
     deleteSession,
-    getUsersBySession
+    getUsersBySession,
+    getExistingChats
 }

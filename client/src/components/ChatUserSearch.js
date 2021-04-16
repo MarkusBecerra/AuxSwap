@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import * as $ from "jquery";
 import './ChatUserSearch.css';
 import TokenContext from './TokenContext'
@@ -8,6 +8,7 @@ import ChatRoom from "./ChatRoom";
 import { useHistory } from "react-router-dom";
 
 import {useRef} from 'react';
+import e from "cors";
 
 
 
@@ -23,14 +24,24 @@ const SpotifyUserSearch = (props) => {
       getSession();
     }
     
-
+    const useForceUpdate = () => useState()[1];
+    
     const history = useHistory();
     const context = useContext(TokenContext);  
+
+    // this is the user id being typed in
     const [userID, setUserID] = useState('');
     const [userDisplayName, setUserDisplayName] = useState('');
     const [userImage, setUserImage] = useState('');
     const [sessionID, setSessionID] = useState(''); 
+
+    // this is YOUR user ID
     const [curUserID, setcurUserID] = useState('');
+    const [existingChats, setExistingChats] = useState([]);
+
+
+    const [existingChatsDisplay, setExistingChatsDisplay] = useState([]);
+
 
     const id = async () => {
       if(!context.currtoken)
@@ -66,9 +77,14 @@ const SpotifyUserSearch = (props) => {
           }
       });
     }
+
+    
     React.useEffect(() => {
+      console.log("INSIDE ID USE EFFECT")
       id();
-    })
+    },[])
+
+    
 
     const getUserSearch = (props) => {
 
@@ -120,13 +136,59 @@ const SpotifyUserSearch = (props) => {
               
       }
     }
+
+
+
     useEffect((props) => {
+      console.log("INSIDE GET USER SEARCH USE EFFECT")
+
       getUserSearch();
     },[userID]);
+
+   
+
+
+    const getExistingChats = async() => {
+      await axios.get(`${process.env.REACT_APP_HOST}/sessions/${curUserID}`, {
+        params: {
+          user_id: curUserID
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+       
+      console.log("DATA")
+      console.log(res.data);
+      setExistingChats(res.data);
+        
+      }).catch(function (err) {
+        console.log(`err: ${err.message}`);
+      });
+    }
+
+
+
+    useEffect((props) => {
+      console.log("INSIDE GET EXISTING CHATS EFFECT")
+
+      if(curUserID != '')
+      {
+        getExistingChats();
+      }
+
+    },[curUserID]);
+
     
-    // TODO: clicking too fast can result multiple chat sessions, and change chat room title to your chat mate
-    // TODO: make sure clicking yourself 
-    // TODO: fix auto scroll when someone sends messages
+
+
+    
+
+
+  
+
+    
     // check the session between two person, if exists, then return session id, else create session
     const getSession = async() => {
       await axios.get(`${process.env.REACT_APP_HOST}/session/${userID}/${curUserID}`, {
@@ -164,17 +226,114 @@ const SpotifyUserSearch = (props) => {
       });
     }
 
+
+
+
+
+
+
+    useEffect((props) => {
+      console.log("INSIDE SET EXISTING CHATS DISPLAY EFFECT")
+
+      if(existingChats == [])
+      {
+        return;
+      }
+      if(existingChats.length == 0)
+      {
+        return;
+      }
+      let array = [];
+     
+      console.log("LOL")
+      console.log(`length: ${existingChats.length}`)
+      // console.log(existingChats[0].session_id);
+
+        for(let i=0;i<existingChats.length;i++) {
+          if(curUserID !== '')
+          {
+            console.log("IT'S HAPPENING")
+            $.ajax({
+            url: `https://api.spotify.com/v1/users/${existingChats[i].user_id}`,
+            type: "GET",
+            beforeSend: xhr => {
+                xhr.setRequestHeader("Authorization", "Bearer " + context.currtoken);
+            },
+            dataType: "json",
+            
+            success: data => {
+                if(!data){
+                }
+                else
+                {
+                  // console.log(`wtf ${i}: ${existingChats[i].session_id}`)
+                  array.push([existingChats[i].session_id, data.display_name, data.images[0].url]);
+                } 
+            },
+            error: error => {
+              console.log(error);
+              
+            }
+          
+          
+     });
+    }
+  }
+
+    setExistingChatsDisplay(array);
+    console.log(`IT SHOULD BE SHOWING: ${existingChatsDisplay.length}`);
+
+
+    },[existingChats]);
+    
+
+
+
+
+
+    useEffect((props) => {
+    console.log(`CHANGED EXISTINGCHATSDISPLAY: ${existingChatsDisplay.length}`)
+    
+
+    },[existingChatsDisplay]);
+
+
     useEffect((props) => {
       // LINK TO
+      console.log("INSIDE LINK TO USE EFFECT")
      
       history.push(`/chat/${sessionID}`);
 
-
-
     },[sessionID]);
 
+
+
     return(
+
+      <div>
+          <ul className="existing-chats" id="existing-chats">
+
+          {existingChatsDisplay.map(index => {
+
+                return <li className="existing-chat-item">
+                <div>
+                  <img className="existing-chat-image" key={index[0]} src={index[2]} onClick={() => {history.push(`/chat/${index[0]}`)}}/>
+                  <div className="existing-chat-displayname">{index[1]}</div>
+
+                </div>
+                </li>
+
+
+          })}
+
+                       
+          </ul>
+
+
         <div className="ChatUserSearch-container">
+
+       
+
         <br></br>
             <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value.toLowerCase())}} />
                   {userDisplayName!=='' && userImage!=='' && (curUserID.toLowerCase() != userID.toLowerCase()) ? <div className="result-containerChatUserSearch">
@@ -219,6 +378,10 @@ const SpotifyUserSearch = (props) => {
  : null}
 
       </div>
+
+
+      </div>
+
     )
     
   }

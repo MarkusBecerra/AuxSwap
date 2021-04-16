@@ -82,7 +82,7 @@ const SpotifyUserSearch = (props) => {
     React.useEffect(() => {
       console.log("INSIDE ID USE EFFECT")
       id();
-    },[])
+    }, )
 
     
 

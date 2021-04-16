@@ -243,13 +243,11 @@ const SpotifyUserSearch = (props) => {
       {
         return;
       }
-      let array = [];
      
       console.log("LOL")
       console.log(`length: ${existingChats.length}`)
-      // console.log(existingChats[0].session_id);
 
-        for(let i=0;i<existingChats.length;i++) {
+      for(let i=0;i<existingChats.length;i++) {
           if(curUserID !== '')
           {
             console.log("IT'S HAPPENING")
@@ -266,8 +264,7 @@ const SpotifyUserSearch = (props) => {
                 }
                 else
                 {
-                  // console.log(`wtf ${i}: ${existingChats[i].session_id}`)
-                  array.push([existingChats[i].session_id, data.display_name, data.images[0].url]);
+                  setExistingChatsDisplay(existingChatsDisplay => [...existingChatsDisplay, [existingChats[i].session_id, data.display_name, data.images[0].url]]);
                 } 
             },
             error: error => {
@@ -275,14 +272,9 @@ const SpotifyUserSearch = (props) => {
               
             }
           
-          
      });
     }
   }
-
-    setExistingChatsDisplay(array);
-    console.log(`IT SHOULD BE SHOWING: ${existingChatsDisplay.length}`);
-
 
     },[existingChats]);
     
@@ -310,24 +302,29 @@ const SpotifyUserSearch = (props) => {
 
     return(
 
-      <div>
-          <ul className="existing-chats" id="existing-chats">
+      <div className="chat-user-search-container">
 
-          {existingChatsDisplay.map(index => {
+        <div className="existing-chats-container">
 
-                return <li className="existing-chat-item">
-                <div>
-                  <img className="existing-chat-image" key={index[0]} src={index[2]} onClick={() => {history.push(`/chat/${index[0]}`)}}/>
-                  <div className="existing-chat-displayname">{index[1]}</div>
+              <ul className="existing-chats-list" id="existing-chats-list">
 
-                </div>
-                </li>
+              {existingChatsDisplay.map(index => {
+
+                    return <li className="existing-chat-item">
+                    <div>
+                      <img className="existing-chat-image" key={index[0]} src={index[2]} onClick={() => {history.push(`/chat/${index[0]}`)}}/>
+                      <div className="existing-chat-displayname">{index[1]}</div>
+
+                    </div>
+                    </li>
 
 
-          })}
+              })}
 
-                       
-          </ul>
+                          
+              </ul>
+
+          </div>
 
 
         <div className="ChatUserSearch-container">

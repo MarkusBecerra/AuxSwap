@@ -25,7 +25,7 @@ const handleEnter = e => {    //handle enter function
   return (
     <div>
       <Player />
-      <div className="home-container">
+      <div className="home-container-party">
       <input
         type="text"
         placeholder="Room"

@@ -1,11 +1,11 @@
 .home-container {
-    position: fixed;
-    left: 10%;
+    /* position: fixed; */
+    /* left: 10%;
     right: 10%;
     top: 50%;
-    transform: translate(0, -50%);
-    display: flex;
-    flex-direction: column;
+    transform: translate(0, -50%); */
+    /* display: flex; */
+    /* flex-direction: column; */
 }
 
 .text-input-field {

@@ -332,7 +332,7 @@ const SpotifyUserSearch = (props) => {
        
 
         <br></br>
-            <input placeholder="Search for a user" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value.toLowerCase())}} />
+            <input placeholder="Search for user by Spotify username" type="search" id="user_searchbar" autoComplete="off" className="user-searchbarChatUserSearch" onChange={() => {setUserID(document.getElementById('user_searchbar').value.toLowerCase())}} />
                   {userDisplayName!=='' && userImage!=='' && (curUserID.toLowerCase() != userID.toLowerCase()) ? <div className="result-containerChatUserSearch">
                         <ul className="result-listChatUserSearch" id="result-listChatUserSearch">
                         <li className="user-info-itemChatUserSearch">

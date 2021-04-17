@@ -108,9 +108,9 @@ function PartyRoom(props){
                 <SearchBar api={spotifyApi} handleSongSend={handleSongSend}/>
                 </div>
                 <div className="song-container">
-                    {localsongList.map((song)=>
+                    {localsongList.map((song, index)=>
                         
-                        (<SongQueue song={song} key={uuidv4()}/>)
+                        index===0 ? (<SongQueue song={song} isFirst={true}key={uuidv4()}/>):(<SongQueue song={song} isFirst={false} key={uuidv4()}/>)
                     )}
                 
                 </div>

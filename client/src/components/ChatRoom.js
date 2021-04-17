@@ -121,7 +121,7 @@ const ChatRoom = (props) => {
    
     setTimeout(() => {
       chats.scrollTop = 1000000000;
-    },300);
+    },200);
     setNewMessage("");
     
   };
@@ -276,7 +276,6 @@ const ChatRoom = (props) => {
                   const tempRegex = /(http:|https:|ftp:)\/\/[a-zA-Z0-9]+[.][a-z]+\/*[^ \n]*/g;
                   const isLink = tempRegex.test(word);
                     return(
-                      //TODO: THOMAS ADD CSS HERE PLZ TO CUT OUT NEW LINES BETWEEN THE TAGS
                       <div key={j}>
                         {isLink ? <a href={word} target="_blank" rel="noreferrer">{word} </a> : <div>{word}</div>}
                       </div>

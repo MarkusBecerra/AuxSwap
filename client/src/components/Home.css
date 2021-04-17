@@ -4,7 +4,7 @@ body{
 
 .head1{
     font-size: 70px;
-    margin-top: 100px;
+    margin-top: 50px;
     text-align: center;
     color: #ffffff;
 }
@@ -76,8 +76,8 @@ body{
 .row{
     margin: auto;
     display: block; 
-    margin-top: 175px;
-    margin-bottom: 250px;
+    margin-top: 80px;
+    margin-bottom: 45px;
     width: 50%;
 }
 
@@ -97,3 +97,10 @@ body{
         width: 100%;
     }
   }
+
+
+.created-by {
+    color: white;
+    text-align: center;
+
+}

@@ -30,9 +30,10 @@
     
 }
 .song-container{
+    margin-top: -80px;
     position: fixed;
     top: 30%;
-    left: 30%;
+    left: 38%;
     overflow-y: scroll;
     height: 65vh;
 }

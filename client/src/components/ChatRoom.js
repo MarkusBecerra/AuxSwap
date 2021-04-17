@@ -121,7 +121,7 @@ const ChatRoom = (props) => {
    
     setTimeout(() => {
       chats.scrollTop = 1000000000;
-    },100);
+    },300);
     setNewMessage("");
     
   };

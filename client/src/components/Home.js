@@ -45,6 +45,13 @@ return(
                 </NavLink>
             </div>
 
+            <h4 className="created-by">
+                Created by Chance Penner, Haonan Hu,
+                Markus Becerra, 
+                <br></br>
+                Ziwen Wang, and Thomas Gardner
+            </h4>
+
             {/* <ul>
                 <li>
                     <NavLink to="/chat"> Chat </NavLink>

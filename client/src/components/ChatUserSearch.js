@@ -260,11 +260,21 @@ const SpotifyUserSearch = (props) => {
             dataType: "json",
             
             success: data => {
+              var userImageLink = "";
                 if(!data){
                 }
                 else
                 {
-                  setExistingChatsDisplay(existingChatsDisplay => [...existingChatsDisplay, [existingChats[i].session_id, data.display_name, data.images[0].url]]);
+                  console.log(`UNDEFINED NAME: ${data.display_name}`);
+                  if(data.images.length == 0)
+                  {
+                    userImageLink = "https://pics.freeicons.io/uploads/icons/png/4080540331548233623-512.png";
+                  }
+                  else
+                  {
+                    userImageLink = data.images[0].url;
+                  }
+                  setExistingChatsDisplay(existingChatsDisplay => [...existingChatsDisplay, [existingChats[i].session_id, data.display_name, userImageLink]]);
                 } 
             },
             error: error => {
